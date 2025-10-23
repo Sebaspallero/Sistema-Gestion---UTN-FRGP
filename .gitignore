@@ -1,0 +1,20 @@
+# Archivos de compilación
+*.o
+*.obj
+*.exe
+*.dll
+*.a
+*.so
+
+# Archivos temporales
+*.log
+*.tmp
+
+# Carpetas comunes de salida
+bin/
+obj/
+
+# Archivos de configuración de usuario
+*.layout
+*.depend
+*.conf
