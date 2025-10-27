@@ -1,0 +1,6 @@
+#ifndef PACIENTE_H_INCLUDED
+#define PACIENTE_H_INCLUDED
+
+
+
+#endif // PACIENTE_H_INCLUDED

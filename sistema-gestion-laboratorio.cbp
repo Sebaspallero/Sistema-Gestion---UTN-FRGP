@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="Headers/include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -32,6 +33,13 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Entidades/Paciente.cpp" />
+		<Unit filename="Entidades/Sala.cpp" />
+		<Unit filename="Manager.h" />
+		<Unit filename="ManagerSala.h" />
+		<Unit filename="Manager/ManagerSala.cpp" />
+		<Unit filename="Paciente.h" />
+		<Unit filename="Sala.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
