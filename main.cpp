@@ -1,17 +1,15 @@
 #include <iostream>
-#include "ServicioH/ServicioSala.h"
+#include "ManagerH/ManagerSala.h"
 #include <limits>
 
 using namespace std;
 
-// Función para limpiar el buffer de entrada en caso de error
 void limpiarBuffer() {
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-// Función principal del menú
-void mostrarMenu(ServicioSala& servicio) {
+void mostrarMenu(ManagerSala& manager) {
     int opcion;
     std::string nombre;
     int piso;
@@ -36,12 +34,11 @@ void mostrarMenu(ServicioSala& servicio) {
             case 1: {
                 std::cout << "\n-- REGISTRAR SALA --\n";
 
-                // Pedir Nombre (puede tener espacios, por eso usamos getline)
+
                 std::cout << "Ingrese el nombre de la sala: ";
-                limpiarBuffer(); // Limpiamos el salto de línea pendiente
+                limpiarBuffer();
                 std::getline(std::cin, nombre);
 
-                // Pedir Piso
                 std::cout << "Ingrese el numero de piso: ";
                 if (!(std::cin >> piso)) {
                     std::cout << "Error: El piso debe ser un numero.\n";
@@ -49,7 +46,7 @@ void mostrarMenu(ServicioSala& servicio) {
                     break;
                 }
 
-                if (servicio.guardarSala(nombre, piso)) {
+                if (manager.crearSala(nombre, piso)) {
                     std::cout << "Sala '" << nombre << "' registrada con exito!\n";
                 } else {
                     std::cout << "Error al intentar guardar la sala.\n";
@@ -59,7 +56,7 @@ void mostrarMenu(ServicioSala& servicio) {
 
             case 2: {
                 std::cout << "\n-- LISTADO DE SALAS --\n";
-                std::vector<Sala> salas = servicio.ListarSalas();
+                std::vector<Sala> salas = manager.leerTodos();
 
                 if (salas.empty()) {
                     std::cout << "No hay salas registradas.\n";
@@ -77,7 +74,7 @@ void mostrarMenu(ServicioSala& servicio) {
 
             case 3: {
                 std::cout << "\n-- LISTADO DE SALAS --\n";
-                std::vector<Sala> salas = servicio.ListarSalas();
+                std::vector<Sala> salas = manager.leerTodos();
 
                 if (salas.empty()) {
                     std::cout << "No hay salas registradas.\n";
@@ -96,7 +93,7 @@ void mostrarMenu(ServicioSala& servicio) {
                 int eliminar;
                 cin>>eliminar;
 
-                 bool eliminado = servicio.eliminarSala(eliminar);
+                 bool eliminado = manager.eliminar(eliminar);
 
                  if(eliminado){
                     std::cout << "\n-- ELIMINADO EXITOSAMENTE --\n";
@@ -115,7 +112,7 @@ void mostrarMenu(ServicioSala& servicio) {
                 std::string nombre;
                 cin>>nombre;
 
-                 Sala sala = servicio.buscarPorNombre(nombre);
+                 Sala sala = manager.buscarPorNombre(nombre);
 
                  if(sala.getId() > 0){
                      std::cout << "ID: " << sala.getId()
@@ -132,7 +129,7 @@ void mostrarMenu(ServicioSala& servicio) {
 
             case 5: {
                 std::cout << "\n-- LISTADO DE SALAS --\n";
-                std::vector<Sala> salas = servicio.ListarSalas();
+                std::vector<Sala> salas = manager.leerTodos();
 
                 if (salas.empty()) {
                     std::cout << "No hay salas registradas.\n";
@@ -170,7 +167,7 @@ void mostrarMenu(ServicioSala& servicio) {
 
                 bool disponible = (opciond == "SI" || opciond == "Si" || opciond == "si");
 
-                bool modificado = servicio.modificarSala(nombre, piso, disponible, modificar);
+                bool modificado = manager.modificarSala(nombre, piso, disponible, modificar);
 
                 if (modificado) {
                     std::cout << "SE MODIFICO EXITOSAMENTE\n";
@@ -182,11 +179,11 @@ void mostrarMenu(ServicioSala& servicio) {
             }
 
             case 0:
-                std::cout << "Saliendo del programa. ¡Hasta luego!\n";
+                std::cout << "Saliendo del programa. Hasta luego!\n";
                 break;
 
             default:
-                std::cout << "Opcion no reconocida. Por favor, elija entre 0 y 2.\n";
+                std::cout << "Opcion no reconocida. Por favor, elija entre 0 y 5.\n";
                 break;
         }
 
@@ -195,9 +192,7 @@ void mostrarMenu(ServicioSala& servicio) {
 
 int main()
 {
-
-   // Inicializa el servicio. Usará el archivo "sala.dat" por defecto.
-    ServicioSala gestorSalas("salas_laboratorio.dat");
+    ManagerSala gestorSalas("salas_laboratorio.dat");
 
     mostrarMenu(gestorSalas);
 

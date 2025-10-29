@@ -1,0 +1,6 @@
+#ifndef ANALISIS_H_INCLUDED
+#define ANALISIS_H_INCLUDED
+
+
+
+#endif // ANALISIS_H_INCLUDED

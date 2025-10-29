@@ -1,0 +1,6 @@
+#ifndef FACTURA_H_INCLUDED
+#define FACTURA_H_INCLUDED
+
+
+
+#endif // FACTURA_H_INCLUDED
