@@ -22,7 +22,7 @@ ManagerSala::ManagerSala(std::string nombreArchivo) : Manager<Sala>(nombreArchiv
     return salaInvalida;
  }
 
- bool ManagerSala :: crearSala(std::string& nombre, int piso){
+bool ManagerSala :: crearSala(std::string& nombre, int piso){
         int id = obtenerNuevoId();
         Sala sala;
         sala.setId(id);
