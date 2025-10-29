@@ -1,6 +1,15 @@
-#ifndef CATEGORIA_H_INCLUDED
-#define CATEGORIA_H_INCLUDED
+#pragma once
 
-
-
-#endif // CATEGORIA_H_INCLUDED
+class Categoria{
+private:
+    int _idCategoria;
+    char _nombre[30];
+    bool _estado;
+public:
+    int getIDCategoria() const;
+    std::string getNombre() const;
+    bool getEstado() const;
+    void setIDCategoria(int idCategoria);
+    void setNombre(std::string& nombre);
+    void setEstado(bool estado);
+};

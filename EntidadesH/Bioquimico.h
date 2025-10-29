@@ -1,6 +1,12 @@
-#ifndef BIOQUIMICO_H_INCLUDED
-#define BIOQUIMICO_H_INCLUDED
+#pragma once
+#include <cstring>
+#include <iostream>
+#include "Persona.h"
 
-
-
-#endif // BIOQUIMICO_H_INCLUDED
+class Bioquimico : public Persona{
+private:
+    char _matricula [30];
+public:
+    std::string getMatricula() const;
+    void setMatricula(std::string& matricula);
+};

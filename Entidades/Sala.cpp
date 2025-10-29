@@ -1,4 +1,4 @@
-#include "../Sala.h"
+#include "../EntidadesH/Sala.h"
 #include <iostream>
 #include <cstring>
 
