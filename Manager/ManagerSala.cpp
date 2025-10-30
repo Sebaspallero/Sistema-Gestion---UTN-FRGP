@@ -49,4 +49,3 @@ bool ManagerSala :: modificarSala(std::string& nombre, int piso, bool disponible
         return modificar(sala, posicion);
 
 }
-
