@@ -2,28 +2,26 @@
 #include <string>
 
 class Sala {
+    private:
+        int _idSala;
+        char _nombre[20];
+        int _piso;
+        bool _disponible;
+        bool _estado;
 
-private:
-    int _id;
-    char _nombre[20];
-    int _piso;
-    bool _disponible;
+    public:
+        Sala();
+        Sala(int id, std::string& nombre, int piso, bool disponible);
 
-public:
+        int getIDSala() const;
+        std::string getNombre() const;
+        int getPiso() const;
+        bool getDisponible() const;
+        bool getEstado() const;
 
-    Sala();
-    Sala(int id, std::string& nombre, int piso, bool disponible);
-
-    // Getters
-    int getId() const;
-    std::string getNombre() const;
-    int getPiso() const;
-    bool isDisponible() const;
-
-    // Setters
-    void setNombre(std:: string& nombre);
-    void setPiso(int piso);
-    void setDisponible(bool disponible);
-    void setId(int id);
-
+        void setIDSala(int idSala);
+        void setNombre(std::string& nombre);
+        void setPiso(int piso);
+        void setDisponible(bool disponible);
+        void setEstado(bool estado);
 };

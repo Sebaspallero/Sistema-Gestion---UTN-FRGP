@@ -1,6 +1,16 @@
-#ifndef PACIENTE_H_INCLUDED
-#define PACIENTE_H_INCLUDED
+#pragma once
+#include "Persona.h"
+#include <cstring>
 
+class Paciente : public Persona{
+    private:
+        char _telefono [15];
+        int _codigoObraSocial;
 
+    public:
+        std::string getTelefono() const;
+        int getCodigoObraSocial() const;
 
-#endif // PACIENTE_H_INCLUDED
+        void setTelefono(std::string telefono);
+        void setCodigoObraSocial(int codigoObraSocial);
+};

@@ -4,9 +4,11 @@
 #include "Persona.h"
 
 class Bioquimico : public Persona{
-private:
-    char _matricula [30];
-public:
-    std::string getMatricula() const;
-    void setMatricula(std::string& matricula);
+    private:
+        int _matricula;
+
+    public:
+        int getMatricula() const;
+
+        void setMatricula(int matricula);
 };

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cstring>
 
-
+    //Constructores
     Sala :: Sala(){
         _id = 0;
         std::strncpy(_nombre, "Sin Nombre", sizeof(_nombre) - 1);
@@ -20,7 +20,6 @@
     };
 
     // Getters
-
     int Sala :: getId() const{
         return _id;
     }
@@ -37,7 +36,6 @@
     }
 
     // Setters
-
     void Sala :: setNombre(std::string& nombre){
         std::strncpy(_nombre, nombre.c_str(), sizeof(_nombre) - 1);
         _nombre[sizeof(_nombre) - 1] = '\0';
