@@ -1,18 +1,22 @@
 #pragma once
 #include <cstring>
+#include <string>
 
 class Categoria{
     private:
-        int _idCategoria;
+        int _id;
         char _nombre[30];
         bool _estado;
 
     public:
-        int getIDCategoria() const;
+        Categoria();
+        Categoria(int id, std::string nombre);
+
+        int getId() const;
         std::string getNombre() const;
         bool getEstado() const;
 
-        void setIDCategoria(int idCategoria);
+        void setId(int idCategoria);
         void setNombre(std::string& nombre);
         void setEstado(bool estado);
 };

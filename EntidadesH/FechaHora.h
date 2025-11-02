@@ -7,11 +7,16 @@ class FechaHora : public Fecha{
         int _minutos;
 
     public:
+        FechaHora();
+        FechaHora(int d, int m, int a, int h, int min);
+
         int getHora() const;
         int getMinutos() const;
 
         void setHora(int hora);
         void setMinutos(int minutos);
 
-        bool crearFechaTurno(int dia, int, mes, int anio, int hora, int minutos);
+        std::string toString() const;      // <--- declarar aquí
+        bool esIgual(const FechaHora& otra) const;
+        bool esAnterior(const FechaHora& otra) const;
 };

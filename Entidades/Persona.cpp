@@ -3,8 +3,35 @@
 #include <iostream>
 #include <cstring>
 
+    //Constructores
+    Persona::Persona() {
+        _id = 0;
+        std::strncpy(_nombre, "Sin Nombre", sizeof(_nombre) - 1);
+        _nombre[sizeof(_nombre) - 1] = '\0';
+        std::strncpy(_apellido, "Sin Apellido", sizeof(_apellido) - 1);
+        _apellido[sizeof(_apellido) - 1] = '\0';
+        _fechaNacimiento = Fecha();
+        _dni = 0;
+        std::strncpy(_email, "sinemail@ejemplo.com", sizeof(_email) - 1);
+        _email[sizeof(_email) - 1] = '\0';
+        _estado = true;
+    }
+
+    Persona::Persona(int id, std::string nombre, std::string apellido, Fecha fechaNacimiento, int dni, std::string email) {
+        _id = id;
+        std::strncpy(_nombre, nombre.c_str(), sizeof(_nombre) - 1);
+        _nombre[sizeof(_nombre) - 1] = '\0';
+        std::strncpy(_apellido, apellido.c_str(), sizeof(_apellido) - 1);
+        _apellido[sizeof(_apellido) - 1] = '\0';
+        _fechaNacimiento = fechaNacimiento;
+        _dni = dni;
+        std::strncpy(_email, email.c_str(), sizeof(_email) - 1);
+        _email[sizeof(_email) - 1] = '\0';
+        _estado = true;
+    }
+
     //Getters
-    int Persona::getID() const{
+    int Persona::getId() const{
         return _id;
     }
 
@@ -33,7 +60,7 @@
     }
 
     //Setters
-    void Persona::setID(int id){
+    void Persona::setId(int id){
         _id = id;
     }
 

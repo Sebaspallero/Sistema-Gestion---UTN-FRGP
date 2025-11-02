@@ -3,20 +3,23 @@
 
 class Resultado{
     private:
-        int _idResultado;
+        int _id;
         int _idTurno;
         char _descripcion [100];
         Fecha _fecha;
         bool _estado;
 
     public:
-        int getIDResultado() const;
+        Resultado();
+        Resultado(int id, int idTurno, std::string descripcion, Fecha fecha);
+
+        int getId() const;
         int getIDTurno() const;
         std::string getDescripcion() const;
         Fecha getFecha() const;
         bool getEstado() const;
 
-        void setIDResultado(int idResultado);
+        void setId(int idResultado);
         void setIDTurno(int idTurno);
         void setDescripcion(std::string& descripcion);
         void setFecha(Fecha fecha);

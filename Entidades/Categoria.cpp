@@ -2,9 +2,24 @@
 #include <cstring>
 #include <iostream>
 
+    //Constructores
+    Categoria::Categoria() {
+        _id = 0;
+        std::strncpy(_nombre, "Sin Nombre", sizeof(_nombre) - 1);
+        _nombre[sizeof(_nombre) - 1] = '\0';
+        _estado = true;
+    }
+
+    Categoria::Categoria(int id, std::string nombre) {
+        _id = id;
+        std::strncpy(_nombre, nombre.c_str(), sizeof(_nombre) - 1);
+        _nombre[sizeof(_nombre) - 1] = '\0';
+        _estado = true;
+    }
+
     //Getters
-    int Categoria::getIDCategoria() const{
-        return _idCategoria;
+    int Categoria::getId() const{
+        return _id;
     }
 
     std::string Categoria::getNombre() const{
@@ -16,8 +31,8 @@
     }
 
     //Setters
-    void Categoria::setIDCategoria(int idCategoria){
-        _idCategoria = idCategoria;
+    void Categoria::setId(int idCategoria){
+        _id = idCategoria;
     }
 
     void Categoria::setNombre(std::string& nombre){

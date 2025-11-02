@@ -2,9 +2,24 @@
 #include <iostream>
 #include <cstring>
 
+    //Constructores
+    MetodoDePago::MetodoDePago() {
+        _id = 0;
+        std::strncpy(_nombre, "Sin Nombre", sizeof(_nombre) - 1);
+        _nombre[sizeof(_nombre) - 1] = '\0';
+        _estado = true;
+    }
+
+    MetodoDePago::MetodoDePago(int id, std::string nombre) {
+        _id = id;
+        std::strncpy(_nombre, nombre.c_str(), sizeof(_nombre) - 1);
+        _nombre[sizeof(_nombre) - 1] = '\0';
+        _estado = true;
+    }
+
     //Getters
-    int MetodoDePago::getIDMetodoPago() const{
-        return _idMetodoPago;
+    int MetodoDePago::getId() const{
+        return _id;
     }
 
     std::string MetodoDePago::getNombre() const{
@@ -16,8 +31,8 @@
     }
 
     //Setters
-    void MetodoDePago::setIDMetodoPago(int idMetodoPago){
-        _idMetodoPago = idMetodoPago;
+    void MetodoDePago::setId(int idMetodoPago){
+        _id = idMetodoPago;
     }
 
     void MetodoDePago::setNombre(std::string& nombre){

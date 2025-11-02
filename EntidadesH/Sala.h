@@ -3,7 +3,7 @@
 
 class Sala {
     private:
-        int _idSala;
+        int _id;
         char _nombre[20];
         int _piso;
         bool _disponible;
@@ -13,13 +13,13 @@ class Sala {
         Sala();
         Sala(int id, std::string& nombre, int piso, bool disponible);
 
-        int getIDSala() const;
+        int getId() const;
         std::string getNombre() const;
         int getPiso() const;
-        bool getDisponible() const;
+        bool isDisponible() const;
         bool getEstado() const;
 
-        void setIDSala(int idSala);
+        void setId(int idSala);
         void setNombre(std::string& nombre);
         void setPiso(int piso);
         void setDisponible(bool disponible);

@@ -1,20 +1,41 @@
 #include "../EntidadesH/Factura.h"
 #include <iostream>
 
-    //Getters
-    int Factura::getIDFactura()const{
-        return _idFactura;
+    //Contructores
+    Factura::Factura() {
+        _id = 0;
+        _idPaciente = 0;
+        _idAnalisis = 0;
+        _idMetodoPago = 0;
+        _costoFinal = 0.0f;
+        _fechaPago = Fecha();
+        _estado = true;
     }
 
-    int Factura::getIDPaciente()const{
+    Factura::Factura(int id, int idPaciente, int idAnalisis, int idMetodoPago, float costoFinal, Fecha fechaPago) {
+        _id = id;
+        _idPaciente = idPaciente;
+        _idAnalisis = idAnalisis;
+        _idMetodoPago = idMetodoPago;
+        _costoFinal = costoFinal;
+        _fechaPago = fechaPago;
+        _estado = true;
+    }
+
+    //Getters
+    int Factura::getId()const{
+        return _id;
+    }
+
+    int Factura::getIdPaciente()const{
         return _idPaciente;
     }
 
-    int Factura::getIDAnalisis()const{
+    int Factura::getIdAnalisis()const{
         return _idAnalisis;
     }
 
-    int Factura::getIDMetodoPago()const{
+    int Factura::getIdMetodoPago()const{
         return _idMetodoPago;
     }
 
@@ -31,19 +52,19 @@
     }
 
     //Setters
-    void Factura::setIDFactura(int idFactura){
-        _idFactura = idFactura;
+    void Factura::setId(int idFactura){
+        _id = idFactura;
     }
 
-    void Factura::setIDPaciente(int idPaciente){
+    void Factura::setIdPaciente(int idPaciente){
         _idPaciente = idPaciente;
     }
 
-    void Factura::setIDAnalisis(int idAnalisis){
+    void Factura::setIdAnalisis(int idAnalisis){
         _idAnalisis = idAnalisis;
     }
 
-    void Factura::setIDMetodoPago(int idMetodoPago){
+    void Factura::setIdMetodoPago(int idMetodoPago){
         _idMetodoPago = idMetodoPago;
     }
 

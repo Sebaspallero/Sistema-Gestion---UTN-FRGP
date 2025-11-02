@@ -3,7 +3,7 @@
 
 class Factura{
     private:
-        int _idFactura;
+        int _id;
         int _idPaciente;
         int _idAnalisis;
         int _idMetodoPago;
@@ -12,18 +12,21 @@ class Factura{
         bool _estado;
 
     public:
-        int getIDFactura() const;
-        int getIDPaciente() const;
-        int getIDAnalisis() const;
-        int getIDMetodoPago() const;
+        Factura();
+        Factura(int id, int idPaciente, int idAnalisis, int idMetodoPago, float costoFinal, Fecha fechaPago);
+
+        int getId() const;
+        int getIdPaciente() const;
+        int getIdAnalisis() const;
+        int getIdMetodoPago() const;
         float getCostoFinal() const;
         Fecha getFechaPago() const;
         bool getEstado() const;
 
-        void setIDFactura(int idFactura);
-        void setIDPaciente(int idPaciente);
-        void setIDAnalisis(int idAnalisis);
-        void setIDMetodoPago(int IdMetodoPago);
+        void setId(int idFactura);
+        void setIdPaciente(int idPaciente);
+        void setIdAnalisis(int idAnalisis);
+        void setIdMetodoPago(int IdMetodoPago);
         void setCostoFinal(float costoFinal);
         void setFechaPago(Fecha fechaPago);
         void setEstado(bool estado);

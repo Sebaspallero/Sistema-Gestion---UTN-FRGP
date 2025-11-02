@@ -1,9 +1,34 @@
 #include "../EntidadesH/Turno.h"
 #include "../EntidadesH/FechaHora.h"
 
+
+    //constructores
+
+    Turno::Turno() {
+        _id = 0;
+        _idPaciente = 0;
+        _idBioquimico = 0;
+        _idAnalisis = 0;
+        _idSala = 0;
+        _fechaTurno = FechaHora();
+        _asistio = false;
+        _estado = true;
+    }
+
+    Turno::Turno(int id, int idPaciente, int idBioquimico, int idAnalisis, int idSala, FechaHora fechaTurno, bool asistio) {
+        _id = id;
+        _idPaciente = idPaciente;
+        _idBioquimico = idBioquimico;
+        _idAnalisis = idAnalisis;
+        _idSala = idSala;
+        _fechaTurno = fechaTurno;
+        _asistio = asistio;
+        _estado = true;
+    }
+
     // Getters
-    int Turno :: getIDTurno() const{
-        return _idTurno;
+    int Turno :: getId() const{
+        return _id;
     }
 
     int Turno::getIDPaciente() const{
@@ -30,13 +55,13 @@
         return _asistio;
     }
 
-    bool Turno::setEstado() const{
+    bool Turno::getEstado() const{
         return _estado;
     }
 
     // Setters
-    void Turno::setIDTurno(int idTurno){
-        _idTurno = idTurno;
+    void Turno::setId(int idTurno){
+        _id = idTurno;
     }
 
     void Turno::setIDPaciente(int idPaciente){
@@ -55,14 +80,14 @@
         _idSala = idSala;
     }
 
-    void setFechaTurno(FechaHora fechaTurno){
+    void Turno::setFechaTurno(FechaHora fechaTurno){
         _fechaTurno = fechaTurno;
     }
 
-    void setAsistio(bool asistio){
+    void Turno::setAsistio(bool asistio){
         _asistio = asistio;
     }
 
-    void setEstado(bool estado){
+    void Turno::setEstado(bool estado){
         _estado = estado;
     }

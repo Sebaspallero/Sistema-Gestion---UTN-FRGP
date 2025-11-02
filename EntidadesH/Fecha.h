@@ -1,4 +1,6 @@
 #pragma once
+#include <cstring>
+#include <string>
 
 class Fecha{
     private:
@@ -16,5 +18,7 @@ class Fecha{
         void setMes(int mes);
         void setAnio(int anio);
 
-        bool crearFecha(int dia, int mes, int anio);
+        std::string toString() const;
+        bool esIgual(const Fecha& otraFecha) const;
+        bool esAnterior(const Fecha& otra) const;
 };

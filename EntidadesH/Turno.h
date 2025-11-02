@@ -3,7 +3,7 @@
 
 class Turno{
     private:
-        int _idTurno;
+        int _id;
         int _idPaciente;
         int _idBioquimico;
         int _idAnalisis;
@@ -13,7 +13,10 @@ class Turno{
         bool _estado;
 
     public:
-       int getIDTurno() const;
+       Turno();
+       Turno(int id, int idPaciente, int idBioquimico, int idAnalisis, int idSala, FechaHora fechaTurno, bool asistio);
+
+       int getId() const;
        int getIDPaciente() const;
        int getIDBioquimico() const;
        int getIDAnalisis() const;
@@ -22,7 +25,7 @@ class Turno{
        bool getAsistio() const;
        bool getEstado() const;
 
-       void setIDTurno(int idTurno);
+       void setId(int idTurno);
        void setIDPaciente(int idPaciente);
        void setIDBioquimico(int idBioquimico);
        void setIDAnalisis(int idAnalisis);

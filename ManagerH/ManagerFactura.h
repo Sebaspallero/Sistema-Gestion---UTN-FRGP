@@ -1,6 +1,18 @@
-#ifndef MANAGERFACTURA_H_INCLUDED
-#define MANAGERFACTURA_H_INCLUDED
+#pragma once
+#include "Manager.h"
+#include "../EntidadesH/Factura.h"
+#include <vector>
+#include <string>
 
+class ManagerFactura : public Manager<Factura> {
+public:
+    ManagerFactura(std::string nombreArchivo);
 
+    std::vector<Factura> ordenarPorFechaDePago();
+    std::vector<Factura> buscarPorMetodoDePago(int idMetodoDePago);
+    std::vector<Factura> buscarPorFecha(int dia, int mes, int anio);
+    std::vector<Factura> buscarPorPacienteID(int idPaciente);
 
-#endif // MANAGERFACTURA_H_INCLUDED
+    bool crearFactura(int idPaciente, int idAnalisis, int idMetodoDePago, float costoFinal, int dia, int mes, int anio);
+    bool modificarFactura(int idPaciente, int idAnalisis, int idMetodoDePago, float costoFinal, int dia, int mes, int anio, int idFactura);
+};

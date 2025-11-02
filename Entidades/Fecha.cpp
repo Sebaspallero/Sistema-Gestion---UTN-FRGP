@@ -1,9 +1,19 @@
 #include "../EntidadesH/Fecha.h"
 #include <iostream>
+#include <string>
 
     //Constructores
-    Fecha::Fecha(){};
-    Fecha::Fecha(int dia,int mes,int anio): _dia(dia), _mes(mes), _anio(anio) {}
+    Fecha::Fecha() {
+        _dia = 0;
+        _mes = 0;
+        _anio = 0;
+    }
+
+    Fecha::Fecha(int d, int m, int a) {
+        _dia = d;
+        _mes = m;
+        _anio = a;
+    }
 
     //Getters
     int Fecha::getDia() const{
@@ -31,4 +41,16 @@
     _anio = anio;
     }
 
-    bool Fecha::crearFecha(int dia, int mes, int anio){};
+    std::string Fecha:: toString() const {
+        return std::to_string(_dia) + "/" + std::to_string(_mes) + "/" + std::to_string(_anio);
+    }
+
+    bool Fecha:: esIgual(const Fecha& otraFecha) const {
+        return _dia == otraFecha._dia && _mes == otraFecha._mes && _anio == otraFecha._anio;
+    }
+
+    bool Fecha:: esAnterior(const Fecha& otraFecha) const {
+        if (_anio != otraFecha._anio) return _anio < otraFecha._anio;
+        if (_mes != otraFecha._mes) return _mes < otraFecha._mes;
+        return _dia < otraFecha._dia;
+    }

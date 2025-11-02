@@ -13,7 +13,10 @@ class Persona{
         bool _estado;
 
     public:
-        int getID() const;
+        Persona();
+        Persona(int id, std::string nombre, std::string apellido, Fecha fechaNacimiento, int dni, std::string email);
+
+        int getId() const;
         std::string getNombre() const;
         std::string getApellido() const;
         Fecha getFechaNacimiento() const;
@@ -21,7 +24,7 @@ class Persona{
         std::string getEmail() const;
         bool getEstado() const;
 
-        void setID(int id);
+        void setId(int id);
         void setNombre(std::string& nombre);
         void setApellido(std::string& apellido);
         void setFechaNacimiento(Fecha fechaNacimiento);

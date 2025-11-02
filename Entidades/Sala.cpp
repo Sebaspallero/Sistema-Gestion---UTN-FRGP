@@ -9,6 +9,7 @@
         _nombre[sizeof(_nombre) - 1] = '\0';
         _piso = 0;
         _disponible = false;
+        _estado = true;
     };
 
     Sala :: Sala(int id, std::string& nombre, int piso, bool disponible){
@@ -17,6 +18,7 @@
          _nombre[sizeof(_nombre) - 1] = '\0';
         _piso = piso;
         _disponible = disponible;
+        _estado = true;
     };
 
     // Getters
@@ -31,8 +33,13 @@
     int Sala :: getPiso() const{
         return _piso;
     }
+
     bool Sala :: isDisponible() const{
         return _disponible;
+    }
+
+    bool Sala :: getEstado() const {
+        return _estado;
     }
 
     // Setters
@@ -51,4 +58,8 @@
 
     void Sala :: setId(int id) {
         _id = id;
+    }
+
+    void Sala :: setEstado(bool estado) {
+        _estado = estado;
     }
