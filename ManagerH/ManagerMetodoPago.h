@@ -1,6 +1,13 @@
-#ifndef MANAGERMETODOPAGO_H_INCLUDED
-#define MANAGERMETODOPAGO_H_INCLUDED
+#pragma once
+#include "Manager.h"
+#include "../EntidadesH/MetodoDePago.h"
+#include <vector>
+#include <string>
 
+class ManagerMetodoDePago : public Manager<MetodoDePago> {
+public:
+    ManagerMetodoDePago(std::string nombreArchivo);
 
-
-#endif // MANAGERMETODOPAGO_H_INCLUDED
+    bool crearMetodoDePago(std::string nombre);
+    bool modificarMetodoDePago(std::string nombre, int id);
+};

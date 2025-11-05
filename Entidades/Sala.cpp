@@ -10,7 +10,7 @@
         _piso = 0;
         _disponible = false;
         _estado = true;
-    };
+    }
 
     Sala :: Sala(int id, std::string& nombre, int piso, bool disponible){
         _id = id;
@@ -19,7 +19,7 @@
         _piso = piso;
         _disponible = disponible;
         _estado = true;
-    };
+    }
 
     // Getters
     int Sala :: getId() const{
