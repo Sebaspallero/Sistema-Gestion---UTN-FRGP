@@ -1,6 +1,12 @@
-#ifndef MENUPRINCIPAL_H_INCLUDED
-#define MENUPRINCIPAL_H_INCLUDED
+#pragma once
+#include "Menu.h"
+#include "MenuSala.h"
 
-
-
-#endif // MENUPRINCIPAL_H_INCLUDED
+class MenuPrincipal : public Menu {
+private:
+    MenuSala menuSala;
+    //AGREGAR EL RESTO DE LOS MENUS CUANDO LOS CREEN
+public:
+    MenuPrincipal();
+    void ejecutar();
+};

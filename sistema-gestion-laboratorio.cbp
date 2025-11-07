@@ -82,8 +82,12 @@
 		<Unit filename="Manager/ManagerResultado.cpp" />
 		<Unit filename="Manager/ManagerSala.cpp" />
 		<Unit filename="Manager/ManagerTurno.cpp" />
+		<Unit filename="MenuH/Menu.h" />
 		<Unit filename="MenuH/MenuPrincipal.h" />
+		<Unit filename="MenuH/MenuSala.h" />
+		<Unit filename="Menu/Menu.cpp" />
 		<Unit filename="Menu/MenuPrincipal.cpp" />
+		<Unit filename="Menu/MenuSala.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
