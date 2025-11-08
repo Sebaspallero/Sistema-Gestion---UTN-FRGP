@@ -26,8 +26,7 @@ Analisis ManagerAnalisis::buscarPorNombre(std::string nombre) {
             return lista[i];
         }
     }
-    return Analisis();
-}
+    return Analisis();}
 
 //BUSCAR POR CATEGORIA
 std::vector<Analisis> ManagerAnalisis::buscarPorCategoria(int idCategoria) {

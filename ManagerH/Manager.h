@@ -124,7 +124,7 @@ std::vector<T> Manager<T>::leerTodos(){
     return lista;
 }
 
-// Buscar NO IMPLEMENTADA
+// Buscar
 template <typename T>
 int Manager<T>::buscar(int id){
     FILE *pFile = fopen(_nombreArchivo.c_str(), "rb");

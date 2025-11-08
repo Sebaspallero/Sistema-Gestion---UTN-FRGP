@@ -4,7 +4,6 @@
 // Constructor
 ManagerTurno::ManagerTurno(std::string nombreArchivo) : Manager<Turno>(nombreArchivo) {}
 
-
 // ORDENAR POR FECHA
 std::vector<Turno> ManagerTurno::ordenarPorFecha() {
     std::vector<Turno> lista = leerTodos();

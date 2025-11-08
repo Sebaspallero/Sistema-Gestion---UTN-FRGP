@@ -11,7 +11,7 @@
         _estado = true;
     }
 
-    ObraSocial::ObraSocial(int id, std::string nombre, int descuento) {
+    ObraSocial::ObraSocial(int id, std::string nombre, float descuento) {
         _id = id;
         std::strncpy(_nombre, nombre.c_str(), sizeof(_nombre) - 1);
         _nombre[sizeof(_nombre) - 1] = '\0';
@@ -28,7 +28,7 @@
         return std::string (_nombre);
     }
 
-    int ObraSocial::getDescuento() const{
+    float ObraSocial::getDescuento() const{
         return _descuento;
     }
 
@@ -46,7 +46,7 @@
         _nombre[sizeof(_nombre) - 1] = '\0';
     }
 
-    void ObraSocial::setDescuento(int descuento){
+    void ObraSocial::setDescuento(float descuento){
         _descuento = descuento;
     }
 
