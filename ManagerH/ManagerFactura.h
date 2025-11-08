@@ -6,7 +6,7 @@
 
 class ManagerFactura : public Manager<Factura> {
 public:
-    ManagerFactura(std::string nombreArchivo);
+    ManagerFactura(const std::string& nombreArchivo);
 
     std::vector<Factura> ordenarPorFechaDePago();
     std::vector<Factura> buscarPorMetodoDePago(int idMetodoDePago);

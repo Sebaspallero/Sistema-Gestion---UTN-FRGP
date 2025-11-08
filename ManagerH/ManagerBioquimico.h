@@ -6,7 +6,7 @@
 
 class ManagerBioquimico : public Manager<Bioquimico> {
 public:
-    ManagerBioquimico(std::string nombreArchivo);
+    ManagerBioquimico(const std::string& nombreArchivo);
 
     std::vector<Bioquimico> ordenarPorApellido();
     std::vector<Bioquimico> ordenarPorLegajo();

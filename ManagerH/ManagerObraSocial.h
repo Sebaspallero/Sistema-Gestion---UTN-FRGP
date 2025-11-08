@@ -4,8 +4,6 @@
 
 class ManagerObraSocial : public Manager<ObraSocial>{
 public:
-    ManagerObraSocial(std::string& nombreArchivo);
+    ManagerObraSocial(const std::string&nombreArchivo);
     ObraSocial buscarPorNombre(std::string& nombre);
-    bool crearObraSocial(std::string& nombre, float descuento);
-    bool modificarObraSocial(std::string& nombre, float descuento, int id);
 };

@@ -2,7 +2,7 @@
 #include "../EntidadesH/Categoria.h"
 
 // Constructor
-ManagerCategoria::ManagerCategoria(std::string nombreArchivo) : Manager<Categoria>(nombreArchivo) {}
+ManagerCategoria::ManagerCategoria(const std::string& nombreArchivo) : Manager<Categoria>(nombreArchivo) {}
 
 
 //BUSCAR POR NOMBRE

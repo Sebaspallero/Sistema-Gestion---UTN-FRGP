@@ -6,7 +6,7 @@
 
 class ManagerAnalisis : public Manager<Analisis> {
 public:
-    ManagerAnalisis(std::string nombreArchivo);
+    ManagerAnalisis(const std::string&nombreArchivo);
 
     std::vector<Analisis> ordenarPorCategoria();
     Analisis buscarPorNombre(std::string nombre);

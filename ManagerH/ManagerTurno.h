@@ -6,7 +6,7 @@
 
 class ManagerTurno : public Manager<Turno> {
 public:
-    ManagerTurno(std::string nombreArchivo);
+    ManagerTurno(const std::string& nombreArchivo);
 
     std::vector<Turno> ordenarPorFecha();
     std::vector<Turno> buscarPorFecha(int dia, int mes, int anio);

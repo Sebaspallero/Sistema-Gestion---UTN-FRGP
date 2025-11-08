@@ -1,10 +1,10 @@
 #pragma once
 #include "Menu.h"
-#include "../ManagerH/ManagerSala.h"
+#include "../ServicioH/ServicioSala.h"
 
 class MenuSala : public Menu {
 private:
-    ManagerSala manager;
+    ServicioSala servicioSala;
 public:
     MenuSala();
     void ejecutar();

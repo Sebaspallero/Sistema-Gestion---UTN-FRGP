@@ -2,7 +2,7 @@
 #include <iostream>
 
 //Constructor
-ManagerPaciente::ManagerPaciente(std::string nombreArchivo) : Manager<Paciente>(nombreArchivo){}
+ManagerPaciente::ManagerPaciente(const std::string& nombreArchivo) : Manager<Paciente>(nombreArchivo){}
 
 
 //ORDENAR POR APELLIDO
@@ -65,35 +65,4 @@ std::vector<Paciente> ManagerPaciente::buscarPorObraSocial(int idObraSocial) {
     }
 
     return resultados;
-}
-
-
-//CREAR PACIENTE
-bool ManagerPaciente::crearPaciente(std::string nombre, std::string apellido, int dia, int mes, int anio, int dni, std::string email, std::string telefono, int codigoObraSocial) {
-    int id = obtenerNuevoId();
-    Fecha fechaNacimiento(dia, mes, anio);
-    Paciente paciente(id, nombre, apellido, fechaNacimiento, dni, email, telefono, codigoObraSocial);
-    return guardar(paciente);
-}
-
-//MODIFICAR PACIENTE
-bool ManagerPaciente::modificarPaciente(std::string nombre, std::string apellido, int dia, int mes, int anio, int dni, std::string email, std::string telefono, int codigoObraSocial, int id) {
-    int posicion;
-    posicion = buscar(id);
-    if (posicion == -1) {
-        return false;
-    }
-
-    Paciente paciente = leer(posicion);
-    Fecha fechaNacimiento(dia, mes, anio);
-
-    paciente.setNombre(nombre);
-    paciente.setApellido(apellido);
-    paciente.setFechaNacimiento(fechaNacimiento);
-    paciente.setDNI(dni);
-    paciente.setEmail(email);
-    paciente.setTelefono(telefono);
-    paciente.setCodigoObraSocial(codigoObraSocial);
-
-    return modificar(paciente, posicion);
 }

@@ -2,7 +2,7 @@
 #include <iostream>
 
 //Constructor
-ManagerBioquimico::ManagerBioquimico(std::string nombreArchivo): Manager<Bioquimico>(nombreArchivo) {}
+ManagerBioquimico::ManagerBioquimico(const std::string& nombreArchivo): Manager<Bioquimico>(nombreArchivo) {}
 
 
 //ORDENAR POR APELLIDO - BURBUJA

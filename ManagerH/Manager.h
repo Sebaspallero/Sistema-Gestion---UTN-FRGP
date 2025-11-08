@@ -11,7 +11,7 @@ protected:
     std::string _nombreArchivo;
 
 public:
-    Manager(std::string nombreArchivo);
+    Manager(const std::string& nombreArchivo);
 
     bool guardar(const T& entidad);
     bool eliminar(int id);
@@ -25,7 +25,7 @@ public:
 
 // Constructor
 template <typename T>
-Manager<T>::Manager(std::string nombreArchivo) {
+Manager<T>::Manager(const std::string& nombreArchivo) {
     _nombreArchivo = nombreArchivo;
 }
 
@@ -43,32 +43,14 @@ bool Manager<T>::guardar(const T& entidad) {
 // Eliminar
 template <typename T>
 bool Manager<T>::eliminar(int id) {
-    FILE *pFileOriginal = fopen(_nombreArchivo.c_str(), "rb");
-    if(!pFileOriginal) return false;
-
-    FILE *pFileCopia = fopen("ArchivoCopia.dat", "wb");
-    if(!pFileCopia) {
-        fclose(pFileOriginal);
+    int pos = buscar(id);
+    if (pos == -1){
         return false;
     }
 
-    T entidad;
-    bool eliminado = false;
-    while(fread(&entidad, sizeof(T), 1, pFileOriginal) == 1){
-        if(entidad.getId() != id){
-            fwrite(&entidad, sizeof(T), 1, pFileCopia);
-        } else {
-            eliminado = true;
-        }
-    }
-
-    fclose(pFileOriginal);
-    fclose(pFileCopia);
-
-    remove(_nombreArchivo.c_str());
-    rename("ArchivoCopia.dat", _nombreArchivo.c_str());
-
-    return eliminado;
+    T entidad = leer(pos);
+    entidad.setEstado(false);
+    return modificar(entidad, pos);
 }
 
 // Modificar
@@ -117,7 +99,9 @@ std::vector<T> Manager<T>::leerTodos(){
 
     T registro;
     while(fread(&registro, sizeof(T), 1, pFile) == 1){
-        lista.push_back(registro);
+        if (registro.getEstado()) {
+            lista.push_back(registro);
+        }
     }
 
     fclose(pFile);
@@ -133,7 +117,7 @@ int Manager<T>::buscar(int id){
     T entidad;
     int i = 0;
     while(fread(&entidad, sizeof(T), 1, pFile) == 1){
-        if(entidad.getId() == id){
+        if(entidad.getId() == id && entidad.getEstado()){
             fclose(pFile);
             return i;
         }

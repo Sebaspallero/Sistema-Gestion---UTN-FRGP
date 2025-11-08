@@ -6,7 +6,7 @@
 
 class ManagerCategoria : public Manager<Categoria> {
 public:
-    ManagerCategoria(std::string nombreArchivo);
+    ManagerCategoria(const std::string& nombreArchivo);
 
     Categoria buscarPorNombre(std::string nombre);
     bool crearCategoria(std::string nombre);

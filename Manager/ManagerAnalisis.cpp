@@ -1,7 +1,7 @@
 #include "../ManagerH/ManagerAnalisis.h"
 
 //Constructor
-ManagerAnalisis::ManagerAnalisis(std::string nombreArchivo): Manager<Analisis>(nombreArchivo) {}
+ManagerAnalisis::ManagerAnalisis(const std::string& nombreArchivo): Manager<Analisis>(nombreArchivo) {}
 
 //ORDENAR POR CATEGORIA
 std::vector<Analisis> ManagerAnalisis::ordenarPorCategoria() {

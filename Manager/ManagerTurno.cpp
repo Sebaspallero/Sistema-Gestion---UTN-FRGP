@@ -2,7 +2,7 @@
 #include <iostream>
 
 // Constructor
-ManagerTurno::ManagerTurno(std::string nombreArchivo) : Manager<Turno>(nombreArchivo) {}
+ManagerTurno::ManagerTurno(const std::string& nombreArchivo) : Manager<Turno>(nombreArchivo) {}
 
 // ORDENAR POR FECHA
 std::vector<Turno> ManagerTurno::ordenarPorFecha() {

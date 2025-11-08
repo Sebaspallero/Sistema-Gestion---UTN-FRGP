@@ -6,7 +6,7 @@
 
 class ManagerResultado : public Manager <Resultado>{
 public:
-    ManagerResultado(std::string nombreArchivo);
+    ManagerResultado(const std::string& nombreArchivo);
 
     std::vector <Resultado> buscarPorPaciente(int idPaciente);
     bool crearResultado(int idTurno, std::string descripcion, int dia, int mes, int anio);

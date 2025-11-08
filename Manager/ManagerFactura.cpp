@@ -1,7 +1,7 @@
 #include "../ManagerH/ManagerFactura.h"
 
 // Constructor
-ManagerFactura::ManagerFactura(std::string nombreArchivo) : Manager<Factura>(nombreArchivo) {}
+ManagerFactura::ManagerFactura(const std::string& nombreArchivo) : Manager<Factura>(nombreArchivo) {}
 
 // ORDENAR POR FECHA DE PAGO
 std::vector<Factura> ManagerFactura::ordenarPorFechaDePago() {

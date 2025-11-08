@@ -2,7 +2,7 @@
 #include "../EntidadesH/MetodoDePago.h"
 
 // Constructor
-ManagerMetodoDePago::ManagerMetodoDePago(std::string nombreArchivo) : Manager<MetodoDePago>(nombreArchivo) {}
+ManagerMetodoDePago::ManagerMetodoDePago(const std::string& nombreArchivo) : Manager<MetodoDePago>(nombreArchivo) {}
 
 
 //CREAR METODO DE PAGO

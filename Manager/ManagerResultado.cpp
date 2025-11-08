@@ -8,7 +8,7 @@
 #include <vector>
 
 /// Constructor
-ManagerResultado::ManagerResultado(std::string nombreArchivo) : Manager<Resultado>(nombreArchivo) {}
+ManagerResultado::ManagerResultado(const std::string& nombreArchivo) : Manager<Resultado>(nombreArchivo) {}
 
 std::vector<Resultado> ManagerResultado::buscarPorPaciente(int idPaciente) {
     std::vector<Resultado> resultados;
