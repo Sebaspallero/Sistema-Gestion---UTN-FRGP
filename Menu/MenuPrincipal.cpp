@@ -11,6 +11,7 @@ void MenuPrincipal::ejecutar() {
         cout << "1. Gestionar Salas" << endl;
         cout << "2. Gestionar Obras Sociales" << endl;
         cout << "3. Gestionar Pacientes" << endl;
+        cout << "4. Gestionar Bioquimicos" << endl;
         //AGREGAR OPCIONES DE LOS MENUS
         cout << "0. Salir" << endl;
         cout << "Seleccione una opcion: ";
@@ -20,12 +21,17 @@ void MenuPrincipal::ejecutar() {
             case 1:
                 menuSala.ejecutar();
                 limpiarBuffer();
+                break;
             case 2:
                 menuObraSocial.ejecutar();
                 limpiarBuffer();
                 break;
             case 3:
                 menuPaciente.ejecutar();
+                limpiarBuffer();
+                break;
+            case 4:
+                menuBioquimico.ejecutar();
                 limpiarBuffer();
                 break;
             case 0:

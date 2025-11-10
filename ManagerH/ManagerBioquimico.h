@@ -10,8 +10,4 @@ public:
 
     std::vector<Bioquimico> ordenarPorApellido();
     std::vector<Bioquimico> ordenarPorLegajo();
-    bool crearBioquimico(std::string nombre, std::string apellido,
-                         int dia, int mes, int anio, int dni, std::string email, int matricula);
-    bool modificarBioquimico(std::string nombre, std::string apellido,
-                             int dia, int mes, int anio, int dni, std::string email, int matricula, int id);
 };

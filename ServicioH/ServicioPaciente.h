@@ -21,4 +21,5 @@ class ServicioPaciente {
         void modificarPaciente();
         void buscarPacientePorDNI();
         void buscarPacientePorApellido();
+        std::vector<Paciente> ordenarPacientesPorApellido();
 };

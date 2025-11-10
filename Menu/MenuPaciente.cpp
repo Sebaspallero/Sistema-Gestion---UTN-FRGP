@@ -15,6 +15,7 @@ void MenuPaciente::ejecutar() {
         cout << "4. Buscar por DNI\n";
         cout << "5. Buscar por apellido\n";
         cout << "6. Modificar paciente\n";
+        cout << "7. Ordenar pacientes por apellido\n";
         cout << "0. Volver al menu principal\n";
         cout << "Seleccione una opcion: ";
 
@@ -52,6 +53,11 @@ void MenuPaciente::ejecutar() {
 
             case 6: {
                 servicioPaciente.modificarPaciente();
+                break;
+            }
+
+            case 7: {
+                servicioPaciente.ordenarPacientesPorApellido();
                 break;
             }
 

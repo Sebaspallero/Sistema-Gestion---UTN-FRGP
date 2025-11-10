@@ -4,7 +4,6 @@
 //Constructor
 ManagerBioquimico::ManagerBioquimico(const std::string& nombreArchivo): Manager<Bioquimico>(nombreArchivo) {}
 
-
 //ORDENAR POR APELLIDO - BURBUJA
 std::vector<Bioquimico> ManagerBioquimico::ordenarPorApellido() {
     std::vector<Bioquimico> lista = leerTodos();
@@ -33,31 +32,4 @@ std::vector<Bioquimico> ManagerBioquimico::ordenarPorLegajo() {
         }
     }
     return lista;
-}
-
-//CREAR BIOQUIMICO
-bool ManagerBioquimico::crearBioquimico(std::string nombre, std::string apellido, int dia, int mes, int anio, int dni, std::string email, int matricula) {
-    int id = obtenerNuevoId();
-    Fecha fechaNacimiento(dia, mes, anio);
-    Bioquimico bioquimico(id, nombre, apellido, fechaNacimiento, dni, email, matricula);
-    return guardar(bioquimico);
-}
-
-bool ManagerBioquimico::modificarBioquimico(std::string nombre, std::string apellido, int dia, int mes, int anio, int dni, std::string email, int matricula, int id) {
-    int posicion;
-    posicion = buscar(id);
-    if (posicion == -1) {
-        return false;
-    }
-
-    Bioquimico bioquimico = leer(posicion);
-    Fecha fechaNacimiento(dia, mes, anio);
-
-    bioquimico.setNombre(nombre);
-    bioquimico.setApellido(apellido);
-    bioquimico.setFechaNacimiento(fechaNacimiento);
-    bioquimico.setEmail(email);
-    bioquimico.setMatricula(matricula);
-
-    return modificar(bioquimico, posicion);
 }

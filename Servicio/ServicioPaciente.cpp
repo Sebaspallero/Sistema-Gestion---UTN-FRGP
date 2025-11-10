@@ -226,3 +226,16 @@ void ServicioPaciente::buscarPacientePorApellido() {
     }
 }
 
+std::vector<Paciente> ServicioPaciente::ordenarPacientesPorApellido() {
+    std::vector<Paciente> listaOrdenada = managerPaciente.ordenarPorApellido();
+
+    cout << "\nPacientes ordenados por apellido:\n";
+    for (int i = 0; i < listaOrdenada.size(); i++) {
+        cout << "Apellido: " << listaOrdenada[i].getApellido() << endl;
+        cout << "Nombre: " << listaOrdenada[i].getNombre() << endl;
+        cout << "DNI: " << listaOrdenada[i].getDNI() << endl;
+        cout << "Obra Social: " << listaOrdenada[i].getCodigoObraSocial() << endl;
+        cout << "-------------------------" << endl;
+    }
+    return listaOrdenada;
+}
