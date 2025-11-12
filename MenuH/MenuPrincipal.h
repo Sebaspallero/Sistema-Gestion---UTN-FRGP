@@ -4,6 +4,8 @@
 #include "MenuObraSocial.h"
 #include "MenuPaciente.h"
 #include "MenuBioquimico.h"
+#include "MenuCategoria.h"
+#include "MenuAnalisis.h"
 
 class MenuPrincipal : public Menu {
 private:
@@ -11,7 +13,9 @@ private:
     MenuObraSocial menuObraSocial;
     MenuPaciente menuPaciente;
     MenuBioquimico menuBioquimico;
+    MenuAnalisis menuAnalisis;
     //AGREGAR EL RESTO DE LOS MENUS CUANDO LOS CREEN
+    MenuCategoria menuCategoria;
 public:
     MenuPrincipal();
     void ejecutar();

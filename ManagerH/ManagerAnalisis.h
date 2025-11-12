@@ -9,9 +9,9 @@ public:
     ManagerAnalisis(const std::string&nombreArchivo);
 
     std::vector<Analisis> ordenarPorCategoria();
-    Analisis buscarPorNombre(std::string nombre);
+    std::vector<Analisis> buscarPorNombre(std::string nombre);
     std::vector<Analisis> buscarPorCategoria(int idCategoria);
+    void listarAnalisis(std::vector<Analisis> lista);
 
-    bool crearAnalisis(std::string nombre, int idCategoria, float valor);
-    bool modificarAnalisis(std::string nombre, int idCategoria, float valor, int id);
 };
+

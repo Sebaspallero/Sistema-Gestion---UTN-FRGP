@@ -5,36 +5,22 @@
 ManagerCategoria::ManagerCategoria(const std::string& nombreArchivo) : Manager<Categoria>(nombreArchivo) {}
 
 
+
 //BUSCAR POR NOMBRE
-Categoria ManagerCategoria::buscarPorNombre(std::string nombre) {
+Categoria ManagerCategoria::buscarPorNombre(std::string nombre,bool& encontro) {
     std::vector<Categoria> lista = leerTodos();
     for (int i = 0; i < lista.size(); i++) {
         if (lista[i].getNombre() == nombre){
+            encontro = true;
             return lista[i];
+
         }
     }
     return Categoria();
 }
 
 
-//CREAR CATEGORÍA
-bool ManagerCategoria::crearCategoria(std::string nombre) {
-    int id = obtenerNuevoId();
-    Categoria categoria (id, nombre);
-    return guardar(categoria);
-}
 
 
-//MODIFICAR CATEGORIA
-bool ManagerCategoria::modificarCategoria(std::string nombre, int id) {
-    int posicion;
-    posicion = buscar(id);
-    if (posicion == -1) {
-        return false;
-    }
 
-    Categoria categoria = leer(posicion);
-    categoria.setNombre(nombre);
 
-    return modificar(categoria, posicion);
-}

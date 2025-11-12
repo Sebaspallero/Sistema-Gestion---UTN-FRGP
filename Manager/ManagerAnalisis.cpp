@@ -1,5 +1,5 @@
 #include "../ManagerH/ManagerAnalisis.h"
-
+#include <iostream>
 //Constructor
 ManagerAnalisis::ManagerAnalisis(const std::string& nombreArchivo): Manager<Analisis>(nombreArchivo) {}
 
@@ -19,14 +19,16 @@ std::vector<Analisis> ManagerAnalisis::ordenarPorCategoria() {
 }
 
 //BUSACR POR NOMBRE
-Analisis ManagerAnalisis::buscarPorNombre(std::string nombre) {
+std::vector<Analisis> ManagerAnalisis::buscarPorNombre(std::string nombre) {
     std::vector<Analisis> lista = leerTodos();
+    std::vector<Analisis> listaPorNombre = {};
+
     for (int i = 0; i < lista.size(); i++) {
         if (lista[i].getNombre() == nombre){
-            return lista[i];
+                listaPorNombre.push_back(lista[i]);
         }
     }
-    return Analisis();}
+    return listaPorNombre;}
 
 //BUSCAR POR CATEGORIA
 std::vector<Analisis> ManagerAnalisis::buscarPorCategoria(int idCategoria) {
@@ -41,24 +43,21 @@ std::vector<Analisis> ManagerAnalisis::buscarPorCategoria(int idCategoria) {
     return resultado;
 }
 
-//CREAR ANALISIS
-bool ManagerAnalisis::crearAnalisis(std::string nombre, int idCategoria, float valor) {
-    int id = obtenerNuevoId();
-    Analisis analisis(id, nombre, idCategoria, valor);
-    return guardar(analisis);
-}
-
-//MODIFICAR ANALISIS
-bool ManagerAnalisis::modificarAnalisis(std::string nombre, int idCategoria, float valor, int id) {
-    int posicion;
-    posicion = buscar(id);
-    if (posicion == -1) {
-        return false;
+void ManagerAnalisis::listarAnalisis(std::vector<Analisis> lista){
+    if (lista.empty()){
+        std::cout << "No hay análisis para mostrar."<<std::endl;
+        return;
     }
 
-    Analisis analisis = leer(posicion);
-    analisis.setNombre(nombre);
-    analisis.setIdCategoria(idCategoria);
-    analisis.setValor(valor);
-    return modificar(analisis, posicion);
+    std::cout << "=== LISTA DE ANALISIS ==="<<std::endl;
+    for (int i = 0; i < (int)lista.size(); i++){
+        std::cout << "ID: " << lista[i].getId()
+                  << " | Categoria: " << lista[i].getIdCategoria()
+                  << " | Nombre: " << lista[i].getNombre()
+                  << " | Valor: $" << lista[i].getValor()
+                  << " | Estado: " << (lista[i].getEstado() ? "Activo" : "Inactivo")
+                  <<std::endl;
+    }
+
 }
+
