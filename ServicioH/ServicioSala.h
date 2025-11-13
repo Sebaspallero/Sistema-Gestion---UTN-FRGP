@@ -4,14 +4,16 @@
 #include <string>
 
 class ServicioSala {
-private:
-    ManagerSala managerSala;
-    void limpiarBuffer() const;
-public:
-    ServicioSala();
-    void crearSala();
-    void modificarSala();
-    std::vector <Sala> listarSalas();
-    void eliminarSala();
-    void buscarSalaPorNombre();
+    private:
+        ManagerSala managerSala;
+        void limpiarBuffer() const;
+
+    public:
+        ServicioSala();
+
+        void crearSala();
+        void modificarSala();
+        std::vector <Sala> listarSalas();
+        void eliminarSala();
+        void buscarSalaPorNombre();
 };

@@ -3,8 +3,10 @@
 class ServicioAnalisis{
     private:
         ManagerAnalisis _managerAnalisis;
+
     public:
         ServicioAnalisis();
+
         bool crearAnalisis();
         bool modificarAnalisis();
         bool eliminarAnalisis();

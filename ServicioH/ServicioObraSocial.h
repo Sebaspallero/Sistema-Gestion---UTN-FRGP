@@ -5,15 +5,16 @@
 #include <string>
 
 class ServicioObraSocial {
-private:
-    ManagerObraSocial managerObraSocial;
-    void limpiarBuffer() const;
+    private:
+        ManagerObraSocial managerObraSocial;
+        void limpiarBuffer() const;
 
-public:
-    ServicioObraSocial();
-    void crearObraSocial();
-    std::vector<ObraSocial> listarObrasSociales();
-    void eliminarObraSocial();
-    void modificarObraSocial();
-    void buscarObraSocialPorNombre();
+    public:
+        ServicioObraSocial();
+
+        void crearObraSocial();
+        std::vector<ObraSocial> listarObrasSociales();
+        void eliminarObraSocial();
+        void modificarObraSocial();
+        void buscarObraSocialPorNombre();
 };

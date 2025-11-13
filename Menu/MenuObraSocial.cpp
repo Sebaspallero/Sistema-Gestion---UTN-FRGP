@@ -1,5 +1,6 @@
 #include "../MenuH/MenuObraSocial.h"
 #include <iostream>
+
 using namespace std;
 
 MenuObraSocial::MenuObraSocial() : Menu("Menu de Obras Sociales"), servicioObraSocial() {}
@@ -16,39 +17,41 @@ void MenuObraSocial::ejecutar() {
         cout << "0. Volver al menu principal\n";
         cout << "Seleccione una opcion: ";
 
-        if (!(cin >> opcion)) {
-            cout << "Entrada inválida.\n";
+        cin>> opcion;
+        if (!opcion) {
+            cout << "Entrada invalida." << endl;
             limpiarBuffer();
-            continue;
         }
 
+        else{
         switch (opcion) {
-            case 1: {
+            case 1:
                 servicioObraSocial.crearObraSocial();
                 break;
-            }
 
-            case 2: {
+            case 2:
                 servicioObraSocial.listarObrasSociales();
                 break;
-            }
 
-            case 3: {
+            case 3:
                 servicioObraSocial.eliminarObraSocial();
                 break;
-            }
 
-            case 4: {
+            case 4:
                 servicioObraSocial.buscarObraSocialPorNombre();
                 break;
-            }
 
-            case 5: {
+            case 5:
                 servicioObraSocial.modificarObraSocial();
                 break;
+
+            case 0: cout << "Volviendo al menu principal..." << endl;
+                break;
+
+            default: cout << "Opcion invalida. Intente nuevamente" << endl;
+                break;
             }
-            case 0: cout << "Volviendo...\n"; break;
-            default: cout << "Opción inválida.\n"; break;
         }
+
     } while (opcion != 0);
 }

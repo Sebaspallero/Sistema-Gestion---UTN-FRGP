@@ -7,7 +7,6 @@
 class ServicioBioquimico {
     private:
         ManagerBioquimico managerBioquimico;
-
         void limpiarBuffer() const;
 
     public:

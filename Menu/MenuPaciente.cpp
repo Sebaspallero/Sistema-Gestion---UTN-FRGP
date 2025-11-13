@@ -1,5 +1,6 @@
 #include "../MenuH/MenuPaciente.h"
 #include <iostream>
+
 using namespace std;
 
 MenuPaciente::MenuPaciente() : Menu("Menu de Pacientes"), servicioPaciente() {}
@@ -19,57 +20,51 @@ void MenuPaciente::ejecutar() {
         cout << "0. Volver al menu principal\n";
         cout << "Seleccione una opcion: ";
 
-        if (!(cin >> opcion)) {
-            cout << "Entrada inválida.\n";
+        cin>> opcion;
+        if (!opcion) {
+            cout << "Entrada invalida." << endl;
             limpiarBuffer();
-            continue;
         }
 
+        else{
         switch (opcion) {
-            case 1: {
+            case 1:
                 servicioPaciente.crearPaciente();
                 break;
-            }
 
-            case 2: {
+            case 2:
                 servicioPaciente.listarPacientes();
                 break;
-            }
 
-            case 3: {
+            case 3:
                 servicioPaciente.eliminarPaciente();
                 break;
-            }
 
-            case 4: {
+            case 4:
                 servicioPaciente.buscarPacientePorDNI();
                 break;
-            }
 
-            case 5: {
+            case 5:
                 servicioPaciente.buscarPacientePorApellido();
                 break;
-            }
 
-            case 6: {
+            case 6:
                 servicioPaciente.modificarPaciente();
                 break;
-            }
 
-            case 7: {
+            case 7:
                 servicioPaciente.ordenarPacientesPorApellido();
                 break;
-            }
 
-            case 0: {
-                cout << "Volviendo...\n";
+            case 0:
+                cout << "Volviendo al menu principal..." << endl;
                 break;
-            }
 
-            default: {
-                cout << "Opción inválida.\n";
+            default:
+                cout << "Opcion invalida. Intente nuevamente" << endl;
                 break;
             }
         }
+
     } while (opcion != 0);
 }

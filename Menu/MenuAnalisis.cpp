@@ -3,29 +3,32 @@
 #include "../ServicioH/ServicioAnalisis.h"
 #include <iostream>
 
-MenuAnalisis::MenuAnalisis() : Menu("Menu de Análisis"), _servicioAnalisis() {}
+using namespace std;
+
+MenuAnalisis::MenuAnalisis() : Menu("Menu de Analisis"), _servicioAnalisis() {}
 
 void MenuAnalisis::ejecutar() {
     int opcion = 0;
 
     do {
         mostrarTitulo();
-        std::cout << "1. Registrar nuevo Análisis" << std::endl;
-        std::cout << "2. Modificar Análisis" << std::endl;
-        std::cout << "3. Eliminar Análisis" << std::endl;
-        std::cout << "4. Listar Análisis activos" << std::endl;
-        std::cout << "5. Buscar por nombre" << std::endl;
-        std::cout << "6. Buscar por categoria" << std::endl;
-        std::cout << "7. Ordenar por nombre" << std::endl;
-        std::cout << "0. Volver al menú principal" << std::endl;
-        std::cout << "Seleccione una opción: ";
+        cout << "1. Registrar nuevo analisis\n";
+        cout << "2. Modificar analisis\n";
+        cout << "3. Eliminar analisis\n";
+        cout << "4. Listar analisis\n";
+        cout << "5. Buscar por nombre\n";
+        cout << "6. Buscar por categoria\n";
+        cout << "7. Ordenar analisis por nombre\n";
+        cout << "0. Volver al menu principal\n";
+        cout << "Seleccione una opcion: ";
 
-        if (!(std::cin >> opcion)) {
-            std::cout << "Entrada inválida." << std::endl;
+        cin>> opcion;
+        if (!opcion) {
+            cout << "Entrada invalida." << endl;
             limpiarBuffer();
-            continue;
         }
 
+        else {
         switch (opcion) {
             case 1:
                 _servicioAnalisis.crearAnalisis();
@@ -56,13 +59,14 @@ void MenuAnalisis::ejecutar() {
                 break;
 
             case 0:
-                std::cout << "Volviendo al menú principal..." << std::endl;
+                cout << "Volviendo al menú principal..." << endl;
                 break;
 
             default:
-                std::cout << "Opción inválida. Intente nuevamente." << std::endl;
+                cout << "Opcion invalida. Intente nuevamente." << endl;
                 break;
+            }
         }
+
     } while (opcion != 0);
 }
-

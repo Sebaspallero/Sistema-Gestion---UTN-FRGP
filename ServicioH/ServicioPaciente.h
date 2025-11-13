@@ -9,7 +9,6 @@ class ServicioPaciente {
     private:
         ManagerPaciente managerPaciente;
         ServicioObraSocial servicioObraSocial;
-
         void limpiarBuffer() const;
 
     public:

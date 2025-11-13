@@ -3,9 +3,10 @@
 #include "../ServicioH/ServicioObraSocial.h"
 
 class MenuObraSocial : public Menu {
-private:
-    ServicioObraSocial servicioObraSocial;
-public:
-    MenuObraSocial();
-    void ejecutar();
+    private:
+        ServicioObraSocial servicioObraSocial;
+
+    public:
+        MenuObraSocial();
+        void ejecutar();
 };

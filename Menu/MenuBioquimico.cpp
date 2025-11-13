@@ -1,5 +1,6 @@
 #include "../MenuH/MenuBioquimico.h"
 #include <iostream>
+
 using namespace std;
 
 MenuBioquimico::MenuBioquimico() : Menu("Menu de Bioquimicos"), servicioBioquimico() {}
@@ -7,6 +8,7 @@ MenuBioquimico::MenuBioquimico() : Menu("Menu de Bioquimicos"), servicioBioquimi
 
 void MenuBioquimico::ejecutar() {
     int opcion = 0;
+
     do {
         mostrarTitulo();
         cout << "1. Registrar nuevo bioquimico\n";
@@ -18,52 +20,47 @@ void MenuBioquimico::ejecutar() {
         cout << "0. Volver al menu principal\n";
         cout << "Seleccione una opcion: ";
 
-        if (!(cin >> opcion)) {
-            cout << "Entrada invalida.\n";
+        cin>> opcion;
+        if (!opcion) {
+            cout << "Entrada invalida." << endl;
             limpiarBuffer();
-            continue;
         }
 
+        else{
         switch (opcion) {
-            case 1: {
+            case 1:
                 servicioBioquimico.crearBioquimico();
                 break;
-            }
 
-            case 2: {
+            case 2:
                 servicioBioquimico.modificarBioquimico();
                 break;
-            }
 
-            case 3: {
+            case 3:
                 servicioBioquimico.eliminarBioquimico();
                 break;
-            }
 
-            case 4: {
+            case 4:
                 servicioBioquimico.listarBioquimicos();
                 break;
-            }
 
-            case 5: {
+            case 5:
                 servicioBioquimico.ordenarBioquimicosPorApellido();
                 break;
-            }
 
-            case 6: {
+            case 6:
                 servicioBioquimico.ordenarBioquimicosPorLegajo();
                 break;
-            }
 
-            case 0: {
-                cout << "Volviendo..." << endl;
+            case 0:
+                cout << "Volviendo al menu principal..." << endl;
                 break;
-            }
 
-            default: {
-                cout << "Opcion invalida. " << endl;
+            default:
+                cout << "Opcion invalida. Intente nuevamente." << endl;
                 break;
             }
         }
+
     } while (opcion != 0);
 }
