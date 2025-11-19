@@ -39,7 +39,7 @@ int opcion = 0;
                 break;
 
             case 4:
-                _servicioCategoria.listarCategoriasActivas();
+                _servicioCategoria.listarCategorias(_servicioCategoria.obtenerCategorias());
                 break;
 
             case 5:

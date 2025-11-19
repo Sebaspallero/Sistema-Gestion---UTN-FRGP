@@ -34,7 +34,7 @@ std::vector<Turno> ManagerTurno::buscarPorFecha(int dia, int mes, int anio) {
     return resultado;
 }
 
-// BUSCAR POR PACIENTE -> ACA HAY QUE PRIMERO EN EL MENU USAR EL METODO DEL MANAGER PACIENTE PARA BUSCAR EL PACIENTE POR DNI Y LUEGO PASARLE EL ID DE ESE RESULTADO A ESTA FUNCION
+// BUSCAR POR PACIENTE
 std::vector<Turno> ManagerTurno::buscarPorPaciente(int idPaciente) {
     std::vector<Turno> lista = leerTodos();
     std::vector<Turno> resultado;
@@ -47,7 +47,7 @@ std::vector<Turno> ManagerTurno::buscarPorPaciente(int idPaciente) {
     return resultado;
 }
 
-// BUSCAR POR BIOQUIMICO -> ACA HAY QUE PRIMERO EN EL MENU USAR EL METODO DEL MANAGER BIOQUIMICO PARA BUSCAR EL PACIENTE POR DNI Y LUEGO PASARLE EL ID DE ESE RESULTADO A ESTA FUNCION
+// BUSCAR POR BIOQUIMICO
 std::vector<Turno> ManagerTurno::buscarPorBioquimico(int idBioquimico) {
     std::vector<Turno> lista = leerTodos();
     std::vector<Turno> resultado;
@@ -60,63 +60,17 @@ std::vector<Turno> ManagerTurno::buscarPorBioquimico(int idBioquimico) {
     return resultado;
 }
 
-// CREAR TURNO - TAMBIEN HAY QUE LLAMAR A LOS OTROS METODOS DE LOS MANAGERS PARA OBETENER LOS IDS CORRESPONDIENTES
-bool ManagerTurno::crearTurno(int idPaciente, int idBioquimico, int idAnalisis, int idSala, int minuto, int hora, int dia, int mes, int anio) {
-    FechaHora fechaTurno(dia, mes, anio, hora, minuto);
-
+//BUSCAR POR ASISTENCIA
+std::vector<Turno> ManagerTurno::buscarPorAsistencia(){
     std::vector<Turno> lista = leerTodos();
+    std::vector<Turno> resultado;
 
     for(int i = 0; i < lista.size(); i++){
-        if(lista[i].getFechaTurno().esIgual(fechaTurno) && lista[i].getIDSala() == idSala){
-            std::cout << "Ya hay un turno asignado en esa fecha, hora y sala.\n";
-            return false;
+        if(lista[i].getAsistio() == true){
+            resultado.push_back(lista[i]);
         }
     }
 
-    int id = obtenerNuevoId();
-    Turno turno(id, idPaciente, idBioquimico, idAnalisis, idSala, fechaTurno, false);
-    return guardar(turno);
+    return resultado;
 }
 
-// MODIFICAR TURNO - TAMBIEN HAY QUE LLAMAR A LOS OTROS METODOS DE LOS MANAGERS PARA OBETENER LOS IDS CORRESPONDIENTES
-bool ManagerTurno::modificarTurno(int idPaciente, int idBioquimico, int idAnalisis, int idSala, int minuto, int hora, int dia, int mes, int anio, bool asistio, int idTurno) {
-    int posicion = buscar(idTurno);
-    if (posicion == -1){
-        return false;
-    }
-
-    FechaHora fechaTurno(dia, mes, anio, hora, minuto);
-
-    std::vector<Turno> lista = leerTodos();
-    for (int i = 0; i < lista.size(); i++) {
-        if (lista[i].getId() != idTurno &&
-            lista[i].getFechaTurno().esIgual(fechaTurno) &&
-            lista[i].getIDSala() == idSala) {
-            std::cout << "Ya hay un turno asignado en esa fecha, hora y sala.\n";
-            return false;
-        }
-    }
-
-    Turno turno = leer(posicion);
-
-    turno.setIDPaciente(idPaciente);
-    turno.setIDBioquimico(idBioquimico);
-    turno.setIDAnalisis(idAnalisis);
-    turno.setIDSala(idSala);
-    turno.setFechaTurno(fechaTurno);
-    turno.setAsistio(asistio);
-
-    return modificar(turno, posicion);
-}
-
-// CONFIRMAR TURNO
-bool ManagerTurno::confirmarTurno(int idTurno) {
-    int posicion = buscar(idTurno);
-    if (posicion == -1){
-        return false;
-    }
-    Turno turno = leer(posicion);
-
-    turno.setEstado(true);
-    return modificar(turno, posicion);
-}

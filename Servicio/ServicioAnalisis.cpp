@@ -4,29 +4,32 @@
 #include <string>
 #include <iostream>
 
-ServicioAnalisis::ServicioAnalisis(): _managerAnalisis("analisis.dat") {}
+ServicioAnalisis::ServicioAnalisis(): _managerAnalisis("analisis.dat"), _servicioCategoria() {}
 
-//CREAR ANALISIS   NO RECIBE POR PARAMETROS, LO PIDE AHI
-bool ServicioAnalisis::crearAnalisis() {
-    ServicioCategoria servicioCategoria;
+//CREAR ANALISIS
+void ServicioAnalisis::crearAnalisis() {
+
     int idCategoria;
     float valor;
     int id = _managerAnalisis.obtenerNuevoId();
     std::string nombre;
-    servicioCategoria.listarCategoriasActivas();
-    std::vector<Categoria> activos = servicioCategoria.obtenerCategoriasActivas();
+
+    std::vector<Categoria> categorias = _servicioCategoria.obtenerCategorias();
     bool categoriaValida = false;
+
+    _servicioCategoria.listarCategorias(categorias);
+
     while (!categoriaValida) {
         std::cout << "Ingrese el ID de la categoría (0 para cancelar): ";
         std::cin >> idCategoria;
 
         if (idCategoria == 0) {
             std::cout << "Operación cancelada.\n";
-            return false;
+            return;
         }
 
-        for (int i = 0; i < activos.size(); i++) {
-            if (activos[i].getId() == idCategoria && activos[i].getEstado()) {
+        for (int i = 0; i < categorias.size(); i++) {
+            if (categorias[i].getId() == idCategoria) {
                 categoriaValida = true;
                 break;
             }
@@ -36,92 +39,132 @@ bool ServicioAnalisis::crearAnalisis() {
             std::cout << "ID inválido. Intente nuevamente.\n";
         }
     }
+
     std::cout<<"Ingrese el nombre del analisis: "<<std::endl;
     std::cin.ignore();
     std::getline(std::cin,nombre);
+
     std::cout<<"Ingrese el valor del analisis: $";std::cin>>valor;
+
     Analisis analisis(id, nombre, idCategoria, valor);
-    return _managerAnalisis.guardar(analisis);
+
+    if(_managerAnalisis.guardar(analisis)){
+         std::cout << "Analisis creado con exito!\n";
+    }else{
+        std::cout << "Error al intentar crear el analisis.\n";
+    }
+
 }
 
 
-bool ServicioAnalisis::modificarAnalisis() {
-   int posicion,id,idCategoria;
+void ServicioAnalisis::modificarAnalisis() {
+   int posicion, id, idCategoria;
    float valor;
    bool estado;
    std::string nombre;
-   ServicioCategoria servicioCategoria;
-   std::cout<<"=== LISTA DE ANALISIS ==="<<std::endl;
-   std::vector<Analisis> listaAnalisis = _managerAnalisis.leerTodos();
-   _managerAnalisis.listarAnalisis(listaAnalisis);
+
+   std::vector<Analisis> lista = _managerAnalisis.leerTodos();
+
+    if (lista.empty()) {
+        std::cout << "\nNo hay analisis para modificar.\n";
+        return;
+    }
+
    std::cout<<"Ingrese el ID correspondiente al Analisis que desea modificar: ";
    std::cin>>id;
+
    posicion = _managerAnalisis.buscar(id);
    if (posicion == -1) {
-    return false;
-    }
+        std::cout << "No se encontro un analisis con ese ID.\n";
+        return;
+   }
 
     Analisis analisis = _managerAnalisis.leer(posicion);
-    std::cout<<"=Lista de Categorias="<<std::endl;
-    servicioCategoria.listarCategoriasActivas();
-    std::cout<<"-Elija la Categoria que corresponde al Analisis: ";std::cin>>idCategoria;
+
+    std::vector<Categoria> categorias = _servicioCategoria.obtenerCategorias();
+
+    if(categorias.empty()){
+        std::cout << "La lista de categorias esta vacia.";
+        return;
+    }
+    _servicioCategoria.listarCategorias(categorias);
+
+    std::cout<<"Elija la Categoria que corresponde al Analisis: ";std::cin>>idCategoria;
     analisis.setIdCategoria(idCategoria);
     std::cin.ignore();
+
     std::cout<<"-Ingrese el nombre del Analisis: ";std::getline(std::cin,nombre);
     analisis.setNombre(nombre);
+
     std::cout<<"-Ingrese el valor del Analisis: ";std::cin>>valor;
     analisis.setValor(valor);
-    std::cout<<"-Esta disponible el Analisis (1 = si / 0 = no): ";std::cin>>estado;
-    analisis.setEstado(estado);
+
+
     if (_managerAnalisis.modificar(analisis, posicion)) {
         std::cout << "Análisis modificado correctamente."<<std::endl;
-        return true;
     } else {
         std::cout << "Error al intentar modificar el análisis."<<std::endl;
-        return false;
     }
 }
 
-void ServicioAnalisis::listarAnalisisActivos(){
-    std::vector<Analisis> lista = _managerAnalisis.leerTodos();
-    std::vector<Analisis> activos;
+ std::vector<Analisis> ServicioAnalisis::obtenerAnalisis(){
+    return _managerAnalisis.leerTodos();
+ }
 
-    for (int i = 0; i < (int)lista.size(); i++) {
-        if (lista[i].getEstado()) {
-            activos.push_back(lista[i]);
+void ServicioAnalisis::listarAnalisis(const std::vector<Analisis>& lista) {
+    if (lista.empty()) {
+        std::cout << "No hay analisis registrados.\n";
+    } else {
+        std::cout << "\n-- LISTADO DE ANALISIS --\n";
+        for (int i = 0; i < lista.size(); i++) {
+            Analisis analisis = lista[i];
+            std::cout << "ID: " << analisis.getId()
+                 << " | Nombre: " << analisis.getNombre()
+                 << " | Categoria: " << analisis.getIdCategoria()
+                 << " | Precio: " << analisis.getValor()
+                 << "\n";
         }
     }
-    _managerAnalisis.listarAnalisis(activos);
 }
 
-bool ServicioAnalisis::eliminarAnalisis(){
+void ServicioAnalisis::eliminarAnalisis(){
     std::vector<Analisis> lista = _managerAnalisis.leerTodos();
+
     if (lista.empty()) {
-        std::cout << "No hay Analisis cargados."<<std::endl;
-        return false;
+        std::cout << "No hay Analisis para eliminar."<<std::endl;
+        return;
     }
-    _managerAnalisis.listarAnalisis(lista);
+
     std::cout << "Ingrese el ID del Analisis a eliminar: "<<std::endl;
     int id;
     std::cin>>id;
 
-    // (opcional: chequeos de existencia/estado)
-    if (_managerAnalisis.eliminar(id)) {
+    bool eliminado = _managerAnalisis.eliminar(id);
+
+    if (eliminado) {
         std::cout << "Analisis dado de baja correctamente."<<std::endl;
-        return true;
     } else {
-        std::cout << "No se encontró el Analisis o ya estaba inactivo."<<std::endl;
-        return false;
+        std::cout << "Ocurrio un error al eliminar el analisis."<<std::endl;
     }
 }
 
+
 void ServicioAnalisis::buscarPorCategoria(){
     int idCategoria;
-    ServicioCategoria servicioCategoria;
-    servicioCategoria.listarCategoriasActivas();
+
+     std::vector<Categoria> categorias =  _servicioCategoria.obtenerCategorias();
+
+    if(categorias.empty()){
+        std::cout << "La lista de categorias esta vacia.";
+        return;
+    }
+    _servicioCategoria.listarCategorias(categorias);
+
     std::cout<<"Ingrese el ID de la categoria por la cual desea filtrar: ";std::cin>>idCategoria;std::cout<<std::endl;
+
     std::vector<Analisis> categoria = _managerAnalisis.buscarPorCategoria(idCategoria);
     std::cout<<"== Estudios Filtrados por Categoria "<<idCategoria<<" =="<<std::endl;
+
     for(int i = 0 ; i < categoria.size(); i ++){
         std::cout << "Categoria: " << categoria[i].getIdCategoria()
               << " | ID: " << categoria[i].getId()
@@ -133,12 +176,15 @@ void ServicioAnalisis::buscarPorCategoria(){
     }
     std::cout<<std::endl;
 }
+
 void ServicioAnalisis::listarPorNombre(){
     std::string nombre;
     std::cout<<"Ingrese el nombre del Analisis por el que quiere filtrar: ";
     std::cin.ignore();
     std::getline(std::cin,nombre);
+
     std::vector<Analisis> lista = _managerAnalisis.leerTodos();
+
     std::vector<Analisis> listaPorNombre = _managerAnalisis.buscarPorNombre(nombre);
     std::cout<<"Filtrado por: "<<nombre<<std::endl;
     for(int i = 0; i<listaPorNombre.size();i++){

@@ -43,7 +43,7 @@ void MenuAnalisis::ejecutar() {
                 break;
 
             case 4:
-                _servicioAnalisis.listarAnalisisActivos();
+                _servicioAnalisis.listarAnalisis(_servicioAnalisis.obtenerAnalisis());
                 break;
 
             case 5:

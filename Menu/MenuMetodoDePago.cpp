@@ -37,7 +37,7 @@ void MenuMetodoDePago::ejecutar() {
                 break;
 
             case 4:
-                servicioMetodoDePago.listarMetodosDePago();
+                servicioMetodoDePago.listarMetodosDePago(servicioMetodoDePago.obtenerMetodosDePago());
                 break;
 
             case 0: cout << "Volviendo al menu principal..." << endl;

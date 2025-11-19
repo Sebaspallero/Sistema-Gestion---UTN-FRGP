@@ -1,4 +1,3 @@
-/**
 #pragma once
 #include "Menu.h"
 #include "../ServicioH/ServicioResultado.h"
@@ -11,5 +10,3 @@ class MenuResultado : public Menu {
         MenuResultado();
         void ejecutar();
 };
-
-*/

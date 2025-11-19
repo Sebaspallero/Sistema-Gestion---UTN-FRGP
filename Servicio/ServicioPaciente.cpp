@@ -43,12 +43,14 @@ void ServicioPaciente::crearPaciente() {
     cout << "Ingrese telefono: ";
     getline(cin, telefono);
 
-    std::vector<ObraSocial> lista = servicioObraSocial.listarObrasSociales();
+    std::vector<ObraSocial> lista = servicioObraSocial.obtenerObrasSociales();
 
     if (lista.empty()) {
         cout << "\nNo hay obras sociales registradas. No se puede registrar paciente.\n";
         return;
     }
+
+    servicioObraSocial.listarObrasSociales(lista);
 
     cout << "Ingrese el codigo de la obra social: ";
     cin >> codigoObraSocial;
@@ -64,15 +66,15 @@ void ServicioPaciente::crearPaciente() {
     }
 }
 
+std::vector<Paciente> ServicioPaciente :: obtenerPacientes(){
+    return managerPaciente.leerTodos();
+}
 
-std::vector<Paciente> ServicioPaciente::listarPacientes() {
-    cout << "\n-- LISTADO DE PACIENTES --\n";
-
-    vector<Paciente> pacientes = managerPaciente.leerTodos();
-
+void ServicioPaciente::listarPacientes(const std::vector<Paciente>& pacientes) {
     if (pacientes.empty()) {
         cout << "No hay pacientes registrados.\n";
     } else {
+        cout << "\n-- LISTADO DE PACIENTES --\n";
         for (int i = 0; i < pacientes.size(); i++) {
             Paciente paciente = pacientes[i];
             cout << "ID: " << paciente.getId()
@@ -83,18 +85,17 @@ std::vector<Paciente> ServicioPaciente::listarPacientes() {
                  << "\n";
         }
     }
-
-    return pacientes;
 }
 
 void ServicioPaciente::eliminarPaciente() {
-    std::vector<Paciente> lista = listarPacientes();
+    std::vector<Paciente> lista = obtenerPacientes();
 
     if (lista.empty()) {
         cout << "\nNo hay pacientes para eliminar.\n";
         return;
     }
 
+    listarPacientes(lista);
     cout << "\nIngrese el ID a eliminar: ";
     int id;
     cin >> id;
@@ -109,13 +110,14 @@ void ServicioPaciente::eliminarPaciente() {
 }
 
 void ServicioPaciente::modificarPaciente() {
-    std::vector<Paciente> lista = listarPacientes();
+    std::vector<Paciente> lista = obtenerPacientes();
 
     if (lista.empty()) {
         cout << "\nNo hay pacientes para modificar.\n";
         return;
     }
 
+    listarPacientes(lista);
     cout << "\nIngrese el ID a modificar: ";
     int id;
     cin >> id;
@@ -151,12 +153,14 @@ void ServicioPaciente::modificarPaciente() {
     cout << "Nuevo telefono: ";
     getline(cin, telefono);
 
-    std::vector<ObraSocial> listaObras = servicioObraSocial.listarObrasSociales();
+    std::vector<ObraSocial> listaObras = servicioObraSocial.obtenerObrasSociales();
 
     if (listaObras.empty()) {
         cout << "\nNo hay obras sociales registradas. No se puede modificar paciente.\n";
         return;
     }
+
+    servicioObraSocial.listarObrasSociales(listaObras);
 
     cout << "Nuevo codigo de obra social: ";
     cin >> codigoObraSocial;

@@ -58,29 +58,12 @@ std::vector<Factura> ManagerFactura::buscarPorPacienteID(int idPaciente) {
     return resultado;
 }
 
-// CREAR FACTURA
-bool ManagerFactura::crearFactura(int idPaciente, int idAnalisis, int idMetodoDePago, float costoFinal, int dia, int mes, int anio) {
-    int id = obtenerNuevoId();
-    Fecha fechaPago(dia, mes, anio);
-    Factura factura(id, idPaciente, idAnalisis, idMetodoDePago, costoFinal, fechaPago);
-    return guardar(factura);
-}
-
-// MODIFICAR FACTURA
-bool ManagerFactura::modificarFactura(int idPaciente, int idAnalisis, int idMetodoDePago, float costoFinal, int dia, int mes, int anio, int idFactura) {
-    int posicion = buscar(idFactura);
-    if (posicion == -1) {
-        return false;
+bool ManagerFactura::existeFacturaParaTurno(int idTurno) {
+    std::vector<Factura> todas = leerTodos();
+    for (int i = 0; i < todas.size(); i++) {
+        if (todas[i].getIdTurno() == idTurno) {
+            return true;
+        }
     }
-
-    Factura factura = leer(posicion);
-    Fecha fechaPago(dia, mes, anio);
-
-    factura.setIdPaciente(idPaciente);
-    factura.setIdAnalisis(idAnalisis);
-    factura.setIdMetodoPago(idMetodoDePago);
-    factura.setCostoFinal(costoFinal);
-    factura.setFechaPago(fechaPago);
-
-    return modificar(factura, posicion);
+    return false;
 }

@@ -38,12 +38,15 @@ void ServicioSala :: crearSala(){
         }
 }
 
-std::vector <Sala> ServicioSala :: listarSalas(){
-        cout << "\n-- LISTADO DE SALAS --\n";
-        vector<Sala> salas = managerSala.leerTodos();
+std::vector<Sala> ServicioSala :: obtenerSalas(){
+    return managerSala.leerTodos();
+}
+
+void ServicioSala :: listarSalas(const std::vector<Sala>& salas){
         if (salas.empty()) {
                 cout << "No hay salas registradas.\n";
         } else {
+            cout << "\n-- LISTADO DE SALAS --\n";
             for (int i = 0; i < salas.size(); i++) {
                 const Sala &sala = salas[i];
                 cout  << "ID: " << sala.getId()
@@ -53,20 +56,25 @@ std::vector <Sala> ServicioSala :: listarSalas(){
                       << "\n";
             }
         }
-    return salas;
 }
 
 void ServicioSala :: eliminarSala(){
-        std::vector<Sala> lista = listarSalas();
+        std::vector<Sala> lista = obtenerSalas();
 
         if(lista.empty()){
             cout << "\nNo hay salas para eliminar.\n";
             return;
         }
 
+        listarSalas(lista);
+
         cout << "\n-- ESCRIBA EL ID DE LA SALA A ELIMINAR --\n";
         int eliminar;
-        cin>>eliminar;
+        while (!(cin >> eliminar)) {
+            cout << "Entrada invalida. Por favor, ingresa un ID valido: ";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        }
 
         bool eliminado = managerSala.eliminar(eliminar);
 
@@ -99,12 +107,14 @@ void ServicioSala :: buscarSalaPorNombre(){
 }
 
 void ServicioSala :: modificarSala(){
-        std::vector<Sala> lista = listarSalas();
+        std::vector<Sala> lista = obtenerSalas();
 
         if(lista.empty()){
-            cout << "\nNo hay salas para modificar.\n";
+            cout << "\nNo hay salas para eliminar.\n";
             return;
         }
+
+        listarSalas(lista);
 
         cout << "\n-- ESCRIBA EL ID DE LA SALA A MODIFICAR --\n";
         int id;

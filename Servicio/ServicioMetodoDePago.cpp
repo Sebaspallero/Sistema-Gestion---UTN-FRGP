@@ -30,7 +30,7 @@ void ServicioMetodoDePago::crearMetodoDePago() {
 }
 
 void ServicioMetodoDePago::modificarMetodoDePago() {
-    std::vector <MetodoDePago> lista = listarMetodosDePago();
+    std::vector <MetodoDePago> lista = managerMetodoDePago.leerTodos();
 
     if(lista.empty()){
         cout << "\nNo hay metodos de pago para modificar.\n";
@@ -64,7 +64,7 @@ void ServicioMetodoDePago::modificarMetodoDePago() {
 }
 
 void ServicioMetodoDePago::eliminarMetodoDePago() {
-    std::vector<MetodoDePago> lista = listarMetodosDePago();
+    std::vector<MetodoDePago> lista = managerMetodoDePago.leerTodos();
 
     if(lista.empty()){
         cout << "\nNo hay metodos de pago para eliminar.\n";
@@ -84,21 +84,20 @@ void ServicioMetodoDePago::eliminarMetodoDePago() {
     }
 }
 
-std::vector <MetodoDePago> ServicioMetodoDePago::listarMetodosDePago() {
-    cout << "\n-- LISTADO DE METODOS DE PAGO --\n";
+std::vector<MetodoDePago> ServicioMetodoDePago:: obtenerMetodosDePago(){
+    return managerMetodoDePago.leerTodos();
+};
 
-    vector<MetodoDePago> metodosPago = managerMetodoDePago.leerTodos();
-
-    if (metodosPago.empty()) {
+void ServicioMetodoDePago::listarMetodosDePago(const std::vector<MetodoDePago>& metodosDePago) {
+    if (metodosDePago.empty()) {
         cout << "No hay metodos de pago registrados.\n";
     } else {
-        for (int i = 0; i < metodosPago.size(); i++) {
-            MetodoDePago metodoPago = metodosPago[i];
+        cout << "\n-- LISTADO DE METODOS DE PAGO --\n";
+        for (int i = 0; i < metodosDePago.size(); i++) {
+            MetodoDePago metodoPago = metodosDePago[i];
             cout << "ID: " << metodoPago.getId()
                  << " | Nombre: " << metodoPago.getNombre()
                  << "\n";
         }
     }
-
-    return metodosPago;
 }

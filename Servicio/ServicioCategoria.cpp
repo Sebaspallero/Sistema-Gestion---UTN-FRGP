@@ -6,108 +6,119 @@
 #include <iostream>
 #include <vector>
 
+using namespace std;
+
 ServicioCategoria::ServicioCategoria(): _managerCategoria("categorias.dat") {}
+
 //CREAR CATEGORÍA
-bool ServicioCategoria::crearCategoria() {
+void ServicioCategoria::crearCategoria() {
     int id = _managerCategoria.obtenerNuevoId();
-    std::string nombre;
-    std::cout<<"Ingrese el nombre de la categoria: "<<std::endl;
-    std::cin.ignore();
-    std::getline(std::cin,nombre);
+    string nombre;
+
+    cout<<"Ingrese el nombre de la categoria: "<<endl;
+    cin.ignore();
+    getline(cin,nombre);
+
     Categoria categoria (id, nombre);
 
-    return _managerCategoria.guardar(categoria);
-
-    ///revisar si se crea en true o false
+    if(_managerCategoria.guardar(categoria)){
+        cout << "Categoria registrada con exito!\n";
+    }else{
+        cout << "Error al intentar guardar una categoria.\n";
+    }
 }
 
 
 //MODIFICAR CATEGORIA
+void ServicioCategoria::modificarCategoria() {
+    std::vector<Categoria> listaCategorias = _managerCategoria.leerTodos();
 
-bool ServicioCategoria::modificarCategoria() {
+    if(listaCategorias.empty()){
+        cout << "\nNo hay categorias para modificar.\n";
+        return;
+    }
+
     int posicion;
     int id;
-    std::vector<Categoria> listaCategorias = _managerCategoria.leerTodos();
-    std::string nombre;
-    std::cout<<"Elija el ID de la Categoria a modificar: "<<std::endl;
-    std::cin>>id;
-    std::cout<<"Ingrese el nuevo nombre de la categoria: "<<std::endl;
-    std::cin.ignore();
-    std::getline(std::cin,nombre);
+    string nombre;
+
+    cout<<"Elija el ID de la Categoria a modificar: "<<endl;
+    cin>>id;
+
+    cout<<"Ingrese el nuevo nombre de la categoria: "<<endl;
+    cin.ignore();
+    getline(cin,nombre);
+
     posicion = _managerCategoria.buscar(id);
     if (posicion == -1) {
-        return false;
+        cout << "No se encontro una categoria con ese ID.\n";
+        return;
     }
 
     Categoria categoria = _managerCategoria.leer(posicion);
     categoria.setNombre(nombre);
 
-    return _managerCategoria.modificar(categoria, posicion);
-}
-
-void ServicioCategoria::listarCategoriasActivas() {
-    std::vector<Categoria> lista = _managerCategoria.leerTodos();
-
-    std::cout <<std::endl <<"-- LISTADO DE CATEGORIAS ACTIVAS --"<<std::endl;
-    bool hay = false;
-    for (int i = 0; i < lista.size(); i++) {
-        if (lista[i].getEstado()) {
-            hay = true;
-            std::cout << "ID: " << lista[i].getId()
-                      << " | Nombre: " << lista[i].getNombre() << "\n";
-        }
-    }
-    if (!hay) {
-        std::cout << "No hay categorias activas.\n";
-    }
-}
-
-bool ServicioCategoria::eliminarCategoria() {
-    ServicioCategoria servicioCategoria;
-    std::vector<Categoria> lista = _managerCategoria.leerTodos();
-    if (lista.empty()) {
-        std::cout << "No hay categorias cargadas."<<std::endl;
-        return false;
-    }
-    servicioCategoria.listarCategoriasActivas();
-    std::cout << "Ingrese el ID de la categoría a eliminar: "<<std::endl;
-    int id;
-    std::cin>>id;
-
-    // (opcional: chequeos de existencia/estado)
-    if (_managerCategoria.eliminar(id)) {
-        std::cout << "Categoría dada de baja correctamente."<<std::endl;
-        return true;
+    if (_managerCategoria.modificar(categoria, posicion)) {
+        cout << "categoria modificada con exito!\n";
     } else {
-        std::cout << "No se encontró la categoría o ya estaba inactiva."<<std::endl;
-        return false;
+        cout << "Error al intentar modificar la categoria.\n";
     }
 }
 
+ std::vector<Categoria> ServicioCategoria::obtenerCategorias(){
+    return _managerCategoria.leerTodos();
+}
 
-std::vector<Categoria> ServicioCategoria::obtenerCategoriasActivas() {
-    std::vector<Categoria> lista = _managerCategoria.leerTodos();
-    std::vector<Categoria> activas;
-    for (int i = 0; i < (int)lista.size(); i++) {
-        if (lista[i].getEstado()) {
-            activas.push_back(lista[i]);
+void ServicioCategoria::listarCategorias(const std::vector<Categoria>& categorias) {
+    if (categorias.empty()) {
+        cout << "No hay categorias registrados.\n";
+    } else {
+        cout << "\n-- LISTADO DE CATEGORIAS --\n";
+        for (int i = 0; i < categorias.size(); i++) {
+            Categoria categoria = categorias[i];
+            cout << "ID: " << categoria.getId()
+                 << " | Nombre: " << categoria.getNombre()
+                 << "\n";
         }
     }
-    return activas;
+}
+
+void ServicioCategoria::eliminarCategoria() {
+    std::vector<Categoria> lista = _managerCategoria.leerTodos();
+
+    if(lista.empty()){
+        cout << "\nNo hay categorias para eliminar.\n";
+        return;
+    }
+
+    cout << "\nIngrese el ID a eliminar: ";
+    int id;
+    cin >> id;
+
+    bool eliminado = _managerCategoria.eliminar(id);
+
+    if(eliminado){
+        cout << "\n-- ELIMINADO EXITOSAMENTE --\n";
+     }else{
+         cout << "\n-- OCURRIO UN ERROR AL ELIMINAR LA CATEGORIA --\n";
+    }
 }
 
 
 void ServicioCategoria::buscarPorNombre(){
-bool encontro = false;
-std::string nombre;
-std::cout<<"Ingrese el nombre de la categoria que desea buscar: ";
-std::cin.ignore();
-std::getline(std::cin,nombre);
-Categoria categoria = _managerCategoria.buscarPorNombre(nombre,encontro);
-if(encontro){
-    std::cout<<"ID : "<<categoria.getId()<<" | Nombre: "<<categoria.getNombre()<<" | Disponible: "<<(categoria.getEstado() ? "Activo" : "Inactivo") <<std::endl;
-}else{
-    std::cout<<"No se encontro ninguna categoria con ese nombre. Intentelo nuevamente."<<std::endl;
-}
+    bool encontro = false;
+    std::string nombre;
+
+    std::cout<<"Ingrese el nombre de la categoria que desea buscar: ";
+    std::cin.ignore();
+    std::getline(std::cin,nombre);
+
+    Categoria categoria = _managerCategoria.buscarPorNombre(nombre, encontro);
+
+    if(encontro){
+        std::cout<<"ID : "<<categoria.getId()<<" | Nombre: " <<categoria.getNombre()<<std::endl;
+    }else{
+        std::cout<<"No se encontro ninguna categoria con ese nombre. Intentelo nuevamente."<<std::endl;
+    }
 
 }

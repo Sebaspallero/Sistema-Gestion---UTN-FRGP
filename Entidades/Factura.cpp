@@ -7,12 +7,13 @@
         _idPaciente = 0;
         _idAnalisis = 0;
         _idMetodoPago = 0;
+        _idTurno = 0;
         _costoFinal = 0.0f;
         _fechaPago = Fecha();
         _estado = true;
     }
 
-    Factura::Factura(int id, int idPaciente, int idAnalisis, int idMetodoPago, float costoFinal, Fecha fechaPago) {
+    Factura::Factura(int id, int idPaciente, int idAnalisis, int idMetodoPago, int idTurno, float costoFinal, Fecha fechaPago) {
         _id = id;
         _idPaciente = idPaciente;
         _idAnalisis = idAnalisis;
@@ -37,6 +38,10 @@
 
     int Factura::getIdMetodoPago()const{
         return _idMetodoPago;
+    }
+
+    int Factura::getIdTurno()const{
+        return _idTurno;
     }
 
     float Factura::getCostoFinal()const{
@@ -66,6 +71,10 @@
 
     void Factura::setIdMetodoPago(int idMetodoPago){
         _idMetodoPago = idMetodoPago;
+    }
+
+    void Factura::setIdTurno(int idTurno){
+        _idTurno = idTurno;
     }
 
     void Factura::setCostoFinal(float costoFinal){

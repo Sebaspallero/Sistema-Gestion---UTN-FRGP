@@ -15,7 +15,8 @@ class ServicioPaciente {
         ServicioPaciente();
 
         void crearPaciente();
-        std::vector<Paciente> listarPacientes();
+        std::vector<Paciente> obtenerPacientes();
+        void listarPacientes(const std::vector<Paciente>& pacientes);
         void eliminarPaciente();
         void modificarPaciente();
         void buscarPacientePorDNI();

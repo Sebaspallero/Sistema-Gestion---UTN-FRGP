@@ -15,5 +15,7 @@ class ServicioMetodoDePago {
         void crearMetodoDePago();
         void modificarMetodoDePago();
         void eliminarMetodoDePago();
-        std::vector<MetodoDePago> listarMetodosDePago();
+        void listarMetodosDePago();
+        std::vector<MetodoDePago> obtenerMetodosDePago();
+        void listarMetodosDePago(const std::vector<MetodoDePago>& metodosDePago);
 };

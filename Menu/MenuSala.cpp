@@ -6,7 +6,7 @@ using namespace std;
 MenuSala::MenuSala() : Menu("Menu de Salas"), servicioSala() {}
 
 void MenuSala::ejecutar() {
-    int opcion = 0;
+    int opcion = -1;
     do {
         mostrarTitulo();
         cout << "1. Registrar nueva sala\n";
@@ -17,20 +17,21 @@ void MenuSala::ejecutar() {
         cout << "0. Volver al menu principal\n";
         cout << "Seleccione una opcion: ";
 
-        cin>> opcion;
-        if (!opcion) {
-            cout << "Entrada invalida. Intente de nuevo.\n";
+        if (!(cin >> opcion)) {
+            system("cls");
+            cout << "Entrada invalida. Debe ingresar un numero.\n";
             limpiarBuffer();
+            opcion = -1;
         }
-
         else{
+        system("cls");
         switch (opcion) {
             case 1:
                 servicioSala.crearSala();
                 break;
 
             case 2:
-                servicioSala.listarSalas();
+                servicioSala.listarSalas(servicioSala.obtenerSalas());
                 break;
 
             case 3:

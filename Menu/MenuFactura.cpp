@@ -1,4 +1,3 @@
-/**
 #include "../MenuH/Menu.h"
 #include "../MenuH/MenuFactura.h"
 #include "../ServicioH/ServicioFactura.h"
@@ -43,7 +42,7 @@ int opcion = 0;
                 break;
 
             case 4:
-                servicioFactura.listarFacturas();
+                servicioFactura.listarFacturas(servicioFactura.obtenerFacturas());
                 break;
 
             case 5:
@@ -75,5 +74,3 @@ int opcion = 0;
     } while (opcion != 0);
 
 }
-
-*/

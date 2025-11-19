@@ -37,14 +37,16 @@ void ServicioObraSocial::crearObraSocial() {
     }
 }
 
-std::vector <ObraSocial> ServicioObraSocial::listarObrasSociales() {
-    cout << "\n-- LISTADO DE OBRAS SOCIALES --\n";
+std::vector<ObraSocial> ServicioObraSocial :: obtenerObrasSociales(){
+    return managerObraSocial.leerTodos();
+}
 
-    vector<ObraSocial> obrasSociales = managerObraSocial.leerTodos();
 
+void ServicioObraSocial::listarObrasSociales(const std::vector<ObraSocial>& obrasSociales) {
     if (obrasSociales.empty()) {
         cout << "No hay obras sociales registradas.\n";
     } else {
+        cout << "\n-- LISTADO DE OBRAS SOCIALES --\n";
         for (int i = 0; i < obrasSociales.size(); i++) {
             ObraSocial obraSocial = obrasSociales[i];
             cout << "ID: " << obraSocial.getId()
@@ -53,18 +55,17 @@ std::vector <ObraSocial> ServicioObraSocial::listarObrasSociales() {
                  << "\n";
         }
     }
-
-    return obrasSociales;
 }
 
 void ServicioObraSocial::eliminarObraSocial() {
-    std::vector<ObraSocial> lista = listarObrasSociales();
+    std::vector<ObraSocial> lista = obtenerObrasSociales();
 
     if(lista.empty()){
         cout << "\nNo hay obras sociales para eliminar.\n";
         return;
     }
 
+    listarObrasSociales(lista);
     cout << "\nIngrese el ID a eliminar: ";
     int id;
     cin >> id;
@@ -79,13 +80,14 @@ void ServicioObraSocial::eliminarObraSocial() {
 }
 
 void ServicioObraSocial::modificarObraSocial() {
-    std::vector <ObraSocial> lista = listarObrasSociales();
+    std::vector <ObraSocial> lista = obtenerObrasSociales();
 
     if(lista.empty()){
         cout << "\nNo hay obras sociales para modificar.\n";
         return;
     }
 
+    listarObrasSociales(lista);
     cout << "\nIngrese el ID a modificar: ";
     int id;
     cin >> id;

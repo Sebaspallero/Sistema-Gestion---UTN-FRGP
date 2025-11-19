@@ -3,13 +3,13 @@
 #include "MenuAnalisis.h"
 #include "MenuBioquimico.h"
 #include "MenuCategoria.h"
-///#include "MenuFactura.h"
+#include "MenuFactura.h"
 #include "MenuMetodoDePago.h"
 #include "MenuObraSocial.h"
 #include "MenuPaciente.h"
-///#include "MenuResultado.h"
+#include "MenuResultado.h"
 #include "MenuSala.h"
-///#include "MenuTurno.h"
+#include "MenuTurno.h"
 
 class MenuPrincipal : public Menu {
     private:
@@ -20,11 +20,9 @@ class MenuPrincipal : public Menu {
         MenuAnalisis menuAnalisis;
         MenuMetodoDePago menuMetodoDePago;
         MenuCategoria menuCategoria;
-        /**
         MenuFactura menuFactura;
         MenuResultado menuResultado;
         MenuTurno menuTurno;
-        */
 
     public:
         MenuPrincipal();

@@ -1,4 +1,3 @@
-/**
 #include "../MenuH/Menu.h"
 #include "../MenuH/MenuTurno.h"
 #include "../ServicioH/ServicioTurno.h"
@@ -19,7 +18,7 @@ int opcion = 0;
         cout << "6. Buscar por paciente\n";
         cout << "7. Buscar por bioquimico\n";
         cout << "8. Confirmar turno\n";
-        cout << "9. Ordenar turnos por fecha\n"
+        cout << "9. Ordenar turnos por fecha\n";
         cout << "0. Volver al menu principal\n";
         cout << "Seleccione una opcion: ";
 
@@ -44,7 +43,7 @@ int opcion = 0;
                 break;
 
             case 4:
-                servicioTurno.listarTurnos();
+                servicioTurno.listarTurnos(servicioTurno.obtenerTurnos());
                 break;
 
             case 5:
@@ -80,5 +79,3 @@ int opcion = 0;
     } while (opcion != 0);
 
 }
-
-*/

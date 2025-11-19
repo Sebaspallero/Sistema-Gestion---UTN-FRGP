@@ -56,12 +56,14 @@ void ServicioBioquimico::crearBioquimico() {
 }
 
 void ServicioBioquimico::modificarBioquimico() {
-    std::vector<Bioquimico> lista = listarBioquimicos();
+    std::vector<Bioquimico> lista = managerBioquimico.leerTodos();
 
     if (lista.empty()) {
         cout << "\nNo hay bioquimicos para modificar.\n";
         return;
     }
+
+    listarBioquimicos(lista);
 
     cout << "\nIngrese el ID a modificar: ";
     int id;
@@ -122,14 +124,15 @@ void ServicioBioquimico::modificarBioquimico() {
     }
 }
 
-std::vector<Bioquimico> ServicioBioquimico::listarBioquimicos() {
-    cout << "\n-- LISTADO DE BIOQUIMICOS --\n";
+std::vector<Bioquimico> ServicioBioquimico::obtenerBioquimicos(){
+    return managerBioquimico.leerTodos();
+}
 
-    vector<Bioquimico> bioquimicos = managerBioquimico.leerTodos();
-
+void ServicioBioquimico::listarBioquimicos(const std::vector<Bioquimico>& bioquimicos) {
     if (bioquimicos.empty()) {
         cout << "No hay bioquimicos registrados.\n";
     } else {
+        cout << "\n-- LISTADO DE BIOQUIMICOS --\n";
         for (int i = 0; i < bioquimicos.size(); i++) {
             Bioquimico bioquimico = bioquimicos[i];
             cout << "ID: " << bioquimico.getId()
@@ -140,17 +143,17 @@ std::vector<Bioquimico> ServicioBioquimico::listarBioquimicos() {
                  << "\n";
         }
     }
-
-    return bioquimicos;
 }
 
 void ServicioBioquimico::eliminarBioquimico() {
-    std::vector<Bioquimico> lista = listarBioquimicos();
+    std::vector<Bioquimico> lista = managerBioquimico.leerTodos();
 
     if (lista.empty()) {
         cout << "\nNo hay bioquimicos para eliminar.\n";
         return;
     }
+
+    listarBioquimicos(lista);
 
     cout << "\nIngrese el ID a eliminar: ";
     int id;
@@ -165,7 +168,7 @@ void ServicioBioquimico::eliminarBioquimico() {
     }
 }
 
-std::vector<Bioquimico> ServicioBioquimico::ordenarBioquimicosPorApellido() {
+void ServicioBioquimico::ordenarBioquimicosPorApellido() {
     std::vector<Bioquimico> listaOrdenada = managerBioquimico.ordenarPorApellido();
 
     cout << "\nBioquimicos ordenados por apellido:\n";
@@ -175,10 +178,9 @@ std::vector<Bioquimico> ServicioBioquimico::ordenarBioquimicosPorApellido() {
         cout << "Matricula: " << listaOrdenada[i].getMatricula() << endl;
         cout << "-------------------------" << endl;
     }
-    return listaOrdenada;
 }
 
-std::vector<Bioquimico> ServicioBioquimico::ordenarBioquimicosPorLegajo() {
+void ServicioBioquimico::ordenarBioquimicosPorLegajo() {
     std::vector<Bioquimico> listaOrdenada = managerBioquimico.ordenarPorLegajo();
 
     cout << "\nBioquimicos ordenados por legajo:\n";
@@ -188,5 +190,4 @@ std::vector<Bioquimico> ServicioBioquimico::ordenarBioquimicosPorLegajo() {
         cout << "Nombre: " << listaOrdenada[i].getNombre() << endl;
         cout << "-------------------------" << endl;
     }
-    return listaOrdenada;
 }

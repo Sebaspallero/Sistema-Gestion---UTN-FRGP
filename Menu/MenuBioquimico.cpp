@@ -41,7 +41,7 @@ void MenuBioquimico::ejecutar() {
                 break;
 
             case 4:
-                servicioBioquimico.listarBioquimicos();
+                servicioBioquimico.listarBioquimicos(servicioBioquimico.obtenerBioquimicos());
                 break;
 
             case 5:

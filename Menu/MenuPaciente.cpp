@@ -33,7 +33,7 @@ void MenuPaciente::ejecutar() {
                 break;
 
             case 2:
-                servicioPaciente.listarPacientes();
+                servicioPaciente.listarPacientes(servicioPaciente.obtenerPacientes());
                 break;
 
             case 3:

@@ -13,7 +13,8 @@ class ServicioObraSocial {
         ServicioObraSocial();
 
         void crearObraSocial();
-        std::vector<ObraSocial> listarObrasSociales();
+        std::vector<ObraSocial> obtenerObrasSociales();
+        void listarObrasSociales(const std::vector<ObraSocial>& obrasSociales);
         void eliminarObraSocial();
         void modificarObraSocial();
         void buscarObraSocialPorNombre();

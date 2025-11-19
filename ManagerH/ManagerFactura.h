@@ -12,7 +12,5 @@ public:
     std::vector<Factura> buscarPorMetodoDePago(int idMetodoDePago);
     std::vector<Factura> buscarPorFecha(int dia, int mes, int anio);
     std::vector<Factura> buscarPorPacienteID(int idPaciente);
-
-    bool crearFactura(int idPaciente, int idAnalisis, int idMetodoDePago, float costoFinal, int dia, int mes, int anio);
-    bool modificarFactura(int idPaciente, int idAnalisis, int idMetodoDePago, float costoFinal, int dia, int mes, int anio, int idFactura);
+    bool existeFacturaParaTurno(int idTurno);
 };

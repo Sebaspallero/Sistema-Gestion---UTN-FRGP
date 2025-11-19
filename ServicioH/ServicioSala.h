@@ -13,7 +13,8 @@ class ServicioSala {
 
         void crearSala();
         void modificarSala();
-        std::vector <Sala> listarSalas();
+        std::vector<Sala> obtenerSalas();
+        void listarSalas(const std::vector<Sala>& salas);
         void eliminarSala();
         void buscarSalaPorNombre();
 };

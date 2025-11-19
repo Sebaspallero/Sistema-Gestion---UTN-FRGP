@@ -15,7 +15,8 @@ class ServicioBioquimico {
         void crearBioquimico();
         void modificarBioquimico();
         void eliminarBioquimico();
-        std::vector<Bioquimico> listarBioquimicos();
-        std::vector<Bioquimico> ordenarBioquimicosPorApellido();
-        std::vector<Bioquimico> ordenarBioquimicosPorLegajo();
+        std::vector<Bioquimico> obtenerBioquimicos();
+        void listarBioquimicos(const std::vector<Bioquimico>& bioquimicos);
+        void ordenarBioquimicosPorApellido();
+        void ordenarBioquimicosPorLegajo();
 };

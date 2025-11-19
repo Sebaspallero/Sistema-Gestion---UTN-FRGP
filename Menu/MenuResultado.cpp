@@ -1,4 +1,3 @@
-/**
 #include "../MenuH/Menu.h"
 #include "../MenuH/MenuResultado.h"
 #include "../ServicioH/ServicioResultado.h"
@@ -40,7 +39,7 @@ int opcion = 0;
                 break;
 
             case 4:
-                servicioResultado.listarResultados();
+                servicioResultado.listarResultados(servicioResultado.obtenerResultado());
                 break;
 
             case 5:
@@ -60,5 +59,3 @@ int opcion = 0;
     } while (opcion != 0);
 
 }
-
-*/

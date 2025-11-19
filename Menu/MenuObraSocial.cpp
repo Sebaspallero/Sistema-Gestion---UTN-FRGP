@@ -30,7 +30,7 @@ void MenuObraSocial::ejecutar() {
                 break;
 
             case 2:
-                servicioObraSocial.listarObrasSociales();
+                servicioObraSocial.listarObrasSociales(servicioObraSocial.obtenerObrasSociales());
                 break;
 
             case 3:

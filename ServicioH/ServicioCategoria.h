@@ -9,10 +9,10 @@ class ServicioCategoria{
     public:
         ServicioCategoria();
 
-        bool crearCategoria();
-        bool modificarCategoria();
-        bool eliminarCategoria();
-        void listarCategoriasActivas();
+        void crearCategoria();
+        void modificarCategoria();
+        void eliminarCategoria();
+        std::vector<Categoria> obtenerCategorias();
+        void listarCategorias(const std::vector<Categoria>& categorias);
         void buscarPorNombre();
-        std::vector<Categoria> obtenerCategoriasActivas();
 };
