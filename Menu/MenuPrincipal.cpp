@@ -7,7 +7,9 @@ MenuPrincipal::MenuPrincipal() : Menu("Menu Principal") {}
 
 void MenuPrincipal::ejecutar() {
     int opcion = -1;
+
     do {
+        system("cls");
         mostrarTitulo();
         cout << "1. Gestionar Salas\n";
         cout << "2. Gestionar Obras Sociales\n";
@@ -19,16 +21,20 @@ void MenuPrincipal::ejecutar() {
         cout << "8. Gestionar Facturas\n";
         cout << "9. Gestionar Turnos\n";
         cout << "10.Gestionar Resultados\n";
+        cout << "**---------------------------**\n";
+        cout << "11. Gestionar Reportes (SIN IMPLEMENTAR)\n";
         cout << "0. Salir del Sistema\n";
         cout << "Seleccione una opcion: ";
 
-        if (!(cin >> opcion)) {
+        if (!(cin>>opcion)) {
             system("cls");
             cout << "Entrada invalida. Debe ingresar un numero.\n";
             limpiarBuffer();
             opcion = -1;
-        }else{
-            system("cls");
+            pausar();
+        }
+
+        else{
             switch (opcion) {
                 case 1:
                     menuSala.ejecutar();
@@ -70,11 +76,17 @@ void MenuPrincipal::ejecutar() {
                     menuResultado.ejecutar();
                     limpiarBuffer();
                     break;
+                /*case 11:
+                    menuReporte.ejecutar();
+                    limpiarBuffer();
+                    pausar();
+                    break;*/
                 case 0:
                     cout << "Saliendo del sistema..." << endl;
                     break;
                 default:
                     cout << "Opcion invalida. Intente nuevamente." << endl;
+                    pausar();
             }
         }
     } while (opcion != 0);

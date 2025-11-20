@@ -86,7 +86,7 @@ void ServicioMetodoDePago::eliminarMetodoDePago() {
 
 std::vector<MetodoDePago> ServicioMetodoDePago:: obtenerMetodosDePago(){
     return managerMetodoDePago.leerTodos();
-};
+}
 
 void ServicioMetodoDePago::listarMetodosDePago(const std::vector<MetodoDePago>& metodosDePago) {
     if (metodosDePago.empty()) {

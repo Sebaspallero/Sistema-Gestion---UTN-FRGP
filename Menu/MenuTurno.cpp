@@ -7,13 +7,16 @@ using namespace std;
 MenuTurno::MenuTurno() : Menu("Menu de Turnos"), servicioTurno() {}
 
 void MenuTurno::ejecutar(){
-int opcion = 0;
+    int opcion = -1;
+
     do {
+        system("cls");
         mostrarTitulo();
         cout << "1. Registrar nuevo turno\n";
-        cout << "2. Modificar turno\n";
-        cout << "3. Eliminar turno\n";
+        cout << "2. Eliminar turno\n";
+        cout << "3. Modificar turno\n";
         cout << "4. Listar turnos\n";
+        cout << "------------------------------\n";
         cout << "5. Buscar por fecha\n";
         cout << "6. Buscar por paciente\n";
         cout << "7. Buscar por bioquimico\n";
@@ -22,56 +25,70 @@ int opcion = 0;
         cout << "0. Volver al menu principal\n";
         cout << "Seleccione una opcion: ";
 
-        cin>> opcion;
-        if (!opcion) {
-            cout << "Entrada invalida." << endl;
+        if (!(cin>>opcion)) {
+            system("cls");
+            cout << "Entrada invalida. Debe ingresar un numero. " << endl;
             limpiarBuffer();
+            opcion = -1;
+            pausar();
         }
 
         else{
+        system("cls");
         switch (opcion) {
             case 1:
                 servicioTurno.crearTurno();
+                pausar();
                 break;
 
             case 2:
-                servicioTurno.modificarTurno();
+                servicioTurno.eliminarTurno();
+                pausar();
                 break;
 
             case 3:
-                servicioTurno.eliminarTurno();
+                servicioTurno.modificarTurno();
+                pausar();
                 break;
 
             case 4:
                 servicioTurno.listarTurnos(servicioTurno.obtenerTurnos());
+                pausar();
                 break;
 
             case 5:
                 servicioTurno.buscarPorFecha();
+                pausar();
                 break;
 
             case 6:
                 servicioTurno.buscarPorPaciente();
+                pausar();
                 break;
 
             case 7:
                 servicioTurno.buscarPorBioquimico();
+                pausar();
                 break;
 
             case 8:
                 servicioTurno.confirmarTurno();
+                pausar();
                 break;
 
             case 9:
                 servicioTurno.ordenarPorFecha();
+                pausar();
                 break;
 
             case 0:
-                cout << "Volviendo al menú principal..." << endl;
+                cout << "Volviendo al menu principal..." << endl;
+                limpiarBuffer();
                 break;
 
             default:
                 cout << "Opcion invalida. Intente nuevamente." << endl;
+                pausar();
                 break;
             }
         }

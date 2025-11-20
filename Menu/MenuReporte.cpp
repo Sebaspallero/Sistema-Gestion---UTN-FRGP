@@ -1,22 +1,24 @@
-#include "../MenuH/MenuObraSocial.h"
-#include <iostream>
+/*
+#include "../MenuH/Menu.h"
+#include "../MenuH/MenuReporte.h"
+#include "../ServicioH/ServicioReporte.h"
 
 using namespace std;
 
-MenuObraSocial::MenuObraSocial() : Menu("Menu de Obras Sociales"), servicioObraSocial() {}
+MenuReporte::MenuReporte() : Menu("Menu de Reportes"), servicioReporte() {}
 
-void MenuObraSocial::ejecutar() {
+void MenuReporte::ejecutar(){
     int opcion = -1;
 
     do {
         system("cls");
         mostrarTitulo();
-        cout << "1. Registrar nueva obra social\n";
-        cout << "2. Eliminar obra social\n";
-        cout << "3. Modificar obra social\n";
-        cout << "4. Listar obras sociales\n";
+        cout << "1. Recaudacion por analisis\n";
+        cout << "2. Recaudacion por obra social\n";
+        cout << "3. Cantidad de analisis en el mes\n";
+        cout << "4. Cantidad de tipos de analisis en el mes\n";
         cout << "------------------------------\n";
-        cout << "5. Buscar por nombre\n";
+        cout << "5. Cantidad de nuevos pacientes por mes\n";
         cout << "0. Volver al menu principal\n";
         cout << "Seleccione una opcion: ";
 
@@ -31,41 +33,43 @@ void MenuObraSocial::ejecutar() {
         else{
         switch (opcion) {
             case 1:
-                servicioObraSocial.crearObraSocial();
+                servicioReporte.obtenerRecaudacionPorAnalisis();
                 pausar();
                 break;
 
             case 2:
-                servicioObraSocial.eliminarObraSocial();
+                servicioReporte.obtenerRecaudacionPorObraSocial();
                 pausar();
                 break;
 
             case 3:
-                servicioObraSocial.modificarObraSocial();
+                servicioReporte.obtenerCantidadAnalisisMes();
                 pausar();
                 break;
 
             case 4:
-                servicioObraSocial.listarObrasSociales(servicioObraSocial.obtenerObrasSociales());
+                servicioReporte.obtenerCantidadTiposAnalisisMes();
                 pausar();
                 break;
 
             case 5:
-                servicioObraSocial.buscarObraSocialPorNombre();
+                servicioReporte.obtenerCantidadNuevosPacientesMes();
                 pausar();
                 break;
 
             case 0:
-                cout << "Volviendo al menu principal..." << endl;
+                cout << "Volviendo al menú principal..." << endl;
                 limpiarBuffer();
                 break;
 
             default:
-                cout << "Opcion invalida. Intente nuevamente" << endl;
+                cout << "Opcion invalida. Intente nuevamente." << endl;
                 pausar();
                 break;
             }
         }
 
     } while (opcion != 0);
+
 }
+*/

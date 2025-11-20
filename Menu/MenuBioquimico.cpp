@@ -5,59 +5,70 @@ using namespace std;
 
 MenuBioquimico::MenuBioquimico() : Menu("Menu de Bioquimicos"), servicioBioquimico() {}
 
-
 void MenuBioquimico::ejecutar() {
-    int opcion = 0;
+    int opcion = -1;
 
     do {
+        system("cls");
         mostrarTitulo();
         cout << "1. Registrar nuevo bioquimico\n";
-        cout << "2. Modificar bioquimico\n";
-        cout << "3. Eliminar bioquimico\n";
+        cout << "2. Eliminar bioquimico\n";
+        cout << "3. Modificar bioquimico\n";
         cout << "4. Listar bioquimicos\n";
+        cout << "------------------------------\n";
         cout << "5. Ordenar bioquimicos por apellido\n";
         cout << "6. Ordenar bioquimicos por legajo\n";
         cout << "0. Volver al menu principal\n";
         cout << "Seleccione una opcion: ";
 
-        cin>> opcion;
-        if (!opcion) {
-            cout << "Entrada invalida." << endl;
+        if (!(cin>>opcion)) {
+            system ("cls");
+            cout << "Entrada invalida. Debe ingresar un numero. " << endl;
             limpiarBuffer();
+            opcion = -1;
+            pausar();
         }
 
         else{
         switch (opcion) {
             case 1:
                 servicioBioquimico.crearBioquimico();
+                pausar();
                 break;
 
             case 2:
-                servicioBioquimico.modificarBioquimico();
+                servicioBioquimico.eliminarBioquimico();
+                pausar();
                 break;
 
             case 3:
-                servicioBioquimico.eliminarBioquimico();
+                servicioBioquimico.modificarBioquimico();
+                pausar();
                 break;
 
             case 4:
                 servicioBioquimico.listarBioquimicos(servicioBioquimico.obtenerBioquimicos());
+                pausar();
                 break;
 
             case 5:
                 servicioBioquimico.ordenarBioquimicosPorApellido();
+                pausar();
                 break;
 
             case 6:
                 servicioBioquimico.ordenarBioquimicosPorLegajo();
+                pausar();
                 break;
 
             case 0:
                 cout << "Volviendo al menu principal..." << endl;
+                limpiarBuffer();
                 break;
 
             default:
                 cout << "Opcion invalida. Intente nuevamente." << endl;
+                pausar();
                 break;
             }
         }
