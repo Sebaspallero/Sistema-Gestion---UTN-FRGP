@@ -15,4 +15,5 @@ class ServicioCategoria{
         std::vector<Categoria> obtenerCategorias();
         void listarCategorias(const std::vector<Categoria>& categorias);
         void buscarPorNombre();
+        std::string buscarPorId(int id);
 };

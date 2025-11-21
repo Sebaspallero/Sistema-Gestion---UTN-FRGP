@@ -10,7 +10,7 @@ public:
 
     std::vector<Analisis> ordenarPorCategoria();
     std::vector<Analisis> buscarPorNombre(std::string nombre);
-    std::vector<Analisis> buscarPorCategoria(int idCategoria);
+    std::vector<Analisis> buscarPorCategoria(int idCategoria,bool& encontro);
     void listarAnalisis(std::vector<Analisis> lista);
 
 };

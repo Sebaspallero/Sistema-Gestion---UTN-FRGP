@@ -2,10 +2,11 @@
 #include "../EntidadesH/Categoria.h"
 #include "../ServicioH/ServicioCategoria.h"
 #include "../ManagerH/Manager.h"
+#include "../ManagerH/ManagerAnalisis.h"
 #include <cstring>
 #include <iostream>
 #include <vector>
-
+#include <limits>
 using namespace std;
 
 ServicioCategoria::ServicioCategoria(): _managerCategoria("categorias.dat") {}
@@ -14,11 +15,13 @@ ServicioCategoria::ServicioCategoria(): _managerCategoria("categorias.dat") {}
 void ServicioCategoria::crearCategoria() {
     int id = _managerCategoria.obtenerNuevoId();
     string nombre;
-
-    cout<<"Ingrese el nombre de la categoria: "<<endl;
-    cin.ignore();
-    getline(cin,nombre);
-
+    do{
+        std::cout<<"Ingrese el nombre de la categoria: "<<std::endl;
+        std::getline(std::cin,nombre);
+        if(nombre.empty() || nombre.find_first_not_of(' ') == std::string::npos){
+            std::cout<<"El nombre no puede ser vacio. Intentelo nuevamente."<<std::endl;
+        }
+    }while(nombre.empty() || nombre.find_first_not_of(' ') == std::string::npos);
     Categoria categoria (id, nombre);
 
     if(_managerCategoria.guardar(categoria)){
@@ -38,28 +41,44 @@ void ServicioCategoria::modificarCategoria() {
         return;
     }
 
-    int posicion;
     int id;
+    int posicion;
     string nombre;
+    listarCategorias(listaCategorias);
+    // VALIDAR ID
+    cout << "Ingrese el ID de la categoria a modificar: ";
 
-    cout<<"Elija el ID de la Categoria a modificar: "<<endl;
-    cin>>id;
-
-    cout<<"Ingrese el nuevo nombre de la categoria: "<<endl;
+    while (!(cin >> id)) {
+        cout << "Error: Debe ingresar un número entero.\n";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Ingrese el ID: ";
+    }
     cin.ignore();
-    getline(cin,nombre);
 
     posicion = _managerCategoria.buscar(id);
     if (posicion == -1) {
-        cout << "No se encontro una categoria con ese ID.\n";
+        cout << "No se encontró una categoría activa con ese ID.\n";
         return;
     }
 
+
+    do {
+        cout << "Ingrese el nuevo nombre de la categoría: ";
+        getline(cin, nombre);
+
+        if (nombre.empty() || nombre.find_first_not_of(' ') == string::npos) {
+            cout << "El nombre no puede estar vacío. Intente nuevamente.\n";
+        }
+
+    } while (nombre.empty() || nombre.find_first_not_of(' ') == string::npos);
+
+    // MODIFICAR
     Categoria categoria = _managerCategoria.leer(posicion);
     categoria.setNombre(nombre);
 
     if (_managerCategoria.modificar(categoria, posicion)) {
-        cout << "categoria modificada con exito!\n";
+        cout << "Categoria modificada con exito!\n";
     } else {
         cout << "Error al intentar modificar la categoria.\n";
     }
@@ -73,12 +92,12 @@ void ServicioCategoria::listarCategorias(const std::vector<Categoria>& categoria
     if (categorias.empty()) {
         cout << "No hay categorias registrados.\n";
     } else {
-        cout << "\n-- LISTADO DE CATEGORIAS --\n";
+        cout << std::endl << "-- LISTADO DE CATEGORIAS --"<< std::endl;
         for (int i = 0; i < categorias.size(); i++) {
             Categoria categoria = categorias[i];
             cout << "ID: " << categoria.getId()
                  << " | Nombre: " << categoria.getNombre()
-                 << "\n";
+                 << std::endl;
         }
     }
 }
@@ -87,20 +106,20 @@ void ServicioCategoria::eliminarCategoria() {
     std::vector<Categoria> lista = _managerCategoria.leerTodos();
 
     if(lista.empty()){
-        cout << "\nNo hay categorias para eliminar.\n";
+        cout << "\n No hay categorias para eliminar.\n";
         return;
     }
-
-    cout << "\nIngrese el ID a eliminar: ";
+    listarCategorias(lista);
+    cout << std::endl << " Ingrese el ID a eliminar: ";
     int id;
     cin >> id;
 
     bool eliminado = _managerCategoria.eliminar(id);
 
     if(eliminado){
-        cout << "\n-- ELIMINADO EXITOSAMENTE --\n";
+        cout << std::endl << "-- ELIMINADO EXITOSAMENTE --"<< std::endl;
      }else{
-         cout << "\n-- OCURRIO UN ERROR AL ELIMINAR LA CATEGORIA --\n";
+         cout << std::endl << "-- OCURRIO UN ERROR AL ELIMINAR LA CATEGORIA --"<< std::endl;
     }
 }
 
@@ -122,3 +141,16 @@ void ServicioCategoria::buscarPorNombre(){
     }
 
 }
+
+std::string ServicioCategoria::buscarPorId(int id){
+    bool encontro = false;
+    std::string nombreCategoria = _managerCategoria.buscarPorId(id, encontro);
+    if (!encontro) {
+        return "Desconocida";
+    }
+    return nombreCategoria;
+}
+
+
+
+

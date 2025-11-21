@@ -17,6 +17,18 @@ Categoria ManagerCategoria::buscarPorNombre(std::string nombre, bool& encontro) 
     return Categoria();
 }
 
+std::string ManagerCategoria::buscarPorId(int id, bool& encontro){
+    std::vector<Categoria> lista = leerTodos();
+
+    for (int i = 0; i < (int)lista.size(); i++) {
+        if (lista[i].getId() == id){
+            encontro = true;
+            return lista[i].getNombre();
+        }
+    }
+    return "Desconocida";
+
+}
 
 
 
