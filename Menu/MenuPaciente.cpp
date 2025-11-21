@@ -32,6 +32,7 @@ void MenuPaciente::ejecutar() {
         }
 
         else{
+        limpiarBuffer();
         switch (opcion) {
             case 1:
                 servicioPaciente.crearPaciente();
@@ -70,7 +71,6 @@ void MenuPaciente::ejecutar() {
 
             case 0:
                 cout << "Volviendo al menu principal..." << endl;
-                limpiarBuffer();
                 break;
 
             default:

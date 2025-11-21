@@ -4,12 +4,15 @@
 #include "../EntidadesH/Paciente.h"
 #include "../EntidadesH/Fecha.h"
 #include <vector>
+#include <string>
 
 class ServicioPaciente {
     private:
         ManagerPaciente managerPaciente;
         ServicioObraSocial servicioObraSocial;
         void limpiarBuffer() const;
+        bool existeDNI(int dni);
+        std::string nombreObraPorId(int id, const std::vector<ObraSocial>& lista);
 
     public:
         ServicioPaciente();
@@ -21,5 +24,5 @@ class ServicioPaciente {
         void modificarPaciente();
         void buscarPacientePorDNI();
         void buscarPacientePorApellido();
-        std::vector<Paciente> ordenarPacientesPorApellido();
+        void ordenarPacientesPorApellido();
 };

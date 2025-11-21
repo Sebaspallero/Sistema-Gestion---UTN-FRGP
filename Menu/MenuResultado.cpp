@@ -30,6 +30,7 @@ void MenuResultado::ejecutar(){
         }
 
         else{
+        limpiarBuffer();
         switch (opcion) {
             case 1:
                 servicioResultado.crearResultado();
@@ -58,7 +59,6 @@ void MenuResultado::ejecutar(){
 
             case 0:
                 cout << "Volviendo al menú principal..." << endl;
-                limpiarBuffer();
                 break;
 
             default:

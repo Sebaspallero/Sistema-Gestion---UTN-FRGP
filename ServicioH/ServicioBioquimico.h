@@ -8,6 +8,7 @@ class ServicioBioquimico {
     private:
         ManagerBioquimico managerBioquimico;
         void limpiarBuffer() const;
+        bool existeDNI(int dni);
 
     public:
         ServicioBioquimico();

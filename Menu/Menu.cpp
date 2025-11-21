@@ -10,9 +10,8 @@ void Menu::mostrarTitulo() const {
 }
 
 void Menu::pausar() const {
-    cout << "\nPresione una tecla para continuar...";
-    cin.ignore();
-    cin.get();
+    cout << endl;
+    system("pause");
 }
 
 void Menu::limpiarBuffer() const{

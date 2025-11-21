@@ -6,19 +6,18 @@
 class ServicioResultado{
     private:
         ManagerResultado managerResultado;
-        ServicioTurno servicioTurno;
         ServicioPaciente servicioPaciente;
+        ServicioTurno servicioTurno;
         void limpiarBuffer() const;
 
-        bool validarFechaResultado(int dia, int mes, int anio);
         bool existeResultadoParaTurno(int idTurno);
 
     public:
         ServicioResultado();
 
-        bool crearResultado();
-        bool modificarResultado();
-        bool eliminarResultado();
+        void crearResultado();
+        void modificarResultado();
+        void eliminarResultado();
         void listarResultados(const std::vector<Resultado>& resultados);
         std::vector<Resultado> obtenerResultado();
         void buscarPorPaciente();

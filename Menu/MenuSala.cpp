@@ -29,6 +29,7 @@ void MenuSala::ejecutar() {
         }
 
         else{
+        limpiarBuffer();
         switch (opcion) {
             case 1:
                 servicioSala.crearSala();
@@ -57,7 +58,6 @@ void MenuSala::ejecutar() {
 
             case 0:
                 cout << "Volviendo al menu principal..." << endl;
-                limpiarBuffer();
                 break;
 
             default:

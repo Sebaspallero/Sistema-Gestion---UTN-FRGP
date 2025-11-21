@@ -29,6 +29,7 @@ void MenuObraSocial::ejecutar() {
         }
 
         else{
+        limpiarBuffer();
         switch (opcion) {
             case 1:
                 servicioObraSocial.crearObraSocial();
@@ -57,7 +58,6 @@ void MenuObraSocial::ejecutar() {
 
             case 0:
                 cout << "Volviendo al menu principal..." << endl;
-                limpiarBuffer();
                 break;
 
             default:

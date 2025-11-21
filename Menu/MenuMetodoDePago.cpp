@@ -27,6 +27,7 @@ void MenuMetodoDePago::ejecutar() {
         }
 
         else{
+        limpiarBuffer();
         switch (opcion) {
             case 1:
                 servicioMetodoDePago.crearMetodoDePago();
@@ -50,7 +51,6 @@ void MenuMetodoDePago::ejecutar() {
 
             case 0:
                 cout << "Volviendo al menu principal..." << endl;
-                limpiarBuffer();
                 break;
 
             default:

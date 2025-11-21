@@ -30,6 +30,7 @@ void MenuBioquimico::ejecutar() {
         }
 
         else{
+        limpiarBuffer();
         switch (opcion) {
             case 1:
                 servicioBioquimico.crearBioquimico();
@@ -63,7 +64,6 @@ void MenuBioquimico::ejecutar() {
 
             case 0:
                 cout << "Volviendo al menu principal..." << endl;
-                limpiarBuffer();
                 break;
 
             default:

@@ -10,7 +10,7 @@
 #include "MenuResultado.h"
 #include "MenuSala.h"
 #include "MenuTurno.h"
-///#include "MenuReporte.h"
+#include "MenuReporte.h"
 
 class MenuPrincipal : public Menu {
     private:
@@ -24,7 +24,7 @@ class MenuPrincipal : public Menu {
         MenuFactura menuFactura;
         MenuResultado menuResultado;
         MenuTurno menuTurno;
-        ///MenuReporte menuReporte;
+        MenuReporte menuReporte;
 
     public:
         MenuPrincipal();

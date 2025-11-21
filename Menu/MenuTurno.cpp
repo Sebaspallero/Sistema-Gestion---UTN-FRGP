@@ -34,7 +34,7 @@ void MenuTurno::ejecutar(){
         }
 
         else{
-        system("cls");
+        limpiarBuffer();
         switch (opcion) {
             case 1:
                 servicioTurno.crearTurno();
@@ -83,7 +83,6 @@ void MenuTurno::ejecutar(){
 
             case 0:
                 cout << "Volviendo al menu principal..." << endl;
-                limpiarBuffer();
                 break;
 
             default:

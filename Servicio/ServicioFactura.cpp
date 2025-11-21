@@ -138,7 +138,6 @@ void ServicioFactura::crearFactura() {
              << " | A Cobrar: $" << montoEstimado
              << "\n";
     }
-    cout << "----------------------------------------------------------------\n";
 
     //SELECCIONAR TURNO
     int idTurnoSeleccionado;
@@ -199,11 +198,20 @@ void ServicioFactura::crearFactura() {
     int dia, mes, anio;
     while(true) {
         cout << "Ingrese fecha de pago (hoy) - Dia: "; cin >> dia;
-        if(cin.fail()){ limpiarBuffer(); continue; }
+        if(cin.fail()){
+            limpiarBuffer();
+            continue;
+            }
         cout << "Mes: "; cin >> mes;
-        if(cin.fail()){ limpiarBuffer(); continue; }
+        if(cin.fail()){
+            limpiarBuffer();
+            continue;
+            }
         cout << "Anio: "; cin >> anio;
-        if(cin.fail()){ limpiarBuffer(); continue; }
+        if(cin.fail()){
+            limpiarBuffer();
+            continue;
+            }
 
         if (dia > 0 && dia <= 31 && mes > 0 && mes <= 12 && anio > 2000) break;
         cout << "Fecha invalida.\n";

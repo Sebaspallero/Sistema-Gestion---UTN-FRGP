@@ -33,6 +33,7 @@ void MenuFactura::ejecutar(){
         }
 
         else{
+        limpiarBuffer();
         switch (opcion) {
             case 1:
                 servicioFactura.crearFactura();
@@ -76,7 +77,6 @@ void MenuFactura::ejecutar(){
 
             case 0:
                 cout << "Volviendo al menu principal..." << endl;
-                limpiarBuffer();
                 break;
 
             default:

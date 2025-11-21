@@ -22,7 +22,7 @@ void MenuPrincipal::ejecutar() {
         cout << "9. Gestionar Turnos\n";
         cout << "10.Gestionar Resultados\n";
         cout << "**---------------------------**\n";
-        cout << "11. Gestionar Reportes (SIN IMPLEMENTAR)\n";
+        cout << "11. Reportes\n";
         cout << "0. Salir del Sistema\n";
         cout << "Seleccione una opcion: ";
 
@@ -35,52 +35,52 @@ void MenuPrincipal::ejecutar() {
         }
 
         else{
+            limpiarBuffer();
             switch (opcion) {
                 case 1:
                     menuSala.ejecutar();
-                    limpiarBuffer();
+                    pausar();
                     break;
                 case 2:
                     menuObraSocial.ejecutar();
-                    limpiarBuffer();
+                    pausar();
                     break;
                 case 3:
                     menuPaciente.ejecutar();
-                    limpiarBuffer();
+                    pausar();
                     break;
                 case 4:
                     menuBioquimico.ejecutar();
-                    limpiarBuffer();
+                    pausar();
                     break;
                 case 5:
                     menuCategoria.ejecutar();
-                    limpiarBuffer();
+                    pausar();
                     break;
                 case 6:
                     menuAnalisis.ejecutar();
-                    limpiarBuffer();
+                    pausar();
                     break;
                 case 7:
                     menuMetodoDePago.ejecutar();
-                    limpiarBuffer();
+                    pausar();
                     break;
                 case 8:
                     menuFactura.ejecutar();
-                    limpiarBuffer();
+                    pausar();
                     break;
                 case 9:
                     menuTurno.ejecutar();
-                    limpiarBuffer();
+                    pausar();
                     break;
                 case 10:
                     menuResultado.ejecutar();
-                    limpiarBuffer();
-                    break;
-                /*case 11:
-                    menuReporte.ejecutar();
-                    limpiarBuffer();
                     pausar();
-                    break;*/
+                    break;
+                case 11:
+                    menuReporte.ejecutar();
+                    pausar();
+                    break;
                 case 0:
                     cout << "Saliendo del sistema..." << endl;
                     break;

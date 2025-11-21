@@ -115,6 +115,7 @@
 		<Unit filename="ServicioH/ServicioMetodoDePago.h" />
 		<Unit filename="ServicioH/ServicioObraSocial.h" />
 		<Unit filename="ServicioH/ServicioPaciente.h" />
+		<Unit filename="ServicioH/ServicioReporte.h" />
 		<Unit filename="ServicioH/ServicioResultado.h" />
 		<Unit filename="ServicioH/ServicioSala.h" />
 		<Unit filename="ServicioH/ServicioTurno.h" />
@@ -125,6 +126,7 @@
 		<Unit filename="Servicio/ServicioMetodoDePago.cpp" />
 		<Unit filename="Servicio/ServicioObraSocial.cpp" />
 		<Unit filename="Servicio/ServicioPaciente.cpp" />
+		<Unit filename="Servicio/ServicioReporte.cpp" />
 		<Unit filename="Servicio/ServicioResultado.cpp" />
 		<Unit filename="Servicio/ServicioSala.cpp" />
 		<Unit filename="Servicio/ServicioTurno.cpp" />
