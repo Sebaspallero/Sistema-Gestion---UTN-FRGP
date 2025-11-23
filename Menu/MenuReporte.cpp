@@ -1,13 +1,14 @@
 #include "../MenuH/Menu.h"
 #include "../MenuH/MenuReporte.h"
 #include "../ServicioH/ServicioReporte.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 
 using namespace std;
 
 MenuReporte::MenuReporte() : Menu("Menu de Reportes"), servicioReporte() {}
 
 void MenuReporte::ejecutar(){
-    int opcion = -1;
+    int opcion;
 
     do {
         system("cls");
@@ -17,17 +18,8 @@ void MenuReporte::ejecutar(){
         cout << "3. Recaudacion por metodo de pago\n";
         cout << "------------------------------\n";
         cout << "0. Volver al menu principal\n";
-        cout << "Seleccione una opcion: ";
+        opcion = pedirEntero("Seleccione una opcion: ");
 
-        if (!(cin>>opcion)) {
-            system("cls");
-            cout << "Entrada invalida. Debe ingresar un numero. " << endl;
-            limpiarBuffer();
-            opcion = -1;
-            pausar();
-        }
-
-        else{
         limpiarBuffer();
         switch (opcion) {
             case 1:
@@ -53,7 +45,6 @@ void MenuReporte::ejecutar(){
                 pausar();
                 break;
             }
-        }
 
     } while (opcion != 0);
 

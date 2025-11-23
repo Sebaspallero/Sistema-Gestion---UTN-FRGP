@@ -1,4 +1,5 @@
 #include "../MenuH/MenuBioquimico.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 #include <iostream>
 
 using namespace std;
@@ -6,7 +7,7 @@ using namespace std;
 MenuBioquimico::MenuBioquimico() : Menu("Menu de Bioquimicos"), servicioBioquimico() {}
 
 void MenuBioquimico::ejecutar() {
-    int opcion = -1;
+    int opcion;
 
     do {
         system("cls");
@@ -19,17 +20,8 @@ void MenuBioquimico::ejecutar() {
         cout << "5. Ordenar bioquimicos por apellido\n";
         cout << "6. Ordenar bioquimicos por legajo\n";
         cout << "0. Volver al menu principal\n";
-        cout << "Seleccione una opcion: ";
+        opcion = pedirEntero("Seleccione una opcion: ");
 
-        if (!(cin>>opcion)) {
-            system ("cls");
-            cout << "Entrada invalida. Debe ingresar un numero. " << endl;
-            limpiarBuffer();
-            opcion = -1;
-            pausar();
-        }
-
-        else{
         limpiarBuffer();
         switch (opcion) {
             case 1:
@@ -71,7 +63,6 @@ void MenuBioquimico::ejecutar() {
                 pausar();
                 break;
             }
-        }
 
     } while (opcion != 0);
 }

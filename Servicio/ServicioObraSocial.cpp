@@ -1,4 +1,5 @@
 #include "../ServicioH/ServicioObraSocial.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 #include <iostream>
 #include <limits>
 using namespace std;
@@ -66,10 +67,12 @@ void ServicioObraSocial::eliminarObraSocial() {
     }
 
     listarObrasSociales(lista);
-    cout << "\nIngrese el ID a eliminar: ";
     int id;
-    cin >> id;
-
+    id = pedirEntero("\nIngrese el ID a eliminar (0 para cancelar): ");
+    if (id == 0) {
+    std::cout << "Operación cancelada.\n";
+    return;
+    }
     bool eliminado = managerObraSocial.eliminar(id);
 
     if(eliminado){
@@ -88,9 +91,12 @@ void ServicioObraSocial::modificarObraSocial() {
     }
 
     listarObrasSociales(lista);
-    cout << "\nIngrese el ID a modificar: ";
     int id;
-    cin >> id;
+    id = pedirEntero("\nIngrese el ID a modificar (0 para cancelar): ");
+    if (id == 0) {
+    std::cout << "Operación cancelada.\n";
+    return;
+    }
     limpiarBuffer();
 
     string nombre;
@@ -99,9 +105,7 @@ void ServicioObraSocial::modificarObraSocial() {
     cout << "Nuevo nombre: ";
     getline(cin, nombre);
 
-    cout << "Nuevo descuento (%): ";
-    cin >> descuento;
-
+    descuento = pedirFloat("Nuevo descuento (%): ");
     int posicion = managerObraSocial.buscar(id);
     if (posicion == -1) {
         cout << "No se encontro una obra social con ese ID.\n";

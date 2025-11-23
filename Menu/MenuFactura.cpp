@@ -1,13 +1,14 @@
 #include "../MenuH/Menu.h"
 #include "../MenuH/MenuFactura.h"
 #include "../ServicioH/ServicioFactura.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 
 using namespace std;
 
 MenuFactura::MenuFactura() : Menu("Menu de Facturas"), servicioFactura() {}
 
 void MenuFactura::ejecutar(){
-    int opcion = -1;
+    int opcion;
 
     do {
         system("cls");
@@ -22,17 +23,7 @@ void MenuFactura::ejecutar(){
         cout << "7. Buscar por paciente\n";
         cout << "8. Ordenar facturas por fecha de pago\n";
         cout << "0. Volver al menu principal\n";
-        cout << "Seleccione una opcion: ";
-
-        if (!(cin>>opcion)) {
-            system("cls");
-            cout << "Entrada invalida. Debe ingresar un numero. " << endl;
-            limpiarBuffer();
-            opcion = -1;
-            pausar();
-        }
-
-        else{
+        opcion = pedirEntero("Seleccione una opcion: ");
         limpiarBuffer();
         switch (opcion) {
             case 1:
@@ -84,7 +75,6 @@ void MenuFactura::ejecutar(){
                 pausar();
                 break;
             }
-        }
 
     } while (opcion != 0);
 

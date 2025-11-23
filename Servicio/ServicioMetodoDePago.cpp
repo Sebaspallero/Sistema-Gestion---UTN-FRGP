@@ -1,4 +1,5 @@
 #include "../ServicioH/ServicioMetodoDePago.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 #include <iostream>
 #include <limits>
 using namespace std;
@@ -11,14 +12,27 @@ void ServicioMetodoDePago::limpiarBuffer() const {
 }
 
 void ServicioMetodoDePago::crearMetodoDePago() {
-    cout << "\n-- REGISTRAR METODO DE PAGO --\n";
 
+    cout << "\n-- REGISTRAR METODO DE PAGO --\n";
+    vector<MetodoDePago> lista = managerMetodoDePago.leerTodos();
     int id = managerMetodoDePago.obtenerNuevoId();
     string nombre;
-
+    bool bandera;
+    do {
+    bandera = true;
     cout << "Ingrese el nombre: ";
-    limpiarBuffer();
     getline(cin, nombre);
+    for(int i=0;i<lista.size();i++){
+        if(lista[i].getNombre()==nombre){
+            cout<<"Ya existe un metodo de pago con ese nombre."<<endl;
+            bandera = false;
+        }
+    }
+    if (nombre.empty() || nombre.find_first_not_of(' ') == string::npos) {
+        cout << "El nombre no puede estar vacío. Intente nuevamente."<<endl;
+    }
+
+    } while (nombre.empty() || nombre.find_first_not_of(' ') == string::npos || bandera == false);
 
     MetodoDePago metodoPago(id, nombre);
 
@@ -31,19 +45,35 @@ void ServicioMetodoDePago::crearMetodoDePago() {
 
 void ServicioMetodoDePago::modificarMetodoDePago() {
     std::vector <MetodoDePago> lista = managerMetodoDePago.leerTodos();
-
     if(lista.empty()){
         cout << "\nNo hay metodos de pago para modificar.\n";
         return;
     }
-
-    cout << "\nIngrese el ID a modificar: ";
+    listarMetodosDePago(lista);
     int id;
-    cin >> id;
-    limpiarBuffer();
+    bool bandera;
+    char opcion;
 
+    do{
+        id=pedirEntero("\nIngrese el ID a modificar: ");
+        bandera = false;
+        for(int i=0;i<lista.size();i++){
+            if(lista[i].getId()==id){
+                bandera = true;
+                break;
+            }
+        }
+        if(!bandera){
+            cout<<"No existe ese numero de ID."<<endl;
+            opcion=pedirCharSN("Quieres intentarlo nuevamente? S/N (S = Si / N = No)");
+        }
+        if(opcion == 'N' || opcion == 'n'){
+            cout<<"Error al modificar el metodo de pago."<<endl;
+            return;
+        }
+    }while(bandera == false);
     string nombre;
-
+    limpiarBuffer();
     cout << "Nuevo nombre: ";
     getline(cin, nombre);
 
@@ -70,11 +100,27 @@ void ServicioMetodoDePago::eliminarMetodoDePago() {
         cout << "\nNo hay metodos de pago para eliminar.\n";
         return;
     }
+    listarMetodosDePago(lista);
 
-    cout << "\nIngrese el ID a eliminar: ";
     int id;
-    cin >> id;
-
+    bool bandera;
+    char opcion;
+    do{
+        id=pedirEntero("Ingrese el ID a eliminar: ");
+        bandera = false;
+        for(int i=0;i<lista.size();i++){
+            if(lista[i].getId()==id){
+                bandera = true;
+            }
+        }
+        if(!bandera){
+            cout<<"No existe ese numero de ID."<<endl;
+            opcion=pedirCharSN("Quieres intentarlo nuevamente? S/N (S = Si / N = No)");
+        }
+        if(opcion == 'N' || opcion == 'n'){
+            bandera = true;
+        }
+    }while(bandera == false);
     bool eliminado = managerMetodoDePago.eliminar(id);
 
     if(eliminado){
@@ -101,3 +147,5 @@ void ServicioMetodoDePago::listarMetodosDePago(const std::vector<MetodoDePago>& 
         }
     }
 }
+
+

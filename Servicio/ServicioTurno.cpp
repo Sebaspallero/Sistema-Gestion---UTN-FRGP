@@ -111,7 +111,6 @@ void ServicioTurno::crearTurno() {
 
     //SELECCIONAR PACIENTE
     servicioPaciente.listarPacientes(pacientes);
-    cout << "Ingrese ID del Paciente (0 para finalizar).\n";
 
     while (true) {
         cout << "\nIngrese ID del Paciente (0 para salir, -1 para registrar NUEVO): ";

@@ -1,13 +1,14 @@
 #include "../MenuH/Menu.h"
 #include "../MenuH/MenuTurno.h"
 #include "../ServicioH/ServicioTurno.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 
 using namespace std;
 
 MenuTurno::MenuTurno() : Menu("Menu de Turnos"), servicioTurno() {}
 
 void MenuTurno::ejecutar(){
-    int opcion = -1;
+    int opcion;
 
     do {
         system("cls");
@@ -23,17 +24,7 @@ void MenuTurno::ejecutar(){
         cout << "8. Confirmar turno\n";
         cout << "9. Ordenar turnos por fecha\n";
         cout << "0. Volver al menu principal\n";
-        cout << "Seleccione una opcion: ";
-
-        if (!(cin>>opcion)) {
-            system("cls");
-            cout << "Entrada invalida. Debe ingresar un numero. " << endl;
-            limpiarBuffer();
-            opcion = -1;
-            pausar();
-        }
-
-        else{
+        opcion = pedirEntero("Seleccione una opcion: ");
         limpiarBuffer();
         switch (opcion) {
             case 1:
@@ -90,7 +81,6 @@ void MenuTurno::ejecutar(){
                 pausar();
                 break;
             }
-        }
 
     } while (opcion != 0);
 

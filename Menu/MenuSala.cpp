@@ -1,12 +1,13 @@
 #include "../MenuH/MenuSala.h"
 #include <iostream>
+#include "../ServicioH/ServiciosUtilidades.h"
 
 using namespace std;
 
 MenuSala::MenuSala() : Menu("Menu de Salas"), servicioSala() {}
 
 void MenuSala::ejecutar() {
-    int opcion = -1;
+    int opcion;
 
     do {
         system("cls");
@@ -18,17 +19,7 @@ void MenuSala::ejecutar() {
         cout << "------------------------------\n";
         cout << "5. Buscar por nombre\n";
         cout << "0. Volver al menu principal\n";
-        cout << "Seleccione una opcion: ";
-
-        if (!(cin >> opcion)) {
-            system("cls");
-            cout << "Entrada invalida. Debe ingresar un numero." << endl;
-            limpiarBuffer();
-            opcion = -1;
-            pausar();
-        }
-
-        else{
+        opcion = pedirEntero("Seleccione una opcion: ");
         limpiarBuffer();
         switch (opcion) {
             case 1:
@@ -65,6 +56,5 @@ void MenuSala::ejecutar() {
                 pausar();
                 break;
             }
-        }
     } while (opcion != 0);
 }

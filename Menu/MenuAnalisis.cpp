@@ -1,6 +1,7 @@
 #include "../MenuH/Menu.h"
 #include "../MenuH/MenuAnalisis.h"
 #include "../ServicioH/ServicioAnalisis.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 #include <iostream>
 
 using namespace std;
@@ -8,7 +9,7 @@ using namespace std;
 MenuAnalisis::MenuAnalisis() : Menu("Menu de Analisis"), _servicioAnalisis() {}
 
 void MenuAnalisis::ejecutar() {
-    int opcion = -1;
+    int opcion;
 
     do {
         system("cls");
@@ -22,17 +23,8 @@ void MenuAnalisis::ejecutar() {
         cout << "6. Buscar por categoria\n";
         cout << "7. Ordenar analisis por nombre\n";
         cout << "0. Volver al menu principal\n";
-        cout << "Seleccione una opcion: ";
+        opcion = pedirEntero("Seleccione una opcion: ");
 
-        if (!(cin>>opcion)) {
-            system("cls");
-            cout << "Entrada invalida.Debe ingresar un numero. " << endl;
-            limpiarBuffer();
-            opcion = -1;
-            pausar();
-        }
-
-        else {
         limpiarBuffer();
         switch (opcion) {
             case 1:
@@ -79,7 +71,7 @@ void MenuAnalisis::ejecutar() {
                 pausar();
                 break;
             }
-        }
+
 
     } while (opcion != 0);
 }

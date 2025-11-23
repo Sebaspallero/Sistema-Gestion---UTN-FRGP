@@ -1,12 +1,13 @@
 #include "../MenuH/MenuPrincipal.h"
 #include <iostream>
+#include "../ServicioH/ServiciosUtilidades.h"
 
 using namespace std;
 
 MenuPrincipal::MenuPrincipal() : Menu("Menu Principal") {}
 
 void MenuPrincipal::ejecutar() {
-    int opcion = -1;
+    int opcion;
 
     do {
         system("cls");
@@ -24,70 +25,61 @@ void MenuPrincipal::ejecutar() {
         cout << "**---------------------------**\n";
         cout << "11. Reportes\n";
         cout << "0. Salir del Sistema\n";
-        cout << "Seleccione una opcion: ";
+        opcion = pedirEntero("Seleccione una opcion: ");
 
-        if (!(cin>>opcion)) {
-            system("cls");
-            cout << "Entrada invalida. Debe ingresar un numero.\n";
-            limpiarBuffer();
-            opcion = -1;
-            pausar();
-        }
-
-        else{
-            limpiarBuffer();
-            switch (opcion) {
-                case 1:
-                    menuSala.ejecutar();
-                    pausar();
-                    break;
-                case 2:
-                    menuObraSocial.ejecutar();
-                    pausar();
-                    break;
-                case 3:
-                    menuPaciente.ejecutar();
-                    pausar();
-                    break;
-                case 4:
-                    menuBioquimico.ejecutar();
-                    pausar();
-                    break;
-                case 5:
-                    menuCategoria.ejecutar();
-                    pausar();
-                    break;
-                case 6:
-                    menuAnalisis.ejecutar();
-                    pausar();
-                    break;
-                case 7:
-                    menuMetodoDePago.ejecutar();
-                    pausar();
-                    break;
-                case 8:
-                    menuFactura.ejecutar();
-                    pausar();
-                    break;
-                case 9:
-                    menuTurno.ejecutar();
-                    pausar();
-                    break;
-                case 10:
-                    menuResultado.ejecutar();
-                    pausar();
-                    break;
-                case 11:
-                    menuReporte.ejecutar();
-                    pausar();
-                    break;
-                case 0:
-                    cout << "Saliendo del sistema..." << endl;
-                    break;
-                default:
-                    cout << "Opcion invalida. Intente nuevamente." << endl;
-                    pausar();
+        limpiarBuffer();
+        switch (opcion) {
+            case 1:
+                menuSala.ejecutar();
+                pausar();
+                break;
+            case 2:
+                menuObraSocial.ejecutar();
+                pausar();
+                break;
+            case 3:
+                menuPaciente.ejecutar();
+                pausar();
+                break;
+            case 4:
+                menuBioquimico.ejecutar();
+                pausar();
+                break;
+            case 5:
+                menuCategoria.ejecutar();
+                pausar();
+                break;
+            case 6:
+                menuAnalisis.ejecutar();
+                pausar();
+                break;
+            case 7:
+                menuMetodoDePago.ejecutar();
+                pausar();
+                break;
+            case 8:
+                menuFactura.ejecutar();
+                pausar();
+                break;
+            case 9:
+                menuTurno.ejecutar();
+                pausar();
+                break;
+            case 10:
+                menuResultado.ejecutar();
+                pausar();
+                break;
+            case 11:
+                menuReporte.ejecutar();
+                pausar();
+                break;
+            case 0:
+                cout << "Saliendo del sistema..." << endl;
+                break;
+            default:
+                cout << "Opcion invalida. Intente nuevamente." << endl;
+                pausar();
             }
-        }
+
     } while (opcion != 0);
 }

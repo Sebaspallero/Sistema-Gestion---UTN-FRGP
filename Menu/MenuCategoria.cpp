@@ -1,13 +1,14 @@
 #include "../MenuH/Menu.h"
 #include "../MenuH/MenuCategoria.h"
 #include "../ServicioH/ServicioCategoria.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 
 using namespace std;
 
 MenuCategoria::MenuCategoria() : Menu("Menu de Categorias"), _servicioCategoria() {}
 
 void MenuCategoria::ejecutar(){
-    int opcion = -1;
+    int opcion;
 
     do {
         system("cls");
@@ -19,17 +20,8 @@ void MenuCategoria::ejecutar(){
         cout << "------------------------------\n";
         cout << "5. Buscar por nombre\n";
         cout << "0. Volver al menu principal\n";
-        cout << "Seleccione una opcion: ";
+        opcion = pedirEntero("Seleccione una opcion: ");
 
-        if (!(cin>>opcion)) {
-            system("cls");
-            cout << "Entrada invalida. Debe ingresar un numero. " << endl;
-            limpiarBuffer();
-            opcion = -1;
-            pausar();
-        }
-
-        else{
         limpiarBuffer();
         switch (opcion) {
             case 1:
@@ -66,7 +58,6 @@ void MenuCategoria::ejecutar(){
                 pausar();
                 break;
             }
-        }
 
     } while (opcion != 0);
 

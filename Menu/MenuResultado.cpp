@@ -1,13 +1,14 @@
 #include "../MenuH/Menu.h"
 #include "../MenuH/MenuResultado.h"
 #include "../ServicioH/ServicioResultado.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 
 using namespace std;
 
 MenuResultado::MenuResultado() : Menu("Menu de Resultados"), servicioResultado() {}
 
 void MenuResultado::ejecutar(){
-    int opcion = -1;
+    int opcion;
 
     do {
         system("cls");
@@ -19,17 +20,7 @@ void MenuResultado::ejecutar(){
         cout << "------------------------------\n";
         cout << "5. Buscar por paciente\n";
         cout << "0. Volver al menu principal\n";
-        cout << "Seleccione una opcion: ";
-
-        if (!(cin>>opcion)) {
-            system("cls");
-            cout << "Entrada invalida. Debe ingresar un numero. " << endl;
-            limpiarBuffer();
-            opcion = -1;
-            pausar();
-        }
-
-        else{
+        opcion = pedirEntero("Seleccione una opcion: ");
         limpiarBuffer();
         switch (opcion) {
             case 1:
@@ -66,7 +57,6 @@ void MenuResultado::ejecutar(){
                 pausar();
                 break;
             }
-        }
 
     } while (opcion != 0);
 

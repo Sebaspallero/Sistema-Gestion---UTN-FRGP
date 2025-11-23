@@ -1,5 +1,6 @@
 #include "../MenuH/MenuPaciente.h"
 #include <iostream>
+#include "../ServicioH/ServiciosUtilidades.h"
 
 using namespace std;
 
@@ -7,7 +8,7 @@ MenuPaciente::MenuPaciente() : Menu("Menu de Pacientes"), servicioPaciente() {}
 
 
 void MenuPaciente::ejecutar() {
-    int opcion = -1;
+    int opcion;
 
     do {
         system("cls");
@@ -21,17 +22,7 @@ void MenuPaciente::ejecutar() {
         cout << "6. Buscar por DNI\n";
         cout << "7. Ordenar pacientes por apellido\n";
         cout << "0. Volver al menu principal\n";
-        cout << "Seleccione una opcion: ";
-
-        if (!(cin>>opcion)) {
-            system("cls");
-            cout << "Entrada invalida. Debe ingresar un numero. " << endl;
-            limpiarBuffer();
-            opcion = -1;
-            pausar();
-        }
-
-        else{
+        opcion = pedirEntero("Seleccione una opcion: ");
         limpiarBuffer();
         switch (opcion) {
             case 1:
@@ -78,7 +69,7 @@ void MenuPaciente::ejecutar() {
                 pausar();
                 break;
             }
-        }
+
 
     } while (opcion != 0);
 }
