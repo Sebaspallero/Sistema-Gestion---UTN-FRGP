@@ -119,6 +119,7 @@
 		<Unit filename="ServicioH/ServicioResultado.h" />
 		<Unit filename="ServicioH/ServicioSala.h" />
 		<Unit filename="ServicioH/ServicioTurno.h" />
+		<Unit filename="ServicioH/ServiciosUtilidades.h" />
 		<Unit filename="Servicio/ServicioAnalisis.cpp" />
 		<Unit filename="Servicio/ServicioBioquimico.cpp" />
 		<Unit filename="Servicio/ServicioCategoria.cpp" />
@@ -130,6 +131,7 @@
 		<Unit filename="Servicio/ServicioResultado.cpp" />
 		<Unit filename="Servicio/ServicioSala.cpp" />
 		<Unit filename="Servicio/ServicioTurno.cpp" />
+		<Unit filename="Servicio/ServicioUtilidades.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
