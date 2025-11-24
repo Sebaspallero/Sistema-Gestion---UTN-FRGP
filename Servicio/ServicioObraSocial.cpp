@@ -23,8 +23,7 @@ void ServicioObraSocial::crearObraSocial() {
 
     bool nombreValido = false;
     do{
-    cout << "Ingrese el nombre: ";
-    getline(cin, nombre);
+    nombre = pedirString("Ingrese el nombre: ");
 
         if(nombre.empty() || nombre.find_first_not_of(' ') == string::npos){
             cout<< "El nombre no puede estar vacio ni ser solo espacios. " << endl;
@@ -217,7 +216,6 @@ void ServicioObraSocial::buscarObraSocialPorNombre() {
 
     string nombre;
     getline(cin, nombre);
-    limpiarBuffer();
 
     if (nombre.empty() || nombre.find_first_not_of(" \t\n\r") == string::npos) {
         cout << "Debe ingresar un nombre valido.\n";

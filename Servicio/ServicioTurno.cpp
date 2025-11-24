@@ -1,4 +1,5 @@
 #include "../ServicioH/ServicioTurno.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 #include <iostream>
 #include <limits>
 using namespace std;
@@ -29,7 +30,7 @@ bool validarFecha(int dia, int mes, int anio) {
 bool ServicioTurno::fechaOcupada(const FechaHora& nuevaFechaHora, int idSala, int idBioquimico) {
     std::vector<Turno> turnos = obtenerTurnos();
 
-    for (int i = 0; i < turnos.size(); i++) {
+    for (int i = 0; i < (int)turnos.size(); i++) {
         Turno t = turnos[i];
         if (t.getFechaTurno().esIgual(nuevaFechaHora)) {
             if (t.getIDSala() == idSala) {
@@ -51,7 +52,7 @@ void ServicioTurno::limpiarBuffer() const {
 
 //HELPERS DE NOMBRES PARA LISTA
 std::string ServicioTurno::nombrePacientePorId(int id, const vector<Paciente>& lista) {
-    for (int i = 0; i < lista.size(); i++) {
+    for (int i = 0; i < (int)lista.size(); i++) {
         if (lista[i].getId() == id) {
             return lista[i].getNombre() + " " + lista[i].getApellido();
         }
@@ -60,7 +61,7 @@ std::string ServicioTurno::nombrePacientePorId(int id, const vector<Paciente>& l
 }
 
 std::string ServicioTurno::nombreBioquimicoPorId(int id, const vector<Bioquimico>& lista) {
-    for (int i = 0; i < lista.size(); i++) {
+    for (int i = 0; i < (int)lista.size(); i++) {
         if (lista[i].getId() == id) {
             return lista[i].getNombre() + " " + lista[i].getApellido();
         }
@@ -69,7 +70,7 @@ std::string ServicioTurno::nombreBioquimicoPorId(int id, const vector<Bioquimico
 }
 
 std::string ServicioTurno::nombreAnalisisPorId(int id, const vector<Analisis>& lista) {
-    for (int i = 0; i < lista.size(); i++) {
+    for (int i = 0; i < (int)lista.size(); i++) {
         if (lista[i].getId() == id) {
             return lista[i].getNombre();
         }
@@ -78,7 +79,7 @@ std::string ServicioTurno::nombreAnalisisPorId(int id, const vector<Analisis>& l
 }
 
 std::string ServicioTurno::nombreSalaPorId(int id, const vector<Sala>& lista) {
-    for (int i = 0; i < lista.size(); i++) {
+    for (int i = 0; i < (int)lista.size(); i++) {
         if (lista[i].getId() == id) {
             return lista[i].getNombre();
         }
@@ -101,7 +102,7 @@ void ServicioTurno::crearTurno() {
     // VALIDAR QUE SE PUEDA CREAR TURNO
     if (bioquimicos.empty() || analisis.empty() || salas.empty()) {
         system("cls");
-        cout << "Debe existir al menos 1 medico, analisis y/o sala.\n";
+        cout << "Debe existir al menos 1 bioquimico, analisis y/o sala.\n";
         return;
     }
 
@@ -113,14 +114,16 @@ void ServicioTurno::crearTurno() {
     servicioPaciente.listarPacientes(pacientes);
 
     while (true) {
-        cout << "\nIngrese ID del Paciente (0 para salir, -1 para registrar NUEVO): ";
-        cin >> idPaciente;
+        idPaciente = pedirEntero("\nIngrese ID del Paciente (0 para salir, -1 para registrar NUEVO):");
 
-        if (cin.fail()) {
-            cout << "Error: Debe ingresar un numero.\n";
-            limpiarBuffer();
-            continue;
-        }
+//         << "\nIngrese ID del Paciente (0 para salir, -1 para registrar NUEVO): ";
+//        cin >> idPaciente;
+
+//        if (cin.fail()) {
+//            cout << "Error: Debe ingresar un numero.\n";
+//            limpiarBuffer();
+//            continue;
+//        }
 
         // OPCIÓN SALIR
         if (idPaciente == 0) {
@@ -142,7 +145,7 @@ void ServicioTurno::crearTurno() {
 
         // VALIDAR SI EL ID EXISTE
         bool encontrado = false;
-        for (int i = 0; i < pacientes.size(); i++) {
+        for (int i = 0; i < (int)pacientes.size(); i++) {
             if (pacientes[i].getId() == idPaciente) {
                 encontrado = true;
                 break;
@@ -176,7 +179,7 @@ void ServicioTurno::crearTurno() {
         }
 
         bool encontrado = false;
-        for (int i = 0; i < bioquimicos.size(); i++) {
+        for (int i = 0; i < (int)bioquimicos.size(); i++) {
             if (bioquimicos[i].getId() == idBioquimico) {
                 encontrado = true;
                 break;
@@ -210,7 +213,7 @@ void ServicioTurno::crearTurno() {
         }
 
         bool encontrado = false;
-        for (int i = 0; i < analisis.size(); i++) {
+        for (int i = 0; i < (int)analisis.size(); i++) {
             if (analisis[i].getId() == idAnalisis) {
                 encontrado = true;
                 break;
@@ -244,7 +247,7 @@ void ServicioTurno::crearTurno() {
         }
 
         bool encontrado = false;
-        for (int i = 0; i < salas.size(); i++) {
+        for (int i = 0; i < (int)salas.size(); i++) {
             if (salas[i].getId() == idSala) {
                 encontrado = true;
                 break;
@@ -257,7 +260,6 @@ void ServicioTurno::crearTurno() {
             cout << "ID no encontrado. Intente nuevamente.\n";
         }
     }
-
 
     //SELECCIONAR FECHA Y HORA
     FechaHora fecha;
@@ -352,7 +354,7 @@ void ServicioTurno::listarTurnos(const std::vector<Turno>& turnos) {
              << " | Analisis: " << nombreAnalisisPorId(t.getIDAnalisis(), listaAnalisis)
              << " | Sala: " << nombreSalaPorId(t.getIDSala(), listaSalas)
              << " | Fecha: " << f.toString()
-             << " | Asistio: " << (t.getAsistio() ? "Sí" : "No")
+             << " | Asistio: " << (t.getAsistio() ? "Si" : "No")
              << "\n";
     }
 }

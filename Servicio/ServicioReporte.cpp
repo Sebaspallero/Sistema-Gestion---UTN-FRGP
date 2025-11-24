@@ -11,7 +11,6 @@ void ServicioReporte::limpiarBuffer() const {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-
 //Recaudación total de un mes específico
 void ServicioReporte::reporteRecaudacionMensual() {
     system("cls");
@@ -58,10 +57,6 @@ void ServicioReporte::reporteRecaudacionMensual() {
     cout << "\nFacturas emitidas: " << cantidadFacturas;
     cout << "\nRECAUDACION TOTAL: $" << recaudacionTotal;
     cout << "\n---------------------------------------\n";
-
-    cout << "Presione ENTER para salir.";
-    limpiarBuffer();
-    cin.get();
 }
 
 //Cantidad de turnos de un analisis
@@ -90,7 +85,7 @@ void ServicioReporte::reporteCantidadPorAnalisis() {
 
     if(!existe){
         cout << "ID incorrecto. Volviendo al menu.\n";
-        limpiarBuffer(); cin.get();
+        limpiarBuffer();
         return;
     }
 
@@ -108,9 +103,6 @@ void ServicioReporte::reporteCantidadPorAnalisis() {
     cout << "\nAnalisis: " << nombreAnalisis;
     cout << "\nCantidad de veces realizado: " << contador;
     cout << "\n---------------------------------------\n";
-
-    cout << "\nPresione ENTER para salir.";
-    limpiarBuffer(); cin.get();
 }
 
 // Recaudacion por metodo de pago
@@ -139,7 +131,4 @@ void ServicioReporte::reporteRecaudacionPorMetodoPago() {
              cout << nombreMetodo << ": $" << totalAcumulado << endl;
         }
     }
-
-    cout << "\nPresione ENTER para salir.";
-    limpiarBuffer(); cin.get();
 }

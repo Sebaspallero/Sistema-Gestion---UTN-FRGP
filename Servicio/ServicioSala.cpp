@@ -62,13 +62,12 @@ void ServicioSala :: listarSalas(const std::vector<Sala>& salas){
                 cout  << "ID: " << sala.getId()
                       << " | Nombre: " << sala.getNombre()
                       << " | Piso: " << sala.getPiso()
-                      << " | Disponible: " << (sala.isDisponible() ? "SI" : "NO")
                       << "\n";
             }
         }
 }
 
-//ELIMINAR SAL
+//ELIMINAR SALA
 void ServicioSala::eliminarSala(){
     std::vector<Sala> lista = obtenerSalas();
 

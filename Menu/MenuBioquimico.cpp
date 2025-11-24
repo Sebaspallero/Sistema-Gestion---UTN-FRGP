@@ -18,7 +18,7 @@ void MenuBioquimico::ejecutar() {
         cout << "4. Listar bioquimicos\n";
         cout << "------------------------------\n";
         cout << "5. Ordenar bioquimicos por apellido\n";
-        cout << "6. Ordenar bioquimicos por legajo\n";
+        cout << "6. Ordenar bioquimicos por matricula\n";
         cout << "0. Volver al menu principal\n";
         opcion = pedirEntero("Seleccione una opcion: ");
 

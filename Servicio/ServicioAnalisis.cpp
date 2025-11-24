@@ -258,13 +258,12 @@ void ServicioAnalisis::buscarPorCategoria(){
     listarAnalisis(categoria);
 }
 
-//LISTAR x NOMBRE
+//BUSCAR x NOMBRE
 void ServicioAnalisis::listarPorNombre(){
     std::string nombre;
     std::vector<Analisis> lista = _managerAnalisis.leerTodos();
      _managerAnalisis.listarAnalisis(lista);
     std::cout<<"Ingrese el nombre del Analisis por el que quiere filtrar: ";
-    std::cin.ignore();
     std::getline(std::cin,nombre);
     std::vector<Analisis> listaPorNombre = _managerAnalisis.buscarPorNombre(nombre);
     while(listaPorNombre.empty()){

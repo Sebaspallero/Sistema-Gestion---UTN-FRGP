@@ -160,6 +160,8 @@ void ServicioCategoria::eliminarCategoria() {
 
     if(id == 0){
         std::cout << "Operacion cancelada. " << std::endl;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         return;
     }
 
@@ -194,7 +196,7 @@ void ServicioCategoria::buscarPorNombre(){
     std::string nombre;
 
     std::cout<<"Ingrese el nombre de la categoria que desea buscar: ";
-    std::cin.ignore();
+    //std::cin.ignore();
     std::getline(std::cin,nombre);
 
     Categoria categoria = _managerCategoria.buscarPorNombre(nombre, encontro);

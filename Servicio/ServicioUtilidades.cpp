@@ -7,7 +7,7 @@ int pedirEntero(const std::string& mensaje) {
     while (true) {
         std::cout << mensaje;
         if (std::cin >> valor) return valor;
-        std::cout << "Entrada inválida."<<std::endl;
+        std::cout << "Entrada invalida."<<std::endl;
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
@@ -25,7 +25,7 @@ char pedirChar(const std::string& mensaje) {
         }
 
         // Si fallo limpiamos
-        std::cout << "Entrada inválida. Debe ingresar un solo caracter."<<std::endl;
+        std::cout << "Entrada invalida. Debe ingresar un solo caracter."<<std::endl;
         std::cin.clear();
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
@@ -41,7 +41,7 @@ char pedirCharSN(const std::string& mensaje) {
             return c;
         }
 
-        std::cout << "Entrada inválida. Debe ingresar 'S' o 'N'."<<std::endl;
+        std::cout << "Entrada invalida. Debe ingresar 'S' o 'N'."<<std::endl;
     }
 }
 
@@ -56,7 +56,7 @@ float pedirFloat(const std::string &mensaje) {
 
         // Evitar cadenas vacías o sólo espacios
         if (input.empty() || input.find_first_not_of(' ') == std::string::npos) {
-            std::cout << "Entrada inválida. Debe ingresar un número.\n";
+            std::cout << "Entrada invalida. Debe ingresar un numero.\n";
             continue;
         }
 
@@ -66,14 +66,14 @@ float pedirFloat(const std::string &mensaje) {
 
             // Validar que TODOS los caracteres se hayan convertido
             if (pos != input.length()) {
-                std::cout << "Entrada inválida. No ingrese letras ni símbolos.\n";
+                std::cout << "Entrada invalida. No ingrese letras ni simbolos.\n";
                 continue;
             }
 
             return valor; // valor válido
 
         } catch (...) {
-            std::cout << "Entrada inválida. Intente nuevamente.\n";
+            std::cout << "Entrada invalida. Intente nuevamente.\n";
         }
     }
 }
@@ -94,6 +94,6 @@ std::string pedirString(const std::string& mensaje) {
             return texto;
         }
 
-        std::cout << "El texto no puede estar vacío.\n";
+        std::cout << "El texto no puede estar vacio.\n";
     }
 }

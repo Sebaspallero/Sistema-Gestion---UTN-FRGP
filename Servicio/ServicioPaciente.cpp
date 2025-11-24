@@ -47,7 +47,6 @@ void ServicioPaciente::crearPaciente() {
     int id = managerPaciente.obtenerNuevoId();
     string nombre, apellido, email, telefono;
     int dia, mes, anio, dni, codigoObraSocial;
-    limpiarBuffer();
 
     // NOMBRE
     do {
@@ -123,8 +122,6 @@ void ServicioPaciente::crearPaciente() {
         }
     }
 
-    limpiarBuffer();
-
     //EMAIL
     do {
         cout << "Ingrese email: ";
@@ -138,8 +135,6 @@ void ServicioPaciente::crearPaciente() {
         getline(cin, telefono);
         if (telefono.empty()) cout << "El telefono no puede estar vacio.\n";
     } while (telefono.empty());
-
-
 
     // SELECCION DE OBRA SOCIAL
     servicioObraSocial.listarObrasSociales(lista);
@@ -236,8 +231,6 @@ void ServicioPaciente::modificarPaciente() {
 
     int id;
     int posicion = -1;
-
-    limpiarBuffer();
 
     //SELECCIONAR ID DEL PACIENTE A MOD
     while (true) {
@@ -353,8 +346,6 @@ void ServicioPaciente::modificarPaciente() {
     getline(cin, telefono);
     if (telefono.empty()) telefono = paciente.getTelefono();
 
-    limpiarBuffer();
-
     //OBRA SOCIAL
     std::vector<ObraSocial> listaObras = servicioObraSocial.obtenerObrasSociales();
     if(listaObras.empty()){
@@ -399,6 +390,7 @@ void ServicioPaciente::modificarPaciente() {
     }
 }
 
+//BUSCAR PACIENTE POR DNI
 void ServicioPaciente::buscarPacientePorDNI() {
     int dni;
 
@@ -427,6 +419,7 @@ void ServicioPaciente::buscarPacientePorDNI() {
     }
 }
 
+//BUSCAR PACIENTE POR APELLIDO
 void ServicioPaciente::buscarPacientePorApellido() {
     string apellido;
 
@@ -459,6 +452,7 @@ void ServicioPaciente::buscarPacientePorApellido() {
     }
 }
 
+//ORDENAR PACIENTES POR APELLIDO
 void ServicioPaciente::ordenarPacientesPorApellido() {
     std::vector<Paciente> listaOrdenada = managerPaciente.ordenarPorApellido();
 
