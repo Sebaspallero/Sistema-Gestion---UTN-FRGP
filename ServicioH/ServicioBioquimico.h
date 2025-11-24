@@ -9,6 +9,7 @@ class ServicioBioquimico {
         ManagerBioquimico managerBioquimico;
         void limpiarBuffer() const;
         bool existeDNI(int dni);
+        bool existeMatricula(int matricula);
 
     public:
         ServicioBioquimico();

@@ -7,7 +7,7 @@ class Analisis{
        int _id;
        char _nombre [30];
        int _idCategoria;
-       float _valor;  //preguntar a que valor se refieren
+       float _valor;
        bool _estado;
 
     public:
@@ -17,12 +17,12 @@ class Analisis{
         int getId() const;
         std::string getNombre() const;
         int getIdCategoria() const;
-        float getValor() const;  //esta asociado con valor
+        float getValor() const;
         bool getEstado() const;
 
         void setId(int idAnalisis);
         void setNombre(std::string& nombre);
         void setIdCategoria(int idCategoria);
-        void setValor(float valor);  //esta asociado con valor
+        void setValor(float valor);
         void setEstado(bool estado);
 };

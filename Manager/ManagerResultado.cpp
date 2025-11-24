@@ -26,7 +26,7 @@ std::vector<Resultado> ManagerResultado::buscarPorPaciente(int idPaciente) {
     std::vector<Resultado> listaResultados = leerTodos();
 
     //Recorremos todos los resultados
-    for (int i = 0; i < listaResultados.size(); i++) {
+    for (int i = 0; i < (int)listaResultados.size(); i++) {
 
         // Verificamos que esté activo
         if (listaResultados[i].getEstado() == false) {
@@ -34,7 +34,7 @@ std::vector<Resultado> ManagerResultado::buscarPorPaciente(int idPaciente) {
         }
 
         // Recorremos todos los turnos de ese paciente
-        for (int j = 0; j < listaTurnos.size(); j++) {
+        for (int j = 0; j < (int)listaTurnos.size(); j++) {
 
             // Si el resultado pertenece a alguno de esos turnos, lo agregamos
             if (listaResultados[i].getIDTurno() == listaTurnos[j].getId()) {

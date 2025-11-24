@@ -22,7 +22,6 @@ void MenuPrincipal::ejecutar() {
         cout << "8. Gestionar Facturas\n";
         cout << "9. Gestionar Turnos\n";
         cout << "10.Gestionar Resultados\n";
-        cout << "**---------------------------**\n";
         cout << "11. Reportes\n";
         cout << "0. Salir del Sistema\n";
         opcion = pedirEntero("Seleccione una opcion: ");

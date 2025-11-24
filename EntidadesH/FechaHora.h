@@ -16,7 +16,7 @@ class FechaHora : public Fecha{
         void setHora(int hora);
         void setMinutos(int minutos);
 
-        std::string toString() const;      // <--- declarar aquí
+        std::string toString() const;
         bool esIgual(const FechaHora& otra) const;
         bool esAnterior(const FechaHora& otra) const;
 };

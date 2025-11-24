@@ -15,7 +15,7 @@ void ServicioPaciente::limpiarBuffer() const {
 //COMPROBAR DNI UNICO
 bool ServicioPaciente::existeDNI(int dni) {
     vector<Paciente> pacientes = managerPaciente.leerTodos();
-    for (int i = 0; i < pacientes.size(); i++) {
+    for (int i = 0; i < (int)pacientes.size(); i++) {
         if (pacientes[i].getDNI() == dni) {
             return true;
         }
@@ -25,7 +25,7 @@ bool ServicioPaciente::existeDNI(int dni) {
 
 //MOSTRAR NOMBRE OBRA SOCIAL EN VEZ DE ID EN LA LISTA
 std::string ServicioPaciente::nombreObraPorId(int id, const vector<ObraSocial>& lista) {
-    for (int i = 0; i < lista.size(); i++) {
+    for (int i = 0; i < (int)lista.size(); i++) {
         if (lista[i].getId() == id) {
             return lista[i].getNombre();
         }
@@ -35,10 +35,9 @@ std::string ServicioPaciente::nombreObraPorId(int id, const vector<ObraSocial>& 
 
 //CREAR PACIENTE
 void ServicioPaciente::crearPaciente() {
-    system("cls");
     cout << "\n-- REGISTRAR PACIENTE --\n";
 
-    //PRIMERO VALIDAMOS QUE HAYA OBRAS SOCIALES PARA NO HACER TODO EL RECIRRDO
+    //PRIMERO VALIDAMOS QUE HAYA OBRAS SOCIALES
     std::vector<ObraSocial> lista = servicioObraSocial.obtenerObrasSociales();
     if (lista.empty()) {
         cout << "\nNo hay obras sociales registradas. No se puede registrar paciente.\n";
@@ -50,49 +49,47 @@ void ServicioPaciente::crearPaciente() {
     int dia, mes, anio, dni, codigoObraSocial;
     limpiarBuffer();
 
-    // VALIDACION NOMBRE
+    // NOMBRE
     do {
         cout << "Ingrese nombre: ";
         getline(cin, nombre);
-        if (nombre.empty()){
-            cout << "El nombre no puede estar vacio.\n";
+        if (nombre.empty() || nombre.find_first_not_of(' ')==string::npos){
+            cout << "El nombre no puede estar vacio." << endl;
         }
-    } while (nombre.empty());
+    } while (nombre.empty() || nombre.find_first_not_of(' ')==string::npos);
 
-    // VALIDACION APELLIDO
+    //APELLIDO
     do {
         cout << "Ingrese apellido: ";
         getline(cin, apellido);
-        if (apellido.empty()){
-             cout << "El apellido no puede estar vacio.\n";
+        if (apellido.empty() || apellido.find_first_not_of(' ')==string::npos){
+             cout << "El apellido no puede estar vacio." << endl;
         }
-    } while (apellido.empty());
+    } while (apellido.empty() || apellido.find_first_not_of(' ')==string::npos);
 
-    // VALIDACION FECHA DE NACIMIENTO: DIA
+    //FECHA DE NACIMIENTO
     while (true) {
         cout << "Ingrese dia de nacimiento (1-31): ";
         if (cin >> dia) {
             if (dia >= 1 && dia <= 31) break;
-            else cout << "Dia fuera de rango.\n";
+            else cout << "Dia fuera de rango." << endl;
         } else {
-            cout << "Error: Debe ingresar un numero.\n";
+            cout << "Error: Debe ingresar un numero." << endl;
             limpiarBuffer();
         }
     }
 
-    // VALIDACION MES
     while (true) {
         cout << "Ingrese mes de nacimiento (1-12): ";
         if (cin >> mes) {
             if (mes >= 1 && mes <= 12) break;
-            else cout << "Mes fuera de rango.\n";
+            else cout << "Mes fuera de rango." << endl;
         } else {
-            cout << "Error: Debe ingresar un numero.\n";
+            cout << "Error: Debe ingresar un numero." << endl;
             limpiarBuffer();
         }
     }
 
-    // VALIDACION ANIO
     while (true) {
         cout << "Ingrese anio de nacimiento (1900-2024): ";
         if (cin >> anio) {
@@ -106,13 +103,14 @@ void ServicioPaciente::crearPaciente() {
 
     limpiarBuffer();
 
-    // VALIDACION DNI
+    //DNI
     while (true) {
         cout << "Ingrese DNI: ";
         if (cin >> dni) {
             if (dni > 0) {
                 if (!existeDNI(dni)) {
-                    break; // DNI válido y no repetido
+                        limpiarBuffer();
+                    break;
                 } else {
                     cout << "Error: Ya existe un paciente con ese DNI.\n";
                 }
@@ -131,7 +129,7 @@ void ServicioPaciente::crearPaciente() {
     do {
         cout << "Ingrese email: ";
         getline(cin, email);
-        if (email.empty()) cout << "El email no puede estar vacio.\n";
+        if (email.empty()) cout << "El email no puede estar vacio." << endl;
     } while (email.empty());
 
     //TELEFONO
@@ -143,23 +141,22 @@ void ServicioPaciente::crearPaciente() {
 
 
 
-    // SELECCION DE OBRA SOCIAL -> ACA YA COMPROBAMOS QUE AL MENOS 1 HABIA
+    // SELECCION DE OBRA SOCIAL
     servicioObraSocial.listarObrasSociales(lista);
-
     while (true) {
         cout << "Ingrese el codigo de la obra social: ";
         if (cin >> codigoObraSocial) {
             bool encontrada = false;
-            for (int i = 0; i < lista.size(); i++) {
+            for (int i = 0; i < (int)lista.size(); i++) {
                 if (lista[i].getId() == codigoObraSocial) {
                     encontrada = true;
                     break;
                 }
             }
             if (encontrada) break;
-            else cout << "ID de obra social no encontrado.\n";
+            else cout << "ID de obra social no encontrado." << endl;
         } else {
-            cout << "Error: Debe ingresar un numero.\n";
+            cout << "Error: Debe ingresar un numero." << endl;
             limpiarBuffer();
         }
     }
@@ -168,23 +165,25 @@ void ServicioPaciente::crearPaciente() {
     Paciente paciente(id, nombre, apellido, fechaNacimiento, dni, email, telefono, codigoObraSocial);
 
     if (managerPaciente.guardar(paciente)) {
-        cout << "Paciente creado con exito!\n";
+        cout << "Paciente creado con exito!" << endl;
     } else {
-        cout << "Error al intentar crear el paciente.\n";
+        cout << "Error al intentar crear el paciente." << endl;
     }
 }
 
+//OBTENER PACIENTES
 std::vector<Paciente> ServicioPaciente :: obtenerPacientes(){
     return managerPaciente.leerTodos();
 }
 
+//LISTAR PACIENTES
 void ServicioPaciente::listarPacientes(const std::vector<Paciente>& pacientes) {
     if (pacientes.empty()) {
         cout << "No hay pacientes registrados.\n";
     } else {
         std::vector<ObraSocial> lista = servicioObraSocial.obtenerObrasSociales();
         cout << "\n-- LISTADO DE PACIENTES --\n";
-        for (int i = 0; i < pacientes.size(); i++) {
+        for (int i = 0; i < (int)pacientes.size(); i++) {
             Paciente paciente = pacientes[i];
             cout << "ID: " << paciente.getId()
                  << " | Nombre: " << paciente.getNombre()
@@ -196,6 +195,7 @@ void ServicioPaciente::listarPacientes(const std::vector<Paciente>& pacientes) {
     }
 }
 
+//ELIMINAR PACIENTE
 void ServicioPaciente::eliminarPaciente() {
     std::vector<Paciente> lista = obtenerPacientes();
     if (lista.empty()) {
@@ -366,7 +366,7 @@ void ServicioPaciente::modificarPaciente() {
             cout << "Nuevo codigo de obra social [" << paciente.getCodigoObraSocial() << "]: ";
             if (cin >> codigoObraSocial) {
                 bool encontrada = false;
-                for (int i = 0; i < lista.size(); i++) {
+                for (int i = 0; i < (int)lista.size(); i++) {
                     if (lista[i].getId() == codigoObraSocial) {
                         encontrada = true;
                         break;
@@ -447,7 +447,7 @@ void ServicioPaciente::buscarPacientePorApellido() {
     if (resultados.empty()) {
         cout << "No se encontraron pacientes con ese apellido.\n";
     } else {
-        for (int i = 0; i < resultados.size(); i++) {
+        for (int i = 0; i < (int)resultados.size(); i++) {
             Paciente paciente = resultados[i];
             cout << "ID: " << paciente.getId()
                  << " | Nombre: " << paciente.getNombre()
@@ -467,7 +467,7 @@ void ServicioPaciente::ordenarPacientesPorApellido() {
     }else{
         std::vector<ObraSocial> lista = servicioObraSocial.obtenerObrasSociales();
         cout << "\nPacientes ordenados por apellido:\n";
-        for (int i = 0; i < listaOrdenada.size(); i++) {
+        for (int i = 0; i < (int)listaOrdenada.size(); i++) {
             cout << "Apellido: " << listaOrdenada[i].getApellido() << endl;
             cout << "Nombre: " << listaOrdenada[i].getNombre() << endl;
             cout << "DNI: " << listaOrdenada[i].getDNI() << endl;

@@ -29,13 +29,14 @@ Manager<T>::Manager(const std::string& nombreArchivo) {
     _nombreArchivo = nombreArchivo;
 }
 
-// Guardar
+// Guardar (Crear)
 template <typename T>
 bool Manager<T>::guardar(const T& entidad) {
     FILE *pFile = fopen(_nombreArchivo.c_str(), "ab");
-    if(!pFile) return false;
+    if(pFile == nullptr) return false;
 
     bool creado = fwrite(&entidad, sizeof(T), 1, pFile) == 1;
+
     fclose(pFile);
     return creado;
 }
@@ -57,10 +58,12 @@ bool Manager<T>::eliminar(int id) {
 template <typename T>
 bool Manager<T>::modificar(const T& entidad, int posicion){
     FILE *pFile = fopen(_nombreArchivo.c_str(), "rb+");
-    if(!pFile) return false;
+    if(pFile == nullptr) return false;
 
     fseek(pFile, sizeof(T) * posicion, SEEK_SET);
+
     bool modificado = fwrite(&entidad, sizeof(T), 1, pFile) == 1;
+
     fclose(pFile);
     return modificado;
 }
@@ -69,11 +72,15 @@ bool Manager<T>::modificar(const T& entidad, int posicion){
 template <typename T>
 T Manager<T>::leer(int posicion){
     FILE *pFile = fopen(_nombreArchivo.c_str(), "rb");
-    T entidad; //VERIFICAR SI FALTA AGREGAR LLAVES
-    if(!pFile) return entidad;
+    T entidad{};
+    if(pFile == nullptr) return entidad;
 
     fseek(pFile, sizeof(T) * posicion, SEEK_SET);
-    fread(&entidad, sizeof(T), 1, pFile);
+
+    if(fread(&entidad, sizeof(T), 1, pFile) != 1){
+        entidad = T{};
+    }
+
     fclose(pFile);
     return entidad;
 }
@@ -82,10 +89,12 @@ T Manager<T>::leer(int posicion){
 template <typename T>
 int Manager<T>::cantidadDeRegistros(){
     FILE *pFile = fopen(_nombreArchivo.c_str(), "rb");
-    if(!pFile) return 0;
+    if(pFile == nullptr) return 0;
 
     fseek(pFile, 0, SEEK_END);
+
     int cantidad = ftell(pFile) / sizeof(T);
+
     fclose(pFile);
     return cantidad;
 }
@@ -95,7 +104,7 @@ template <typename T>
 std::vector<T> Manager<T>::leerTodos(){
     std::vector<T> lista;
     FILE *pFile = fopen(_nombreArchivo.c_str(), "rb");
-    if(!pFile) return lista;
+    if(pFile == nullptr) return lista;
 
     T registro;
     while(fread(&registro, sizeof(T), 1, pFile) == 1){
@@ -112,7 +121,7 @@ std::vector<T> Manager<T>::leerTodos(){
 template <typename T>
 int Manager<T>::buscar(int id){
     FILE *pFile = fopen(_nombreArchivo.c_str(), "rb");
-    if(!pFile) return -1;
+    if(pFile == nullptr) return -1;
 
     T entidad;
     int i = 0;
@@ -135,5 +144,3 @@ int Manager<T>::obtenerNuevoId() {
     T ultimo = leer(cantidad - 1);
     return ultimo.getId() + 1;
 }
-
-

@@ -9,7 +9,7 @@ ManagerSala::ManagerSala(const std::string& nombreArchivo) : Manager<Sala>(nombr
 Sala ManagerSala::buscarPorNombre(const std::string& nombre) {
     std::vector<Sala> lista = leerTodos();
 
-    for (int i = 0; i < lista.size(); i++) {
+    for (int i = 0; i < (int)lista.size(); i++) {
         if (lista[i].getNombre() == nombre) {
             return lista[i];
         }

@@ -6,8 +6,8 @@ ManagerFactura::ManagerFactura(const std::string& nombreArchivo) : Manager<Factu
 // ORDENAR POR FECHA DE PAGO
 std::vector<Factura> ManagerFactura::ordenarPorFechaDePago() {
     std::vector<Factura> lista = leerTodos();
-    for (int i = 0; i < lista.size() - 1; i++) {
-        for (int j = i + 1; j < lista.size(); j++) {
+    for (int i = 0; i < (int)lista.size() - 1; i++) {
+        for (int j = i + 1; j < (int)lista.size(); j++) {
             if (lista[j].getFechaPago().esAnterior(lista[i].getFechaPago())) {
                 Factura aux = lista[i];
                 lista[i] = lista[j];
@@ -23,7 +23,7 @@ std::vector<Factura> ManagerFactura::buscarPorMetodoDePago(int idMetodoDePago) {
     std::vector<Factura> lista = leerTodos();
     std::vector<Factura> resultado;
 
-    for (int i = 0; i < lista.size(); i++) {
+    for (int i = 0; i < (int)lista.size(); i++) {
         if (lista[i].getIdMetodoPago() == idMetodoDePago) {
             resultado.push_back(lista[i]);
         }
@@ -36,7 +36,7 @@ std::vector<Factura> ManagerFactura::buscarPorFecha(int dia, int mes, int anio) 
     std::vector<Factura> lista = leerTodos();
     std::vector<Factura> resultado;
 
-    for (int i = 0; i < lista.size(); i++) {
+    for (int i = 0; i < (int)lista.size(); i++) {
         Fecha f = lista[i].getFechaPago();
         if (f.getDia() == dia && f.getMes() == mes && f.getAnio() == anio) {
             resultado.push_back(lista[i]);
@@ -50,7 +50,7 @@ std::vector<Factura> ManagerFactura::buscarPorPacienteID(int idPaciente) {
     std::vector<Factura> lista = leerTodos();
     std::vector<Factura> resultado;
 
-    for (int i = 0; i < lista.size(); i++) {
+    for (int i = 0; i < (int)lista.size(); i++) {
         if (lista[i].getIdPaciente() == idPaciente) {
             resultado.push_back(lista[i]);
         }
@@ -60,7 +60,7 @@ std::vector<Factura> ManagerFactura::buscarPorPacienteID(int idPaciente) {
 
 bool ManagerFactura::existeFacturaParaTurno(int idTurno) {
     std::vector<Factura> todas = leerTodos();
-    for (int i = 0; i < todas.size(); i++) {
+    for (int i = 0; i < (int)todas.size(); i++) {
         if (todas[i].getIdTurno() == idTurno) {
             return true;
         }

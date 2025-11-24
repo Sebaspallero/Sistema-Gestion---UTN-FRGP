@@ -8,8 +8,8 @@ ManagerAnalisis::ManagerAnalisis(const std::string& nombreArchivo): Manager<Anal
 //ORDENAR POR CATEGORIA
 std::vector<Analisis> ManagerAnalisis::ordenarPorCategoria() {
     std::vector<Analisis> lista = leerTodos();
-    for (int i = 0; i < lista.size() - 1; i++) {
-        for (int j = i + 1; j < lista.size(); j++) {
+    for (int i = 0; i < (int)lista.size() - 1; i++) {
+        for (int j = i + 1; j < (int)lista.size(); j++) {
             if (lista[i].getIdCategoria() > lista[j].getIdCategoria()) {
                 Analisis aux = lista[i];
                 lista[i] = lista[j];
@@ -25,7 +25,7 @@ std::vector<Analisis> ManagerAnalisis::buscarPorNombre(std::string nombre) {
     std::vector<Analisis> lista = leerTodos();
     std::vector<Analisis> listaPorNombre = {};
 
-    for (int i = 0; i < lista.size(); i++) {
+    for (int i = 0; i < (int)lista.size(); i++) {
         if (lista[i].getNombre() == nombre){
                 listaPorNombre.push_back(lista[i]);
         }
@@ -37,7 +37,7 @@ std::vector<Analisis> ManagerAnalisis::buscarPorCategoria(int idCategoria,bool& 
     std::vector<Analisis> lista = leerTodos();
     std::vector<Analisis> resultado;
 
-    for (int i = 0; i < lista.size(); i++) {
+    for (int i = 0; i < (int)lista.size(); i++) {
         if (lista[i].getIdCategoria() == idCategoria){
             encontro = true;
             resultado.push_back(lista[i]);
@@ -45,6 +45,7 @@ std::vector<Analisis> ManagerAnalisis::buscarPorCategoria(int idCategoria,bool& 
     }
     return resultado;
 }
+
 
 void ManagerAnalisis::listarAnalisis(std::vector<Analisis> lista){
     ManagerCategoria managerCategoria("categorias.dat");

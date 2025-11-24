@@ -11,28 +11,35 @@ void ServicioMetodoDePago::limpiarBuffer() const {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
+//CREAR METODO DE PAGO
 void ServicioMetodoDePago::crearMetodoDePago() {
 
     cout << "\n-- REGISTRAR METODO DE PAGO --\n";
     vector<MetodoDePago> lista = managerMetodoDePago.leerTodos();
     int id = managerMetodoDePago.obtenerNuevoId();
     string nombre;
-    bool bandera;
+    bool nombreValido = false;
+
     do {
-    bandera = true;
     cout << "Ingrese el nombre: ";
     getline(cin, nombre);
-    for(int i=0;i<lista.size();i++){
-        if(lista[i].getNombre()==nombre){
-            cout<<"Ya existe un metodo de pago con ese nombre."<<endl;
-            bandera = false;
-        }
-    }
+
+    nombreValido = true;
+
     if (nombre.empty() || nombre.find_first_not_of(' ') == string::npos) {
         cout << "El nombre no puede estar vacío. Intente nuevamente."<<endl;
+        nombreValido = false;
+        continue;
     }
 
-    } while (nombre.empty() || nombre.find_first_not_of(' ') == string::npos || bandera == false);
+    for(int i=0;i < (int)lista.size();i++){
+        if(lista[i].getNombre()==nombre){
+            cout<<"Ya existe un metodo de pago con ese nombre."<<endl;
+            nombreValido = false;
+            break;
+        }
+    }
+    } while (!nombreValido);
 
     MetodoDePago metodoPago(id, nombre);
 
@@ -43,39 +50,64 @@ void ServicioMetodoDePago::crearMetodoDePago() {
     }
 }
 
+//MODIFICAR METODO DE PAGO
 void ServicioMetodoDePago::modificarMetodoDePago() {
     std::vector <MetodoDePago> lista = managerMetodoDePago.leerTodos();
+
     if(lista.empty()){
         cout << "\nNo hay metodos de pago para modificar.\n";
         return;
     }
+
     listarMetodosDePago(lista);
+
     int id;
-    bool bandera;
+    bool idValido;
     char opcion;
 
     do{
         id=pedirEntero("\nIngrese el ID a modificar: ");
-        bandera = false;
-        for(int i=0;i<lista.size();i++){
+        idValido = false;
+        for(int i=0;i < (int)lista.size();i++){
             if(lista[i].getId()==id){
-                bandera = true;
+                idValido = true;
                 break;
             }
         }
-        if(!bandera){
+        if(!idValido){
             cout<<"No existe ese numero de ID."<<endl;
-            opcion=pedirCharSN("Quieres intentarlo nuevamente? S/N (S = Si / N = No)");
+            opcion=pedirCharSN("Quieres intentarlo nuevamente? (S/N): ");
         }
         if(opcion == 'N' || opcion == 'n'){
             cout<<"Error al modificar el metodo de pago."<<endl;
             return;
         }
-    }while(bandera == false);
+    }while(!idValido);
+
     string nombre;
+    bool nombreValido = false;
     limpiarBuffer();
-    cout << "Nuevo nombre: ";
-    getline(cin, nombre);
+
+    do{
+        cout << "Nuevo nombre: ";
+        getline(cin, nombre);
+
+        nombreValido = true;
+
+        if (nombre.empty() || nombre.find_first_not_of(' ')==string::npos){
+            cout << "El nombre no puede estar vacio. Intente nuevamente. " << endl;
+            nombreValido = false;
+            continue;
+        }
+
+        for (int i=0; i < (int)lista.size(); i++){
+            if (lista[i].getNombre() == nombre && lista[i].getId() != id) {
+                cout << "Ya existe un metodo de pago con ese nombre. " << endl;
+                nombreValido = false;
+                break;
+            }
+        }
+    }while(!nombreValido);
 
     int posicion = managerMetodoDePago.buscar(id);
     if (posicion == -1) {
@@ -93,59 +125,65 @@ void ServicioMetodoDePago::modificarMetodoDePago() {
     }
 }
 
+//ELIMINAR METODO DE PAGO
 void ServicioMetodoDePago::eliminarMetodoDePago() {
-    std::vector<MetodoDePago> lista = managerMetodoDePago.leerTodos();
+    vector<MetodoDePago> lista = managerMetodoDePago.leerTodos();
 
     if(lista.empty()){
         cout << "\nNo hay metodos de pago para eliminar.\n";
         return;
     }
+
     listarMetodosDePago(lista);
 
     int id;
-    bool bandera;
-    char opcion;
-    do{
-        id=pedirEntero("Ingrese el ID a eliminar: ");
-        bandera = false;
-        for(int i=0;i<lista.size();i++){
-            if(lista[i].getId()==id){
-                bandera = true;
-            }
-        }
-        if(!bandera){
-            cout<<"No existe ese numero de ID."<<endl;
-            opcion=pedirCharSN("Quieres intentarlo nuevamente? S/N (S = Si / N = No)");
-        }
-        if(opcion == 'N' || opcion == 'n'){
-            bandera = true;
-        }
-    }while(bandera == false);
-    bool eliminado = managerMetodoDePago.eliminar(id);
+    cout << "Ingrese el ID a eliminar (0 para cancelar): ";
+    cin >> id;
 
-    if(eliminado){
-        cout << "\n-- ELIMINADO EXITOSAMENTE --\n";
-     }else{
-         cout << "\n-- OCURRIO UN ERROR AL ELIMINAR EL METODO DE PAGO --\n";
+    if (id == 0){
+        cout << "Operacion cancelada." << endl;
+        return;
     }
-}
 
+    int posicion = managerMetodoDePago.buscar(id);
+    if (posicion == -1){
+        cout << "No se encontro un metodo de pago con ese ID. " << endl;
+        return;
+    }
+
+    cout << "Esta seguro que desea eliminar este metodo de pago? (S/N): ";
+    char confirma;
+    cin >> confirma;
+
+    if (confirma == 'S' || confirma == 's'){
+        bool eliminado = managerMetodoDePago.eliminar(id);
+        if (eliminado){
+            cout << "\n-- ELIMINADO EXITOSAMENTE --\n";
+        }else{
+            cout << "\n-- OCURRIO UN ERROR AL ELIMINAR EL METODO DE PAGO --\n";
+            }
+        } else{
+            cout << "Operacion cancelada. " << endl;
+            return;
+        }
+    }
+
+//OBTENER METODOS DE PAGO
 std::vector<MetodoDePago> ServicioMetodoDePago:: obtenerMetodosDePago(){
     return managerMetodoDePago.leerTodos();
 }
 
+//LISTAR METODOS DE PAGO
 void ServicioMetodoDePago::listarMetodosDePago(const std::vector<MetodoDePago>& metodosDePago) {
     if (metodosDePago.empty()) {
         cout << "No hay metodos de pago registrados.\n";
     } else {
         cout << "\n-- LISTADO DE METODOS DE PAGO --\n";
-        for (int i = 0; i < metodosDePago.size(); i++) {
+        for (int i = 0; i < (int)metodosDePago.size(); i++) {
             MetodoDePago metodoPago = metodosDePago[i];
             cout << "ID: " << metodoPago.getId()
                  << " | Nombre: " << metodoPago.getNombre()
-                 << "\n";
+                 << endl;
         }
     }
 }
-
-

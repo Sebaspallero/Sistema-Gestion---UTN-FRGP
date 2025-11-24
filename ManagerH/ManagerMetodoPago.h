@@ -7,7 +7,4 @@
 class ManagerMetodoDePago : public Manager<MetodoDePago> {
 public:
     ManagerMetodoDePago(const std::string& nombreArchivo);
-
-    bool crearMetodoDePago(std::string nombre);
-    bool modificarMetodoDePago(std::string nombre, int id);
 };
