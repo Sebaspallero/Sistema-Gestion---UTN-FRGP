@@ -360,6 +360,7 @@ void ServicioBioquimico::ordenarBioquimicosPorApellido() {
     }
 
     cout << "\nBioquimicos ordenados por apellido:\n";
+    cout << "-------------------------" << endl;
     for (int i=0; i < (int)listaOrdenada.size(); i++) {
         const Bioquimico& b = listaOrdenada[i];
         cout << "Apellido: " << b.getApellido() << endl
@@ -379,6 +380,7 @@ void ServicioBioquimico::ordenarBioquimicosPorLegajo() {
     }
 
     cout << "\nBioquimicos ordenados por matricula:\n";
+    cout << "-------------------------" << endl;
     for (int i=0; i < (int)listaOrdenada.size(); i++) {
         const Bioquimico &b = listaOrdenada[i];
         cout << "Matricula: " << b.getMatricula() << endl

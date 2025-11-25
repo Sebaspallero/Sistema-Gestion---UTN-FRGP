@@ -357,8 +357,8 @@ void ServicioPaciente::modificarPaciente() {
             cout << "Nuevo codigo de obra social [" << paciente.getCodigoObraSocial() << "]: ";
             if (cin >> codigoObraSocial) {
                 bool encontrada = false;
-                for (int i = 0; i < (int)lista.size(); i++) {
-                    if (lista[i].getId() == codigoObraSocial) {
+                for (int i = 0; i < (int)listaObras.size(); i++) {
+                    if (listaObras[i].getId() == codigoObraSocial) {
                         encontrada = true;
                         break;
                     }
@@ -372,7 +372,7 @@ void ServicioPaciente::modificarPaciente() {
         }
     }
 
-    // 8. GUARDADO
+    //GUARDADO
     Fecha fechaNacimiento(dia, mes, anio);
 
     paciente.setNombre(nombre);
@@ -461,6 +461,7 @@ void ServicioPaciente::ordenarPacientesPorApellido() {
     }else{
         std::vector<ObraSocial> lista = servicioObraSocial.obtenerObrasSociales();
         cout << "\nPacientes ordenados por apellido:\n";
+        cout << "-------------------------" << endl;
         for (int i = 0; i < (int)listaOrdenada.size(); i++) {
             cout << "Apellido: " << listaOrdenada[i].getApellido() << endl;
             cout << "Nombre: " << listaOrdenada[i].getNombre() << endl;

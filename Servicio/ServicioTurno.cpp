@@ -87,7 +87,6 @@ std::string ServicioTurno::nombreSalaPorId(int id, const vector<Sala>& lista) {
     return "Desconocido";
 }
 
-
 //CREAR TURNO
 void ServicioTurno::crearTurno() {
     system("cls");
@@ -116,15 +115,6 @@ void ServicioTurno::crearTurno() {
     while (true) {
         idPaciente = pedirEntero("\nIngrese ID del Paciente (0 para salir, -1 para registrar NUEVO):");
 
-//         << "\nIngrese ID del Paciente (0 para salir, -1 para registrar NUEVO): ";
-//        cin >> idPaciente;
-
-//        if (cin.fail()) {
-//            cout << "Error: Debe ingresar un numero.\n";
-//            limpiarBuffer();
-//            continue;
-//        }
-
         // OPCIÓN SALIR
         if (idPaciente == 0) {
             system("cls");
@@ -133,6 +123,7 @@ void ServicioTurno::crearTurno() {
 
         // OPCIÓN CREAR NUEVO PACIENTE
         if (idPaciente == -1) {
+            limpiarBuffer();
             servicioPaciente.crearPaciente();
 
             pacientes = servicioPaciente.obtenerPacientes();
@@ -348,14 +339,14 @@ void ServicioTurno::listarTurnos(const std::vector<Turno>& turnos) {
         Turno t = turnos[i];
         FechaHora f = t.getFechaTurno();
 
-        cout << "ID: " << t.getId()
-             << " | Paciente: " << nombrePacientePorId(t.getIDPaciente(), listaPacientes)
-             << " | Bioquimico: " << nombreBioquimicoPorId(t.getIDBioquimico(), listaBioquimicos)
-             << " | Analisis: " << nombreAnalisisPorId(t.getIDAnalisis(), listaAnalisis)
-             << " | Sala: " << nombreSalaPorId(t.getIDSala(), listaSalas)
-             << " | Fecha: " << f.toString()
-             << " | Asistio: " << (t.getAsistio() ? "Si" : "No")
-             << "\n";
+        cout << "ID: " << t.getId() << endl;
+        cout << " Paciente: " << nombrePacientePorId(t.getIDPaciente(), listaPacientes) << endl;
+        cout << " Bioquimico: " << nombreBioquimicoPorId(t.getIDBioquimico(), listaBioquimicos) << endl;
+        cout << " Analisis: " << nombreAnalisisPorId(t.getIDAnalisis(), listaAnalisis) << endl;
+        cout << " Sala: " << nombreSalaPorId(t.getIDSala(), listaSalas) << endl;
+        cout << " Fecha: " << f.toString() << endl;
+        cout << " Asistio: " << (t.getAsistio() ? "Si" : "No") << endl;
+        cout << "-------------------------" << endl;
     }
 }
 

@@ -67,7 +67,6 @@
 		<Unit filename="ManagerH/ManagerMetodoPago.h" />
 		<Unit filename="ManagerH/ManagerObraSocial.h" />
 		<Unit filename="ManagerH/ManagerPaciente.h" />
-		<Unit filename="ManagerH/ManagerReporte.h" />
 		<Unit filename="ManagerH/ManagerResultado.h" />
 		<Unit filename="ManagerH/ManagerSala.h" />
 		<Unit filename="ManagerH/ManagerTurno.h" />
@@ -78,7 +77,6 @@
 		<Unit filename="Manager/ManagerMetodoPago.cpp" />
 		<Unit filename="Manager/ManagerObraSocial.cpp" />
 		<Unit filename="Manager/ManagerPaciente.cpp" />
-		<Unit filename="Manager/ManagerReporte.cpp" />
 		<Unit filename="Manager/ManagerResultado.cpp" />
 		<Unit filename="Manager/ManagerSala.cpp" />
 		<Unit filename="Manager/ManagerTurno.cpp" />

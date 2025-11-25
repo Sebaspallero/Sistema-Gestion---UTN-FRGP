@@ -250,13 +250,13 @@ void ServicioReporte::reporteFacturasPorObraSocial() {
     }
 }
 
+//Ranking Metodos de Pago + usados
 void ServicioReporte::reporteRankingMetodoPago() {
     system("cls");
     cout << "\n--- METODOS DE PAGO MAS USADOS ---\n";
 
     vector<MetodoDePago> metodos = _servicioMetodoDePago.obtenerMetodosDePago();
     vector<Factura> facturas = _servicioFactura.obtenerFacturas();
-
 
     cout << left << setw(25) << "Metodo de Pago"
          << " | "
@@ -284,5 +284,3 @@ void ServicioReporte::reporteRankingMetodoPago() {
 
     cout << "-----------------------------------------------\n";
 }
-
-

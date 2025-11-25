@@ -27,7 +27,7 @@ void ServicioMetodoDePago::crearMetodoDePago() {
     nombreValido = true;
 
     if (nombre.empty() || nombre.find_first_not_of(' ') == string::npos) {
-        cout << "El nombre no puede estar vacío. Intente nuevamente."<<endl;
+        cout << "El nombre no puede estar vacio. Intente nuevamente."<<endl;
         nombreValido = false;
         continue;
     }

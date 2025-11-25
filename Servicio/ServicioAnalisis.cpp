@@ -8,7 +8,6 @@
 
 ServicioAnalisis::ServicioAnalisis(): _managerAnalisis("analisis.dat"), _servicioCategoria() {}
 
-
 //CREAR ANALISIS
 void ServicioAnalisis::crearAnalisis() {
 
@@ -100,7 +99,7 @@ void ServicioAnalisis::modificarAnalisis() {
 
     bool categoriaValida = false;
     while (!categoriaValida) {
-        idCategoria = pedirEntero("Elija el ID de la categoría que corresponde al analisis: ");
+        idCategoria = pedirEntero("Elija el ID de la categoria que corresponde al analisis: ");
         for (int i = 0; i < (int)categorias.size(); i++) {
             if (categorias[i].getId() == idCategoria) {
                 categoriaValida = true;
@@ -168,11 +167,11 @@ void ServicioAnalisis::eliminarAnalisis(){
         return;
     }
 
-    char confirma;
     std::cout << "Esta seguro que desea dar de baja el analisis con ID? (S/N): " << std::endl;
+    char confirma;
     std::cin >> confirma;
 
-    if (confirma == 'S' && confirma == 's') {
+    if (confirma == 'S' || confirma == 's') {
 
     bool eliminado = _managerAnalisis.eliminar(id);
 

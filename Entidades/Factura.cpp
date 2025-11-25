@@ -18,6 +18,7 @@
         _idPaciente = idPaciente;
         _idAnalisis = idAnalisis;
         _idMetodoPago = idMetodoPago;
+        _idTurno = idTurno;
         _costoFinal = costoFinal;
         _fechaPago = fechaPago;
         _estado = true;

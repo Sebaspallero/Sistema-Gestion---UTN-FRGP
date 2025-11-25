@@ -20,7 +20,7 @@ bool ServicioResultado::existeResultadoParaTurno(int idTurno) {
     return false;
 }
 
-
+//CREAR RESULTADO
 void ServicioResultado::crearResultado() {
     system("cls");
     cout << "\n-- CREAR RESULTADO --\n";
@@ -37,14 +37,14 @@ void ServicioResultado::crearResultado() {
     string descripcion;
     int dia, mes, anio;
 
-
+    servicioTurno.listarTurnos(turnosAsistencia);
     //VALIDACION ID TURNO
     while (true) {
         cout << "Ingrese ID del turno asociado: ";
         if (cin >> idTurno) {
             if (idTurno > 0) {
                 if (existeResultadoParaTurno(idTurno)) {
-                    cout << "Error: Ese turno YA TIENE un resultado cargado.\n";
+                    cout << "Ese turno YA TIENE un resultado cargado.\n";
                 } else {
                     bool turnoValido = false;
                     for (int i = 0; i < turnosAsistencia.size(); i++) {
@@ -57,7 +57,7 @@ void ServicioResultado::crearResultado() {
                         limpiarBuffer(); // Exito
                         break;
                     } else {
-                        cout << "Error: El turno no existe o el paciente NO registro asistencia.\n";
+                        cout << "El turno no existe o el paciente NO registro asistencia.\n";
                         cout << "Solo se pueden cargar resultados a turnos con asistencia 'SI'.\n";
                     }
                 }
@@ -81,7 +81,7 @@ void ServicioResultado::crearResultado() {
 
     //DIA
     while (true) {
-        cout << "Ingrese dia (1-31): ";
+        cout << "Ingrese el dia de hoy (1-31): ";
         if (cin >> dia && dia >= 1 && dia <= 31){
             break;
         }
@@ -91,7 +91,7 @@ void ServicioResultado::crearResultado() {
 
     //MES
     while (true) {
-        cout << "Ingrese mes (1-12): ";
+        cout << "Ingrese el mes actual(1-12): ";
         if (cin >> mes && mes >= 1 && mes <= 12){
             break;
         }
@@ -101,14 +101,13 @@ void ServicioResultado::crearResultado() {
 
     //ANIO
     while (true) {
-        cout << "Ingrese anio (2000-2025): ";
+        cout << "Ingrese el anio actual (2000-2025): ";
         if (cin >> anio && anio >= 2000 && anio <= 2025){
             break;
         }
         cout << "Anio invalido.\n";
         limpiarBuffer();
     }
-
 
     Resultado resultado(id, idTurno, descripcion, Fecha(dia, mes, anio));
 
@@ -119,11 +118,12 @@ void ServicioResultado::crearResultado() {
     }
 }
 
-
+//TRAER TODOS LOS RESULTADO
 vector<Resultado> ServicioResultado::obtenerResultado() {
     return managerResultado.leerTodos();
 }
 
+//LISTAR RESULTADOS
 void ServicioResultado::listarResultados(const vector<Resultado>& lista) {
     if (lista.empty()) {
         cout << "No hay resultados registrados.\n";
@@ -136,7 +136,7 @@ void ServicioResultado::listarResultados(const vector<Resultado>& lista) {
 
         cout << "ID: " << r.getId()
              << " | ID Turno: " << r.getIDTurno()
-             << " | Descripción: " << r.getDescripcion()
+             << " | Descripcion: " << r.getDescripcion()
              << " | Fecha: " << r.getFecha().toString()
              << "\n";
     }
@@ -229,6 +229,7 @@ void ServicioResultado::modificarResultado() {
     }
 }
 
+//ELIMINAR RESULTADO
 void ServicioResultado::eliminarResultado() {
     vector<Resultado> lista = obtenerResultado();
 
@@ -260,6 +261,7 @@ void ServicioResultado::eliminarResultado() {
     }
 }
 
+//BUSCAR x PACIENTE
 void ServicioResultado::buscarPorPaciente() {
     int id;
     while(true) {

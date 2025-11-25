@@ -54,7 +54,7 @@ void ServicioObraSocial::crearObraSocial() {
             limpiarBuffer();
             continue;
         }
-        if(descuento <= 0 || descuento > 100){
+        if(descuento < 0 || descuento > 100){
             cout << "El descuento debe ser mayor a 0 y menor o igual a 100. " << endl;
             continue;
         }
@@ -193,7 +193,7 @@ void ServicioObraSocial::modificarObraSocial() {
             limpiarBuffer();
             continue;
         }
-        if (descuento <= 0 || descuento > 100){
+        if (descuento < 0 || descuento > 100){
             cout << "El descuento debe ser mayor a 0 y menor o igual a 100. " << endl;
             continue;
         }

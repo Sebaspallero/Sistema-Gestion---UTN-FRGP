@@ -46,8 +46,11 @@ std::string ServicioFactura::nombreMetodoDePagoPorId(int id, const vector<Metodo
 
 bool ServicioFactura::existeFacturaParaTurno(int idTurno) {
     vector<Factura> todas = managerFactura.leerTodos();
-    for(int i = 0; i < todas.size(); i++) {
-        if(todas[i].getIdTurno() == idTurno) return true;
+
+    for (int i = 0; i < todas.size(); i++) {
+        if (todas[i].getIdTurno() == idTurno) {
+            return true;
+        }
     }
     return false;
 }
@@ -221,10 +224,10 @@ void ServicioFactura::crearFactura() {
     int nuevoIdFactura = managerFactura.obtenerNuevoId();
 
     Factura nuevaFactura(nuevoIdFactura,
-                         turnoSeleccionado.getId(),
                          turnoSeleccionado.getIDPaciente(),
                          turnoSeleccionado.getIDAnalisis(),
                          idMetodo,
+                         turnoSeleccionado.getId(),
                          montoFinal,
                          Fecha(dia, mes, anio));
 
@@ -233,9 +236,6 @@ void ServicioFactura::crearFactura() {
     } else {
         cout << "\nNo se pudo guardar la factura.\n";
     }
-
-    cout << "\nPresione ENTER para volver al menu...";
-    limpiarBuffer();
 }
 
 //OBTENER LISTA DE FACTURAS
@@ -243,7 +243,7 @@ std::vector<Factura> ServicioFactura::obtenerFacturas() {
     return managerFactura.leerTodos();
 }
 
-//IMPRIMIR LISTA DE FACTURAS
+//LISTAR FACTURAS
 void ServicioFactura::listarFacturas(const std::vector<Factura>& facturas) {
     system("cls");
 
@@ -261,22 +261,17 @@ void ServicioFactura::listarFacturas(const std::vector<Factura>& facturas) {
     for (int i = 0; i < facturas.size(); i++) {
         Factura factura = facturas[i];
 
-        cout << "ID: " << factura.getId()
-             << " | Paciente: " << nombrePacientePorId(factura.getIdPaciente(), listaPacientes)
-             << " | Análisis: " << nombreAnalisisPorId(factura.getIdAnalisis(), listaAnalisis)
-             << " | Método de pago: " << nombreMetodoDePagoPorId(factura.getIdMetodoPago(), listaMetodos)
-             << " | Costo final: $" << factura.getCostoFinal()
-             << " | Fecha de pago: " << factura.getFechaPago().toString()
-             << "\n";
+        cout << "ID: " << factura.getId() << endl;
+        cout << " Paciente: " << nombrePacientePorId(factura.getIdPaciente(), listaPacientes) << endl;
+        cout << " Analisis: " << nombreAnalisisPorId(factura.getIdAnalisis(), listaAnalisis) << endl;
+        cout << " Método de pago: " << nombreMetodoDePagoPorId(factura.getIdMetodoPago(), listaMetodos) << endl;
+        cout << " Costo final: $" << factura.getCostoFinal() << endl;
+        cout << " Fecha de pago: " << factura.getFechaPago().toString() << endl;
+        cout << "-------------------------" << endl;
     }
-
-    cout << "\nPresione ENTER para continuar...";
-    limpiarBuffer();
-    cin.get();
-    system("cls");
 }
 
-// MODIFICAR FACTURA (VERSION MEJORADA CON VALIDACIONES)
+// MODIFICAR FACTURA
 void ServicioFactura::modificarFactura() {
     vector<Factura> lista = obtenerFacturas();
     if (lista.empty()) {
@@ -348,6 +343,7 @@ void ServicioFactura::modificarFactura() {
     }
 }
 
+//ELIMINAR FACTURA
 void ServicioFactura::eliminarFactura() {
     vector<Factura> lista = obtenerFacturas();
 
@@ -385,6 +381,7 @@ void ServicioFactura::eliminarFactura() {
     }
 }
 
+//BUSCAR x METODO DE PAGO
 void ServicioFactura::buscarPorMetodoDePago() {
     vector<MetodoDePago> metodos = servicioMetodoDePago.obtenerMetodosDePago();
     servicioMetodoDePago.listarMetodosDePago(metodos);
@@ -410,6 +407,7 @@ void ServicioFactura::buscarPorMetodoDePago() {
     listarFacturas(lista);
 }
 
+//BUSCAR x FECHA
 void ServicioFactura::buscarPorFecha() {
     int dia, mes, anio;
     cout << "\n-- BUSQUEDA POR FECHA --\n";
@@ -437,6 +435,7 @@ void ServicioFactura::buscarPorFecha() {
     listarFacturas(lista);
 }
 
+//BUSCAR x PACIENTE
 void ServicioFactura::buscarPorPaciente() {
     vector<Paciente> pacs = servicioPaciente.obtenerPacientes();
     servicioPaciente.listarPacientes(pacs);
@@ -462,6 +461,7 @@ void ServicioFactura::buscarPorPaciente() {
     listarFacturas(lista);
 }
 
+//ORDENAR x FECHA DE PAGO
 vector<Factura> ServicioFactura::ordenarPorFechaDePago() {
     return managerFactura.ordenarPorFechaDePago();
 }
