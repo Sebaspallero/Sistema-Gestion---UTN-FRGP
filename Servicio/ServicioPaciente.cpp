@@ -470,3 +470,17 @@ void ServicioPaciente::ordenarPacientesPorApellido() {
         }
     }
 }
+
+//BUSACR POR ID (USADO EN REPORTE)
+bool ServicioPaciente::buscarPorId(int id, Paciente &paciente) {
+    vector<Paciente> lista = managerPaciente.leerTodos();
+
+    for (int i = 0; i < (int)lista.size(); i++) {
+        if (lista[i].getId() == id) {
+            paciente = lista[i];
+            return true;
+        }
+    }
+
+    return false;
+}

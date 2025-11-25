@@ -25,4 +25,5 @@ class ServicioPaciente {
         void buscarPacientePorDNI();
         void buscarPacientePorApellido();
         void ordenarPacientesPorApellido();
+        bool buscarPorId(int id, Paciente &paciente);
 };

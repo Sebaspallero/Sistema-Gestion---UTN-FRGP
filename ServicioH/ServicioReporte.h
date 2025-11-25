@@ -26,4 +26,8 @@ public:
     void reporteRecaudacionMensual();
     void reporteCantidadPorAnalisis();
     void reporteRecaudacionPorMetodoPago();
+    void reporteTurnosPorObraSocial();
+    void reporteAsistenciaTurnos();
+    void reporteFacturasPorObraSocial();
+    void reporteRankingMetodoPago();
 };
