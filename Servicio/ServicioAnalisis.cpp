@@ -1,11 +1,13 @@
 #include "../ServicioH/ServicioAnalisis.h"
 #include "../ManagerH/ManagerAnalisis.h"
 #include "../ServicioH/ServicioCategoria.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 #include <string>
 #include <iostream>
 #include <limits>
 
 ServicioAnalisis::ServicioAnalisis(): _managerAnalisis("analisis.dat"), _servicioCategoria() {}
+
 
 //CREAR ANALISIS
 void ServicioAnalisis::crearAnalisis() {
@@ -21,9 +23,7 @@ void ServicioAnalisis::crearAnalisis() {
     _servicioCategoria.listarCategorias(categorias);
 
     while (!categoriaValida) {
-        std::cout << "Ingrese el ID de la categoria (0 para cancelar): ";
-        std::cin >> idCategoria;
-
+        idCategoria = pedirEntero("Ingrese el ID de la categoria (0 para cancelar): ");
         if (idCategoria == 0) {
             std::cout << "Operacion cancelada."<<std::endl;
             return;
@@ -40,9 +40,7 @@ void ServicioAnalisis::crearAnalisis() {
             std::cout << "ID invalido. Intente nuevamente."<<std::endl;
         }
     }
-
-    std::cin.clear();
-    std::cin.ignore();
+    limpiarBuffer();
 
     do{
         std::cout<<"Ingrese el nombre del analisis: "<<std::endl;
@@ -53,13 +51,10 @@ void ServicioAnalisis::crearAnalisis() {
     }while(nombre.empty() || nombre.find_first_not_of(' ') == std::string::npos);
 
     do{
-        std::cout<<"Ingrese el valor del analisis: $";
-        std::cin>>valor;
+        valor = pedirFloat("Ingrese el valor del analisis: $");
 
-        if(std::cin.fail() || valor<=0){
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout<<"El valor ingresado no es correcto. No puede haber letras, negativos o 0."<<std::endl;
+        if(valor<=0){
+            std::cout<<"El valor ingresado no puede ser menor o igual a 0."<<std::endl;
             valor = -1;
         }
     }while(valor<=0);
@@ -87,16 +82,7 @@ void ServicioAnalisis::modificarAnalisis() {
     }
 
     listarAnalisis(lista);
-
-    std::cout << std::endl << "Ingrese el ID correspondiente al analisis que desea modificar: ";
-
-    while (!(std::cin >> id)) {
-        std::cout << "Error: debe ingresar un número entero."<<std::endl;
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "Ingrese el ID: ";
-    }
-
+    id = pedirEntero("Ingrese el ID correspondiente al analisis que desea modificar: ");
     posicion = _managerAnalisis.buscar(id);
     if (posicion == -1) {
         std::cout << "No se encontro un analisis activo con ese ID."<<std::endl;
@@ -114,14 +100,7 @@ void ServicioAnalisis::modificarAnalisis() {
 
     bool categoriaValida = false;
     while (!categoriaValida) {
-        std::cout << "Elija el ID de la categoría que corresponde al analisis: ";
-        if (!(std::cin >> idCategoria)) {
-            std::cout << "Error: debe ingresar un numero entero."<<std::endl;
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            continue;
-        }
-
+        idCategoria = pedirEntero("Elija el ID de la categoría que corresponde al analisis: ");
         for (int i = 0; i < (int)categorias.size(); i++) {
             if (categorias[i].getId() == idCategoria) {
                 categoriaValida = true;
@@ -137,26 +116,12 @@ void ServicioAnalisis::modificarAnalisis() {
     analisis.setIdCategoria(idCategoria);
 
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    do {
-        std::cout << "- Ingrese el nuevo nombre del analisis: ";
-        std::getline(std::cin, nombre);
-
-        if (nombre.empty() || nombre.find_first_not_of(' ') == std::string::npos) {
-            std::cout << "El nombre no puede estar vacio ni ser solo espacios. Intente nuevamente." << std::endl;
-        }
-    } while (nombre.empty() || nombre.find_first_not_of(' ') == std::string::npos);
-
+    nombre = pedirString("- Ingrese el nuevo nombre del analisis: ");
     analisis.setNombre(nombre);
 
     bool valorValido = false;
     while (!valorValido) {
-        std::cout << "- Ingrese el nuevo valor del analisis: ";
-        if (!(std::cin >> valor)) {
-            std::cout << "Error: debe ingresar un numero." << std::endl;
-            std::cin.clear();
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            continue;
-        }
+        valor = pedirFloat("- Ingrese el nuevo valor del analisis: ");
         if (valor <= 0) {
             std::cout << "El valor debe ser mayor a 0." << std::endl;
             continue;
@@ -194,16 +159,8 @@ void ServicioAnalisis::eliminarAnalisis(){
     listarAnalisis(lista);
 
     int id;
-    std::cout << std::endl << "Ingrese el ID del analisis a eliminar: ";
-
     // Validar que se ingrese un número
-    while (!(std::cin >> id)) {
-        std::cout << "Error: debe ingresar un numero entero."<< std::endl;
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "Ingrese el ID del analisis a eliminar: ";
-    }
-
+    id = pedirEntero("Ingrese el ID del analisis a eliminar: ");
     // Verificar que el ID exista (y esté activo, porque buscar mira getEstado())
     int posicion = _managerAnalisis.buscar(id);
     if (posicion == -1) {
@@ -244,13 +201,11 @@ void ServicioAnalisis::buscarPorCategoria(){
         return;
     }
     _servicioCategoria.listarCategorias(categorias);
-    std::cout<<"Ingrese el ID de la categoria por la cual desea filtrar: ";
-    std::cin>>idCategoria;std::cout<<std::endl;
+    idCategoria = pedirEntero("Ingrese el ID de la categoria por la cual desea filtrar: ");
     std::vector<Analisis> categoria = _managerAnalisis.buscarPorCategoria(idCategoria,encontro);
     while(!encontro){
         std::cout<<"No se encontro ningun estudio categorizado con ese ID. Intentelo nuevamente."<<std::endl;
-        std::cout<<"Ingrese el ID de la categoria por la cual desea filtrar: ";
-        std::cin>>idCategoria;std::cout<<std::endl;
+        idCategoria = pedirEntero("ID CATEGORIA: ");
         categoria = _managerAnalisis.buscarPorCategoria(idCategoria,encontro);
 
     };
@@ -262,7 +217,13 @@ void ServicioAnalisis::buscarPorCategoria(){
 void ServicioAnalisis::listarPorNombre(){
     std::string nombre;
     std::vector<Analisis> lista = _managerAnalisis.leerTodos();
-     _managerAnalisis.listarAnalisis(lista);
+    std::cout<<std::endl;
+    std::cout<<"-NOMBRES DE LOS ANALISIS-"<<std::endl;
+     for(int i = 0;(int)i<lista.size();i++){
+        std::cout<<"-------------------------"<<std::endl;
+        std::cout<<lista[i].getNombre()<<std::endl;
+     }
+    std::cout<<"-------------------------"<<std::endl;
     std::cout<<"Ingrese el nombre del Analisis por el que quiere filtrar: ";
     std::getline(std::cin,nombre);
     std::vector<Analisis> listaPorNombre = _managerAnalisis.buscarPorNombre(nombre);

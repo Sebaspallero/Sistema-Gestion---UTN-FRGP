@@ -1,5 +1,6 @@
 #include "../ServicioH/ServicioBioquimico.h"
 #include "../ManagerH/Manager.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 #include <iostream>
 #include <limits>
 using namespace std;
@@ -386,3 +387,24 @@ void ServicioBioquimico::ordenarBioquimicosPorLegajo() {
              << "-------------------------" << endl;
     }
 }
+
+void ServicioBioquimico::buscarPorMatricula(){
+int matricula;
+bool encontro;
+Bioquimico bioquimico;
+matricula = pedirEntero("Ingrese la matricula de Bioquimico que desea buscar: ");
+bioquimico = managerBioquimico.buscarPorMatricula(matricula,encontro);
+if(encontro){
+    cout << "\n-- BIOQUIMICO MATRICULA: "<<matricula<<" --\n";
+            cout << "ID: " << bioquimico.getId()
+                 << " | Nombre: " << bioquimico.getNombre()
+                 << " | Apellido: " << bioquimico.getApellido()
+                 << " | DNI: " << bioquimico.getDNI()
+                 << " | Matricula: " << bioquimico.getMatricula()
+                 << "\n";
+
+}else{
+    cout<<"No existe un Bioquimico con ese numero de matricula."<<endl;
+}
+}
+

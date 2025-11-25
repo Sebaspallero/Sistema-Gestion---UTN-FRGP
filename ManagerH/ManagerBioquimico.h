@@ -10,4 +10,5 @@ public:
 
     std::vector<Bioquimico> ordenarPorApellido();
     std::vector<Bioquimico> ordenarPorLegajo();
+    Bioquimico buscarPorMatricula(int matricula,bool& encontro);
 };

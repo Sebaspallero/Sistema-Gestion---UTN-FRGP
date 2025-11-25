@@ -33,3 +33,15 @@ std::vector<Bioquimico> ManagerBioquimico::ordenarPorLegajo() {
     }
     return lista;
 }
+
+
+Bioquimico ManagerBioquimico::buscarPorMatricula(int matricula,bool& encontro){
+std::vector<Bioquimico> lista = leerTodos();
+for(int i = 0;(int)i<lista.size();i++){
+    if(lista[i].getMatricula()== matricula){
+        encontro = true;
+        return lista[i];
+    }
+}
+    return Bioquimico();
+}

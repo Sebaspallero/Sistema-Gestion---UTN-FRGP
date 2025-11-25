@@ -21,4 +21,5 @@ class ServicioBioquimico {
         void listarBioquimicos(const std::vector<Bioquimico>& bioquimicos);
         void ordenarBioquimicosPorApellido();
         void ordenarBioquimicosPorLegajo();
+        void buscarPorMatricula();
 };

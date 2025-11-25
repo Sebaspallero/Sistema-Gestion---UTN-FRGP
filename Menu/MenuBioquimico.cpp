@@ -17,8 +17,9 @@ void MenuBioquimico::ejecutar() {
         cout << "3. Modificar bioquimico\n";
         cout << "4. Listar bioquimicos\n";
         cout << "------------------------------\n";
-        cout << "5. Ordenar bioquimicos por apellido\n";
-        cout << "6. Ordenar bioquimicos por matricula\n";
+        cout << "5. Buscar Bioquimico por Matricula\n";
+        cout << "6. Ordenar bioquimicos por apellido\n";
+        cout << "7. Ordenar bioquimicos por matricula\n";
         cout << "0. Volver al menu principal\n";
         opcion = pedirEntero("Seleccione una opcion: ");
 
@@ -45,11 +46,16 @@ void MenuBioquimico::ejecutar() {
                 break;
 
             case 5:
-                servicioBioquimico.ordenarBioquimicosPorApellido();
+                servicioBioquimico.buscarPorMatricula();
                 pausar();
                 break;
 
             case 6:
+                servicioBioquimico.ordenarBioquimicosPorApellido();
+                pausar();
+                break;
+
+            case 7:
                 servicioBioquimico.ordenarBioquimicosPorLegajo();
                 pausar();
                 break;

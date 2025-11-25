@@ -61,8 +61,8 @@ float pedirFloat(const std::string &mensaje) {
         }
 
         try {
-            size_t pos;
-            valor = std::stof(input, &pos);
+            size_t pos; //almacena la posicion del primer caracter que no fue procesado durante la conversion
+            valor = std::stof(input, &pos);  //Convierte una cadena a un float
 
             // Validar que TODOS los caracteres se hayan convertido
             if (pos != input.length()) {
@@ -96,4 +96,10 @@ std::string pedirString(const std::string& mensaje) {
 
         std::cout << "El texto no puede estar vacio.\n";
     }
+}
+
+
+void limpiarBuffer(){
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
