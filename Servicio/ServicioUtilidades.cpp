@@ -2,6 +2,9 @@
 #include <string>
 #include <limits>
 #include "../ServicioH/ServiciosUtilidades.h"
+
+using namespace std;
+
 int pedirEntero(const std::string& mensaje) {
     int valor;
     while (true) {
@@ -98,8 +101,56 @@ std::string pedirString(const std::string& mensaje) {
     }
 }
 
-
 void limpiarBuffer(){
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
+
+Fecha pedirFecha(const std::string& mensaje, int anioMin, int anioMax) {
+    int dia, mes, anio;
+
+    while (true) {
+        cout << "\n" << mensaje << endl;
+
+        while (true) {
+            cout << "Dia (1-31): ";
+            if (cin >> dia && dia >= 1 && dia <= 31) break;
+            cout << "Dia invalido.\n";
+            limpiarBuffer();
+        }
+
+        while (true) {
+            cout << "Mes (1-12): ";
+            if (cin >> mes && mes >= 1 && mes <= 12) break;
+            cout << "Mes invalido.\n";
+            limpiarBuffer();
+        }
+
+        while (true) {
+            cout << "Anio (" << anioMin << "-" << anioMax << "): ";
+            if (cin >> anio && anio >= anioMin && anio <= anioMax) break;
+            cout << "Anio invalido.\n";
+            limpiarBuffer();
+        }
+
+        if (validarFecha(dia, mes, anio)) {
+            return Fecha(dia, mes, anio);
+        }
+
+        cout << "La fecha ingresada no es valida. Intente nuevamente.\n";
+    }
+}
+
+bool validarFecha(int dia, int mes, int anio) {
+    if (anio <= 0) return false;
+    if (mes < 1 || mes > 12) return false;
+    if (dia < 1 || dia > 31) return false;
+
+    if ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia > 30)
+        return false;
+    if (mes == 2 && dia > 28)
+        return false;
+
+    return true;
+}
+

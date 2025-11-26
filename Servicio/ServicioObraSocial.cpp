@@ -104,8 +104,8 @@ void ServicioObraSocial::eliminarObraSocial() {
 
     int id = pedirEntero("\nIngrese el ID a eliminar (0 para cancelar): ");
     if (id == 0) {
-    std::cout << "Operacion cancelada." << endl;
-    return;
+        std::cout << "Operacion cancelada." << endl;
+        return;
     }
 
     int posicion = managerObraSocial.buscar(id);

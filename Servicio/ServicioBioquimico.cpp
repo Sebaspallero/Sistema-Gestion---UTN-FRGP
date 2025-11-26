@@ -37,7 +37,7 @@ void ServicioBioquimico::crearBioquimico() {
 
     int id = managerBioquimico.obtenerNuevoId();
     string nombre, apellido, email;
-    int dia, mes, anio, dni, matricula;
+    int dni, matricula;
 
     //NOMBRE
     do {
@@ -58,32 +58,7 @@ void ServicioBioquimico::crearBioquimico() {
     } while (apellido.empty() || apellido.find_first_not_of(' ')==string::npos);
 
     //FECHA NACIMIENTO
-    while (true) {
-        cout << "Ingrese dia de nacimiento (1-31): ";
-        if (cin >> dia && dia >= 1 && dia <= 31) {
-            break;
-        }
-        cout << "Dia fuera de rango o invalido.\n";
-        limpiarBuffer();
-    }
-
-    while (true) {
-        cout << "Ingrese mes de nacimiento (1-12): ";
-        if (cin >> mes && mes >= 1 && mes <= 12){
-            break;
-        }
-        cout << "Mes fuera de rango o invalido.\n";
-        limpiarBuffer();
-    }
-
-    while (true) {
-        cout << "Ingrese anio de nacimiento (1900-2025): ";
-        if (cin >> anio && anio >= 1900 && anio <= 2025){
-             break;
-        }
-        cout << "Anio fuera de rango o invalido.\n";
-        limpiarBuffer();
-    }
+    Fecha fechaNacimiento = pedirFecha("Ingrese la fecha de nacimiento:", 1900, 2025);
 
     limpiarBuffer();
 
@@ -126,7 +101,6 @@ void ServicioBioquimico::crearBioquimico() {
         }
     }
 
-    Fecha fechaNacimiento(dia, mes, anio);
     Bioquimico bioquimico(id, nombre, apellido, fechaNacimiento, dni, email, matricula);
 
     if(managerBioquimico.guardar(bioquimico)){
@@ -170,7 +144,7 @@ void ServicioBioquimico::modificarBioquimico() {
     Bioquimico bioquimico = managerBioquimico.leer(posicion);
 
     string nombre, apellido, email;
-    int dia, mes, anio, dni, matricula;
+    int dni, matricula;
 
     cout << "\n-- MODIFICANDO DATOS (Presione ENTER en textos para mantener el actual) --\n";
 
@@ -199,30 +173,10 @@ void ServicioBioquimico::modificarBioquimico() {
         }
 
     //FECHA NACIMIENTO
-    cout << "\n-- Reingrese la fecha de nacimiento --\n";
+    cout << "\n-- Fecha de nacimiento actual: "
+     << bioquimico.getFechaNacimiento().toString() << "\n";
 
-    while (true) {
-        cout << "Nuevo dia (" << bioquimico.getFechaNacimiento().getDia() << "): ";
-        if (cin >> dia && dia >= 1 && dia <= 31) break;
-        cout << "Dia invalido." << endl;
-        limpiarBuffer();
-        continue;
-    }
-    while (true) {
-        cout << "Nuevo mes (" << bioquimico.getFechaNacimiento().getMes() << "): ";
-        if (cin >> mes && mes >= 1 && mes <= 12) break;
-        cout << "Mes invalido." << endl;
-        limpiarBuffer();
-        continue;
-    }
-    while (true) {
-        cout << "Nuevo anio (" << bioquimico.getFechaNacimiento().getAnio() << "): ";
-        if (cin >> anio && anio >= 1900 && anio <= 2025) break;
-        cout << "Anio invalido." << endl;
-        limpiarBuffer();
-        continue;
-    }
-    limpiarBuffer();
+    Fecha fechaNacimiento = pedirFecha("Ingrese nueva fecha:", 1900, 2025);
 
     // DNI
     while (true) {
@@ -256,19 +210,20 @@ void ServicioBioquimico::modificarBioquimico() {
         cout << "Nueva matricula [" << bioquimico.getMatricula() << "]: ";
         if (cin >> matricula) {
             if (matricula > 0) {
-                    if (matricula == bioquimico.getMatricula() || !existeMatricula(matricula)){
-                limpiarBuffer();
-                break;
-            } else{
+                if (matricula == bioquimico.getMatricula() || !existeMatricula(matricula)) {
+                    limpiarBuffer();
+                    break;
+                } else {
                     cout << "Error: Ya existe un bioquimico con esa matricula. " << endl;
                 }
-        } else{
-            cout << "La matricula debe ser positiva." << endl;
-            limpiarBuffer();
+            } else {
+                cout << "La matricula debe ser positiva." << endl;
             }
+        } else {
+            cout << "Error: Ingrese un numero.\n";
+            limpiarBuffer();
         }
-
-    Fecha fechaNacimiento(dia, mes, anio);
+    }
 
     bioquimico.setNombre(nombre);
     bioquimico.setApellido(apellido);
@@ -282,7 +237,6 @@ void ServicioBioquimico::modificarBioquimico() {
     } else {
         cout << "Error al intentar modificar el bioquimico.\n";
     }
-}
 }
 //OBTENER BIOQUIMICOS
 std::vector<Bioquimico> ServicioBioquimico::obtenerBioquimicos(){

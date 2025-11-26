@@ -1,4 +1,5 @@
 #include "../ServicioH/ServicioPaciente.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 #include <iostream>
 #include <limits>
 using namespace std;
@@ -67,38 +68,7 @@ void ServicioPaciente::crearPaciente() {
     } while (apellido.empty() || apellido.find_first_not_of(' ')==string::npos);
 
     //FECHA DE NACIMIENTO
-    while (true) {
-        cout << "Ingrese dia de nacimiento (1-31): ";
-        if (cin >> dia) {
-            if (dia >= 1 && dia <= 31) break;
-            else cout << "Dia fuera de rango." << endl;
-        } else {
-            cout << "Error: Debe ingresar un numero." << endl;
-            limpiarBuffer();
-        }
-    }
-
-    while (true) {
-        cout << "Ingrese mes de nacimiento (1-12): ";
-        if (cin >> mes) {
-            if (mes >= 1 && mes <= 12) break;
-            else cout << "Mes fuera de rango." << endl;
-        } else {
-            cout << "Error: Debe ingresar un numero." << endl;
-            limpiarBuffer();
-        }
-    }
-
-    while (true) {
-        cout << "Ingrese anio de nacimiento (1900-2024): ";
-        if (cin >> anio) {
-            if (anio >= 1900 && anio <= 2025) break;
-            else cout << "Anio invalido.\n";
-        } else {
-            cout << "Error: Debe ingresar un numero.\n";
-            limpiarBuffer();
-        }
-    }
+    Fecha fechaNacimiento = pedirFecha("Ingrese la fecha de nacimiento:", 1900, 2025);
 
     limpiarBuffer();
 
@@ -156,7 +126,6 @@ void ServicioPaciente::crearPaciente() {
         }
     }
 
-    Fecha fechaNacimiento(dia, mes, anio);
     Paciente paciente(id, nombre, apellido, fechaNacimiento, dni, email, telefono, codigoObraSocial);
 
     if (managerPaciente.guardar(paciente)) {
@@ -209,7 +178,17 @@ void ServicioPaciente::eliminarPaciente() {
             limpiarBuffer();
         }
     }
+
     if (id == 0) return;
+
+    // Confirmación
+    cout << "Esta seguro que desea eliminar el paciente con ID " << id << "? (S/N): ";
+    char confirma;
+    cin >> confirma;
+    if (confirma != 'S' && confirma != 's') {
+        cout << "Operacion cancelada. No se elimino el paciente.\n";
+        return;
+    }
 
     if (managerPaciente.eliminar(id)) {
         cout << "\n-- ELIMINADO EXITOSAMENTE --\n";
@@ -273,43 +252,10 @@ void ServicioPaciente::modificarPaciente() {
     }
 
     //FECHA
-    cout << "\n-- Reingrese la fecha de nacimiento --\n";
+    cout << "\n-- Fecha de nacimiento actual: "
+     << paciente.getFechaNacimiento().toString() << "\n";
 
-    //DIA
-    while (true) {
-        cout << "Nuevo dia (" << paciente.getFechaNacimiento().getDia() << "): ";
-        if (cin >> dia) {
-            if (dia >= 1 && dia <= 31) break;
-            else cout << "Dia fuera de rango.\n";
-        } else {
-            cout << "Error: Debe ingresar un numero.\n";
-            limpiarBuffer();
-        }
-    }
-
-    //MES
-    while (true) {
-        cout << "Nuevo mes (" << paciente.getFechaNacimiento().getMes() << "): ";
-        if (cin >> mes) {
-            if (mes >= 1 && mes <= 12) break;
-            else cout << "Mes fuera de rango.\n";
-        } else {
-            cout << "Error: Debe ingresar un numero.\n";
-            limpiarBuffer();
-        }
-    }
-
-    //ANIO
-    while (true) {
-        cout << "Nuevo anio (" << paciente.getFechaNacimiento().getAnio() << "): ";
-        if (cin >> anio) {
-            if (anio >= 1900 && anio <= 2025) break;
-            else cout << "Anio invalido.\n";
-        } else {
-            cout << "Error: Debe ingresar un numero.\n";
-            limpiarBuffer();
-        }
-    }
+    Fecha fechaNacimiento = pedirFecha("Ingrese nueva fecha:", 1900, 2025);
 
     //DNI -> HAY QUE VALIDAR QUE SEA UNICO PERO QUE SE PUEDA INGRESAR EL PROPIO
     while (true) {
@@ -373,8 +319,6 @@ void ServicioPaciente::modificarPaciente() {
     }
 
     //GUARDADO
-    Fecha fechaNacimiento(dia, mes, anio);
-
     paciente.setNombre(nombre);
     paciente.setApellido(apellido);
     paciente.setFechaNacimiento(fechaNacimiento);

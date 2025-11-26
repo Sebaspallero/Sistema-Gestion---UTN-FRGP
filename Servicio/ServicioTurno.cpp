@@ -12,20 +12,6 @@ ServicioTurno::ServicioTurno() :
     servicioPaciente(),
     servicioBioquimico(){}
 
-//METODOS AUXILIARES
-bool validarFecha(int dia, int mes, int anio) {
-    if (anio <= 0) return false;
-    if (mes < 1 || mes > 12) return false;
-    if (dia < 1 || dia > 31) return false;
-
-    if ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia > 30)
-        return false;
-    if (mes == 2 && dia > 28)
-        return false;
-
-    return true;
-}
-
 //VALIDAR SI LA FECHA ESTA OCUPADA
 bool ServicioTurno::fechaOcupada(const FechaHora& nuevaFechaHora, int idSala, int idBioquimico) {
     std::vector<Turno> turnos = obtenerTurnos();
@@ -372,11 +358,17 @@ void ServicioTurno::eliminarTurno() {
             continue;
         }
 
-        if (id == 0){
-            return;
-        }else{
-            break;
-        }
+        if (id == 0) return;
+        break;
+    }
+
+    // Confirmación
+    cout << "Esta seguro que desea eliminar el turno con ID " << id << "? (S/N): ";
+    char confirma;
+    cin >> confirma;
+    if (confirma != 'S' && confirma != 's') {
+        cout << "Operacion cancelada. No se elimino el turno.\n";
+        return;
     }
 
     bool eliminado = managerTurno.eliminar(id);

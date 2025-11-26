@@ -67,11 +67,10 @@ void ServicioSala :: listarSalas(const std::vector<Sala>& salas){
         }
 }
 
-//ELIMINAR SALA
-void ServicioSala::eliminarSala(){
+void ServicioSala::eliminarSala() {
     std::vector<Sala> lista = obtenerSalas();
 
-    if(lista.empty()){
+    if (lista.empty()) {
         cout << "\nNo hay salas para eliminar.\n";
         return;
     }
@@ -92,7 +91,16 @@ void ServicioSala::eliminarSala(){
 
     if (id == 0) return;
 
-    if(managerSala.eliminar(id)){
+    // Confirmación
+    cout << "Esta seguro que desea eliminar la sala con ID " << id << "? (S/N): ";
+    char confirma;
+    cin >> confirma;
+    if (confirma != 'S' && confirma != 's') {
+        cout << "Operacion cancelada. No se elimino la sala.\n";
+        return;
+    }
+
+    if (managerSala.eliminar(id)) {
         cout << "\n-- SALA ELIMINADA EXITOSAMENTE --\n";
     } else {
         cout << "\n-- NO SE ENCONTRO ESE ID --\n";

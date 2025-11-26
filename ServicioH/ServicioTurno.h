@@ -13,7 +13,6 @@ class ServicioTurno{
         ServicioPaciente servicioPaciente;
         ServicioBioquimico servicioBioquimico;
 
-        bool validarFechaSimple(int dia, int mes, int anio);
         bool fechaOcupada(const FechaHora& nuevaFechaHora, int idSala, int idBioquimico);
 
         std::string nombrePacientePorId(int id, const std::vector<Paciente>& lista);

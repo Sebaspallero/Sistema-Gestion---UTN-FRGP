@@ -1,4 +1,5 @@
 #include "../ServicioH/ServicioResultado.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 #include <iostream>
 #include <limits>
 using namespace std;
@@ -35,7 +36,6 @@ void ServicioResultado::crearResultado() {
     int id = managerResultado.obtenerNuevoId();
     int idTurno;
     string descripcion;
-    int dia, mes, anio;
 
     servicioTurno.listarTurnos(turnosAsistencia);
     //VALIDACION ID TURNO
@@ -78,38 +78,9 @@ void ServicioResultado::crearResultado() {
     } while (descripcion.empty());
 
     //FECHA
+    Fecha fechaResultado = pedirFecha("Ingrese nueva fecha:", 2022, 2025);
 
-    //DIA
-    while (true) {
-        cout << "Ingrese el dia de hoy (1-31): ";
-        if (cin >> dia && dia >= 1 && dia <= 31){
-            break;
-        }
-        cout << "Dia invalido.\n";
-        limpiarBuffer();
-    }
-
-    //MES
-    while (true) {
-        cout << "Ingrese el mes actual(1-12): ";
-        if (cin >> mes && mes >= 1 && mes <= 12){
-            break;
-        }
-        cout << "Mes invalido.\n";
-        limpiarBuffer();
-    }
-
-    //ANIO
-    while (true) {
-        cout << "Ingrese el anio actual (2000-2025): ";
-        if (cin >> anio && anio >= 2000 && anio <= 2025){
-            break;
-        }
-        cout << "Anio invalido.\n";
-        limpiarBuffer();
-    }
-
-    Resultado resultado(id, idTurno, descripcion, Fecha(dia, mes, anio));
+    Resultado resultado(id, idTurno, descripcion, fechaResultado);
 
     if(managerResultado.guardar(resultado)){
         cout << "Resultado creado con exito!\n";
@@ -176,7 +147,6 @@ void ServicioResultado::modificarResultado() {
     Resultado resultado = managerResultado.leer(pos);
 
     string descripcion;
-    int dia, mes, anio;
 
     cout << "\n-- MODIFICANDO DATOS (Presione ENTER en textos para mantener el actual) --\n";
 
@@ -189,38 +159,13 @@ void ServicioResultado::modificarResultado() {
     // FECHA
     cout << "\n-- Reingrese la fecha del resultado --\n";
 
-    //DIA
-    while (true) {
-        cout << "Nuevo dia (" << resultado.getFecha().getDia() << "): ";
-        if (cin >> dia && dia >= 1 && dia <= 31){
-            break;
-        }
-        cout << "Dia invalido.\n";
-        limpiarBuffer();
-    }
+    cout << "\n-- Fecha de resultado actual: "
+     << resultado.getFecha().toString() << "\n";
 
-    //MES
-    while (true) {
-        cout << "Nuevo mes (" << resultado.getFecha().getMes() << "): ";
-        if (cin >> mes && mes >= 1 && mes <= 12){
-            break;
-        }
-        cout << "Mes invalido.\n";
-        limpiarBuffer();
-    }
-
-    //ANIO
-    while (true) {
-        cout << "Nuevo anio (" << resultado.getFecha().getAnio() << "): ";
-        if (cin >> anio && anio >= 2000 && anio <= 2025){
-             break;
-        }
-        cout << "Anio invalido.\n";
-        limpiarBuffer();
-    }
+    Fecha fechaResultado = pedirFecha("Ingrese nueva fecha:", 1900, 2025);
 
     resultado.setDescripcion(descripcion);
-    resultado.setFecha(Fecha(dia, mes, anio));
+    resultado.setFecha(fechaResultado);
 
     if(managerResultado.modificar(resultado, pos)){
         cout << "Resultado modificado con exito!\n";
@@ -253,6 +198,16 @@ void ServicioResultado::eliminarResultado() {
     }
 
     if (id == 0) return;
+
+    // Confirmación
+    cout << "Esta seguro que desea eliminar el resultado con ID " << id << "? (S/N): ";
+    char confirma;
+    cin >> confirma;
+
+    if (confirma != 'S' && confirma != 's') {
+        cout << "Operacion cancelada. No se elimino el resultado.\n";
+        return;
+    }
 
     if (managerResultado.eliminar(id)) {
         cout << "Resultado eliminado correctamente.\n";

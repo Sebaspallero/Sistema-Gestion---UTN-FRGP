@@ -32,13 +32,13 @@ std::vector<Factura> ManagerFactura::buscarPorMetodoDePago(int idMetodoDePago) {
 }
 
 // BUSCAR POR FECHA
-std::vector<Factura> ManagerFactura::buscarPorFecha(int dia, int mes, int anio) {
+std::vector<Factura> ManagerFactura::buscarPorFecha(Fecha fecha) {
     std::vector<Factura> lista = leerTodos();
     std::vector<Factura> resultado;
 
     for (int i = 0; i < (int)lista.size(); i++) {
         Fecha f = lista[i].getFechaPago();
-        if (f.getDia() == dia && f.getMes() == mes && f.getAnio() == anio) {
+        if (f.esIgual(fecha)) {
             resultado.push_back(lista[i]);
         }
     }

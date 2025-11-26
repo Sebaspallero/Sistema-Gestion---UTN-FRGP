@@ -23,7 +23,6 @@ class ServicioFactura{
 
         void limpiarBuffer() const;
 
-        bool validarFechaFactura(int dia, int mes, int anio);
         bool existeFacturaParaTurno(int idTurno);
         float calcularMontoConDescuento(int idPaciente, int idAnalisis, const std::vector<Paciente>& listaPacientes, const std::vector<Analisis>& listaAnalisis,const std::vector<ObraSocial>& listaOS);
 

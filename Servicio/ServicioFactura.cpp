@@ -1,4 +1,5 @@
 #include "../ServicioH/ServicioFactura.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 #include <iostream>
 #include <limits>
 #include <vector>
@@ -88,20 +89,6 @@ float ServicioFactura::calcularMontoConDescuento(int idPaciente, int idAnalisis,
     //CALCULO FINAL
     float descuento = valorBase * (porcentajeDescuento / 100.0f);
     return valorBase - descuento;
-}
-
-bool ServicioFactura::validarFechaFactura(int dia, int mes, int anio) {
-    if (anio <= 2000) return false; // Validacion basica de anio
-    if (mes < 1 || mes > 12) return false;
-    if (dia < 1 || dia > 31) return false;
-
-    if ((mes == 4 || mes == 6 || mes == 9 || mes == 11) && dia > 30)
-        return false;
-    // Febrero
-    if (mes == 2 && dia > 29)
-        return false;
-
-    return true;
 }
 
 //CREAR FACTURA
@@ -198,27 +185,7 @@ void ServicioFactura::crearFactura() {
     }
 
     //FECHA DE PAGO
-    int dia, mes, anio;
-    while(true) {
-        cout << "Ingrese fecha de pago (hoy) - Dia: "; cin >> dia;
-        if(cin.fail()){
-            limpiarBuffer();
-            continue;
-            }
-        cout << "Mes: "; cin >> mes;
-        if(cin.fail()){
-            limpiarBuffer();
-            continue;
-            }
-        cout << "Anio: "; cin >> anio;
-        if(cin.fail()){
-            limpiarBuffer();
-            continue;
-            }
-
-        if (dia > 0 && dia <= 31 && mes > 0 && mes <= 12 && anio > 2000) break;
-        cout << "Fecha invalida.\n";
-    }
+    Fecha fechaFactura = pedirFecha("Ingrese nueva fecha:", 2022, 2025);
 
     //GUARDAR FACTURA
     int nuevoIdFactura = managerFactura.obtenerNuevoId();
@@ -229,7 +196,7 @@ void ServicioFactura::crearFactura() {
                          idMetodo,
                          turnoSeleccionado.getId(),
                          montoFinal,
-                         Fecha(dia, mes, anio));
+                         fechaFactura);
 
     if (managerFactura.guardar(nuevaFactura)) {
         cout << "\nFactura generada correctamente.\n";
@@ -374,6 +341,15 @@ void ServicioFactura::eliminarFactura() {
         }
     }
 
+    // Confirmación
+    cout << "Esta seguro que desea eliminar la factura con ID " << id << "? (S/N): ";
+    char confirma;
+    cin >> confirma;
+    if (confirma != 'S' && confirma != 's') {
+        cout << "Operacion cancelada. No se elimino la factura.\n";
+        return;
+    }
+
     if (managerFactura.eliminar(id)) {
         cout << "Factura eliminada correctamente.\n";
     } else {
@@ -409,24 +385,11 @@ void ServicioFactura::buscarPorMetodoDePago() {
 
 //BUSCAR x FECHA
 void ServicioFactura::buscarPorFecha() {
-    int dia, mes, anio;
     cout << "\n-- BUSQUEDA POR FECHA --\n";
 
-    while(true) {
-        cout << "Ingrese dia: "; cin >> dia;
-        if(cin.fail()){ limpiarBuffer(); continue; }
+    Fecha fechaFactura = pedirFecha("Ingrese nueva fecha:", 2022, 2025);
 
-        cout << "Ingrese mes: "; cin >> mes;
-        if(cin.fail()){ limpiarBuffer(); continue; }
-
-        cout << "Ingrese anio: "; cin >> anio;
-        if(cin.fail()){ limpiarBuffer(); continue; }
-
-        if (validarFechaFactura(dia, mes, anio)) break;
-        cout << "Fecha invalida. Intente nuevamente.\n";
-    }
-
-    vector<Factura> lista = managerFactura.buscarPorFecha(dia, mes, anio);
+    vector<Factura> lista = managerFactura.buscarPorFecha(fechaFactura);
     if(lista.empty()) {
         cout << "No se encontraron facturas en esa fecha.\n";
         return;
