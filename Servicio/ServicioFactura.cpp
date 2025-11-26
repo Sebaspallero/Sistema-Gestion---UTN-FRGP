@@ -169,9 +169,10 @@ void ServicioFactura::crearFactura() {
 
     int idMetodo;
     while (true) {
-        cout << "Seleccione ID Metodo de Pago: ";
+        cout << "Seleccione ID Metodo de Pago (0 para cancelar): ";
         cin >> idMetodo;
         if (cin.fail()) { limpiarBuffer(); continue; }
+        if(idMetodo == 0) return;
 
         bool existe = false;
         for(int i=0; i < metodos.size(); i++) {
@@ -186,6 +187,8 @@ void ServicioFactura::crearFactura() {
 
     //FECHA DE PAGO
     Fecha fechaFactura = pedirFecha("Ingrese nueva fecha:", 2022, 2025);
+
+    if (fechaFactura.getAnio() == 0) return;
 
     //GUARDAR FACTURA
     int nuevoIdFactura = managerFactura.obtenerNuevoId();
@@ -280,15 +283,11 @@ void ServicioFactura::modificarFactura() {
     servicioMetodoDePago.listarMetodosDePago(metodos);
 
     while(true) {
-        cout << "Nuevo ID Metodo de Pago (0 para mantener actual): ";
+        cout << "Nuevo ID Metodo de Pago (0 para cancelar): ";
         cin >> nuevoIdMetodo;
         if(cin.fail()) { limpiarBuffer(); continue; }
 
-        if(nuevoIdMetodo == 0) {
-            nuevoIdMetodo = factura.getIdMetodoPago();
-            cout << "Manteniendo metodo anterior.\n";
-            break;
-        }
+        if(nuevoIdMetodo == 0) return;
 
         // Validar existencia
         bool existe = false;
@@ -364,13 +363,14 @@ void ServicioFactura::buscarPorMetodoDePago() {
 
     int id;
     while(true) {
-        cout << "Ingrese ID de metodo de pago a buscar: ";
+        cout << "Ingrese ID de metodo de pago a buscar (0 para salir): ";
         cin >> id;
         if (cin.fail()) {
             cout << "Error: Ingrese un numero valido.\n";
             limpiarBuffer();
             continue;
         }
+        if(id == 0) return;
         break;
     }
 
@@ -388,6 +388,7 @@ void ServicioFactura::buscarPorFecha() {
     cout << "\n-- BUSQUEDA POR FECHA --\n";
 
     Fecha fechaFactura = pedirFecha("Ingrese nueva fecha:", 2022, 2025);
+    if (fechaFactura.getAnio() == 0) return;
 
     vector<Factura> lista = managerFactura.buscarPorFecha(fechaFactura);
     if(lista.empty()) {
@@ -412,6 +413,7 @@ void ServicioFactura::buscarPorPaciente() {
             limpiarBuffer();
             continue;
         }
+        if(id == 0) return;
         break;
     }
 

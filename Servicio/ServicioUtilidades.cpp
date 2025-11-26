@@ -1,7 +1,9 @@
 #include<iostream>
 #include <string>
 #include <limits>
+#include "../EntidadesH/Fecha.h"
 #include "../ServicioH/ServiciosUtilidades.h"
+#include "../EntidadesH/Fecha.h"
 
 using namespace std;
 
@@ -110,36 +112,146 @@ Fecha pedirFecha(const std::string& mensaje, int anioMin, int anioMax) {
     int dia, mes, anio;
 
     while (true) {
-        cout << "\n" << mensaje << endl;
+        std::cout << "\n" << mensaje << " (ingrese 0 para cancelar)\n";
 
+        // ---- DIA ----
         while (true) {
-            cout << "Dia (1-31): ";
-            if (cin >> dia && dia >= 1 && dia <= 31) break;
-            cout << "Dia invalido.\n";
+            std::cout << "Dia (1-31): ";
+            if (std::cin >> dia) {
+                if (dia == 0) {
+                    std::cout << "Operacion cancelada.\n";
+                    return Fecha(0,0,0);
+                }
+                if (dia >= 1 && dia <= 31) break;
+            }
+            std::cout << "Dia invalido.\n";
             limpiarBuffer();
         }
 
+        // ---- MES ----
         while (true) {
-            cout << "Mes (1-12): ";
-            if (cin >> mes && mes >= 1 && mes <= 12) break;
-            cout << "Mes invalido.\n";
+            std::cout << "Mes (1-12): ";
+            if (std::cin >> mes) {
+                if (mes == 0) {
+                    std::cout << "Operacion cancelada.\n";
+                    return Fecha(0,0,0);
+                }
+                if (mes >= 1 && mes <= 12) break;
+            }
+            std::cout << "Mes invalido.\n";
             limpiarBuffer();
         }
 
+        // ---- ANIO ----
         while (true) {
-            cout << "Anio (" << anioMin << "-" << anioMax << "): ";
-            if (cin >> anio && anio >= anioMin && anio <= anioMax) break;
-            cout << "Anio invalido.\n";
+            std::cout << "Anio (" << anioMin << "-" << anioMax << "): ";
+            if (std::cin >> anio) {
+                if (anio == 0) {
+                    std::cout << "Operacion cancelada.\n";
+                    return Fecha(0,0,0);
+                }
+                if (anio >= anioMin && anio <= anioMax) break;
+            }
+            std::cout << "Anio invalido.\n";
             limpiarBuffer();
         }
 
+        // ---- VALIDACIÓN FINAL ----
         if (validarFecha(dia, mes, anio)) {
             return Fecha(dia, mes, anio);
         }
 
-        cout << "La fecha ingresada no es valida. Intente nuevamente.\n";
+        std::cout << "La fecha ingresada no es valida. Intente nuevamente.\n";
     }
 }
+
+FechaHora pedirFechaHora(const std::string& mensaje, int anioMin, int anioMax) {
+    int dia, mes, anio, hora, minutos;
+
+    while (true) {
+        std::cout << "\n" << mensaje << " (ingrese 0 para cancelar)\n";
+
+        // ---- DIA ----
+        while (true) {
+            std::cout << "Dia (1-31): ";
+            if (std::cin >> dia) {
+                if (dia == 0) {
+                    std::cout << "Operacion cancelada.\n";
+                    return FechaHora(0,0,0,0,0);
+                }
+                if (dia >= 1 && dia <= 31) break;
+            }
+            std::cout << "Dia invalido.\n";
+            limpiarBuffer();
+        }
+
+        // ---- MES ----
+        while (true) {
+            std::cout << "Mes (1-12): ";
+            if (std::cin >> mes) {
+                if (mes == 0) {
+                    std::cout << "Operacion cancelada.\n";
+                    return FechaHora(0,0,0,0,0);
+                }
+                if (mes >= 1 && mes <= 12) break;
+            }
+            std::cout << "Mes invalido.\n";
+            limpiarBuffer();
+        }
+
+        // ---- ANIO ----
+        while (true) {
+            std::cout << "Anio (" << anioMin << "-" << anioMax << "): ";
+            if (std::cin >> anio) {
+                if (anio == 0) {
+                    std::cout << "Operacion cancelada.\n";
+                    return FechaHora(0,0,0,0,0);
+                }
+                if (anio >= anioMin && anio <= anioMax) break;
+            }
+            std::cout << "Anio invalido.\n";
+            limpiarBuffer();
+        }
+
+        // ---- VALIDACIÓN DE FECHA ----
+        if (!validarFecha(dia, mes, anio)) {
+            std::cout << "La fecha ingresada no es valida. Intente nuevamente.\n";
+            continue;
+        }
+
+        // ---- HORA ----
+        while (true) {
+            std::cout << "Hora (0-23): ";
+            if (std::cin >> hora) {
+                if (hora == 0) {
+                    std::cout << "Operacion cancelada.\n";
+                    return FechaHora(0,0,0,0,0);
+                }
+                if (hora >= 0 && hora <= 23) break;
+            }
+            std::cout << "Hora invalida.\n";
+            limpiarBuffer();
+        }
+
+        // ---- MINUTOS ----
+        while (true) {
+            std::cout << "Minutos (0-59): ";
+            if (std::cin >> minutos) {
+                if (minutos == 0) {
+                    std::cout << "Operacion cancelada.\n";
+                    return FechaHora(0,0,0,0,0);
+                }
+                if (minutos >= 0 && minutos <= 59) break;
+            }
+            std::cout << "Minutos invalidos.\n";
+            limpiarBuffer();
+        }
+
+        limpiarBuffer();
+        return FechaHora(dia, mes, anio, hora, minutos);
+    }
+}
+
 
 bool validarFecha(int dia, int mes, int anio) {
     if (anio <= 0) return false;

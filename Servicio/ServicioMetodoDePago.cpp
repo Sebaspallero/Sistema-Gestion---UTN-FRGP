@@ -13,33 +13,38 @@ void ServicioMetodoDePago::limpiarBuffer() const {
 
 //CREAR METODO DE PAGO
 void ServicioMetodoDePago::crearMetodoDePago() {
-
     cout << "\n-- REGISTRAR METODO DE PAGO --\n";
+
     vector<MetodoDePago> lista = managerMetodoDePago.leerTodos();
     int id = managerMetodoDePago.obtenerNuevoId();
     string nombre;
-    bool nombreValido = false;
 
-    do {
-    cout << "Ingrese el nombre: ";
-    getline(cin, nombre);
+    while (true) {
+        cout << "Ingrese el nombre (0 para cancelar): ";
+        getline(cin, nombre);
 
-    nombreValido = true;
+        if (nombre == "0") return;
 
-    if (nombre.empty() || nombre.find_first_not_of(' ') == string::npos) {
-        cout << "El nombre no puede estar vacio. Intente nuevamente."<<endl;
-        nombreValido = false;
-        continue;
-    }
-
-    for(int i=0;i < (int)lista.size();i++){
-        if(lista[i].getNombre()==nombre){
-            cout<<"Ya existe un metodo de pago con ese nombre."<<endl;
-            nombreValido = false;
-            break;
+        if (nombre.empty() || nombre.find_first_not_of(' ') == string::npos) {
+            cout << "El nombre no puede estar vacio.\n";
+            continue;
         }
+
+        bool duplicado = false;
+        for (const MetodoDePago& mp : lista) {
+            if (mp.getNombre() == nombre) {
+                duplicado = true;
+                break;
+            }
+        }
+
+        if (duplicado) {
+            cout << "Ya existe un metodo de pago con ese nombre.\n";
+            continue;
+        }
+
+        break;
     }
-    } while (!nombreValido);
 
     MetodoDePago metodoPago(id, nombre);
 
@@ -52,9 +57,9 @@ void ServicioMetodoDePago::crearMetodoDePago() {
 
 //MODIFICAR METODO DE PAGO
 void ServicioMetodoDePago::modificarMetodoDePago() {
-    std::vector <MetodoDePago> lista = managerMetodoDePago.leerTodos();
+    vector<MetodoDePago> lista = managerMetodoDePago.leerTodos();
 
-    if(lista.empty()){
+    if (lista.empty()) {
         cout << "\nNo hay metodos de pago para modificar.\n";
         return;
     }
@@ -62,63 +67,68 @@ void ServicioMetodoDePago::modificarMetodoDePago() {
     listarMetodosDePago(lista);
 
     int id;
-    bool idValido;
-    char opcion;
+    int posicion = -1;
 
-    do{
-        id=pedirEntero("\nIngrese el ID a modificar: ");
-        idValido = false;
-        for(int i=0;i < (int)lista.size();i++){
-            if(lista[i].getId()==id){
-                idValido = true;
-                break;
-            }
-        }
-        if(!idValido){
-            cout<<"No existe ese numero de ID."<<endl;
-            opcion=pedirCharSN("Quieres intentarlo nuevamente? (S/N): ");
-        }
-        if(opcion == 'N' || opcion == 'n'){
-            cout<<"Error al modificar el metodo de pago."<<endl;
-            return;
-        }
-    }while(!idValido);
+    // Selección de ID
+    while (true) {
+        cout << "\nIngrese el ID a modificar (0 para cancelar): ";
 
-    string nombre;
-    bool nombreValido = false;
-    limpiarBuffer();
-
-    do{
-        cout << "Nuevo nombre: ";
-        getline(cin, nombre);
-
-        nombreValido = true;
-
-        if (nombre.empty() || nombre.find_first_not_of(' ')==string::npos){
-            cout << "El nombre no puede estar vacio. Intente nuevamente. " << endl;
-            nombreValido = false;
+        if (!(cin >> id)) {
+            cout << "Debe ingresar un numero.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             continue;
         }
 
-        for (int i=0; i < (int)lista.size(); i++){
-            if (lista[i].getNombre() == nombre && lista[i].getId() != id) {
-                cout << "Ya existe un metodo de pago con ese nombre. " << endl;
-                nombreValido = false;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+        if (id == 0) return;
+
+        posicion = managerMetodoDePago.buscar(id);
+        if (posicion != -1) break;
+
+        cout << "No existe un metodo de pago con ese ID.\n";
+    }
+
+    MetodoDePago metodo = managerMetodoDePago.leer(posicion);
+
+    string nombre;
+
+    while (true) {
+        cout << "Nuevo nombre [" << metodo.getNombre() << "] (0 para cancelar): ";
+        getline(cin, nombre);
+
+        if (nombre == "0") return;
+
+        if (nombre.empty()) {
+            nombre = metodo.getNombre(); // acepta el anterior
+            break;
+        }
+
+        if (nombre.find_first_not_of(' ') == string::npos) {
+            cout << "El nombre no puede ser vacio.\n";
+            continue;
+        }
+
+        bool duplicado = false;
+        for (const MetodoDePago& mp : lista) {
+            if (mp.getId() != id && mp.getNombre() == nombre) {
+                duplicado = true;
                 break;
             }
         }
-    }while(!nombreValido);
 
-    int posicion = managerMetodoDePago.buscar(id);
-    if (posicion == -1) {
-        cout << "No se encontro un metodo de pago con ese ID.\n";
-        return;
+        if (duplicado) {
+            cout << "Ya existe un metodo de pago con ese nombre.\n";
+            continue;
+        }
+
+        break;
     }
 
-    MetodoDePago metodoPago = managerMetodoDePago.leer(posicion);
-    metodoPago.setNombre(nombre);
+    metodo.setNombre(nombre);
 
-    if (managerMetodoDePago.modificar(metodoPago, posicion)) {
+    if (managerMetodoDePago.modificar(metodo, posicion)) {
         cout << "Metodo de pago modificado con exito!\n";
     } else {
         cout << "Error al intentar modificar el metodo de pago.\n";

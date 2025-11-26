@@ -20,17 +20,23 @@ void ServicioSala::crearSala() {
     string nombre;
 
     //NOMBRE
-    do {
-        cout << "Ingrese el nombre de la sala: ";
+    while (true) {
+        cout << "Ingrese el nombre de la sala (0 para cancelar): ";
         getline(cin, nombre);
-        if (nombre.empty()) cout << "El nombre no puede estar vacio.\n";
-    } while (nombre.empty());
+
+        if (nombre == "0") return;
+
+        if (!nombre.empty()) break;
+
+        cout << "El nombre no puede estar vacio.\n";
+    }
 
     //PISO
     while (true) {
-        cout << "Ingrese el numero de piso: ";
+        cout << "Ingrese el numero de piso (0 para cancelar): ";
         if (cin >> piso) {
             limpiarBuffer();
+            if (piso == 0) return;
             break;
         } else {
             cout << "Error: El piso debe ser un numero.\n";
@@ -38,7 +44,6 @@ void ServicioSala::crearSala() {
         }
     }
 
-    //Revisar que hacer con atributo dispoinible, complicado de implementar
     Sala sala(id, nombre, piso, true);
 
     if(managerSala.guardar(sala)){
@@ -115,6 +120,8 @@ void ServicioSala::buscarSalaPorNombre(){
     cout << "Ingrese nombre a buscar: ";
     getline(cin, nombre);
 
+    if (nombre == "0") return;
+
     Sala sala = managerSala.buscarPorNombre(nombre);
 
     if(sala.getId() > 0){
@@ -165,15 +172,17 @@ void ServicioSala::modificarSala(){
     cout << "\n-- MODIFICANDO DATOS (Presione ENTER para mantener actual) --\n";
 
     // NOMBRE
-    cout << "Nombre actual [" << sala.getNombre() << "]: ";
+    cout << "Nombre actual [" << sala.getNombre() << "] (0 para cancelar): ";
     getline(cin, nombre);
     if (nombre.empty()) nombre = sala.getNombre();
+    if(nombre == "0") return;
 
     // PISO
     while (true) {
-        cout << "Nuevo piso [" << sala.getPiso() << "]: ";
+        cout << "Nuevo piso [" << sala.getPiso() << "] (0 para cancelar): ";
         if (cin >> piso) {
             limpiarBuffer();
+            if (piso == 0) return;
             break;
         } else {
             cout << "Error: Debe ingresar un numero.\n";
