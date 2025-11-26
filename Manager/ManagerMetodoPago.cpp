@@ -1,8 +1,5 @@
-#include <iostream>
-using namespace std;
+#include "../ManagerH/ManagerMetodoPago.h"
+#include "../EntidadesH/MetodoDePago.h"
 
-int main() {
-
-   return 0;
-}
-
+// Constructor
+ManagerMetodoDePago::ManagerMetodoDePago(const std::string& nombreArchivo) : Manager<MetodoDePago>(nombreArchivo) {}

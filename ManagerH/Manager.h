@@ -11,7 +11,7 @@ protected:
     std::string _nombreArchivo;
 
 public:
-    Manager(std::string nombreArchivo);
+    Manager(const std::string& nombreArchivo);
 
     bool guardar(const T& entidad);
     bool eliminar(int id);
@@ -25,17 +25,18 @@ public:
 
 // Constructor
 template <typename T>
-Manager<T>::Manager(std::string nombreArchivo) {
+Manager<T>::Manager(const std::string& nombreArchivo) {
     _nombreArchivo = nombreArchivo;
 }
 
-// Guardar
+// Guardar (Crear)
 template <typename T>
 bool Manager<T>::guardar(const T& entidad) {
     FILE *pFile = fopen(_nombreArchivo.c_str(), "ab");
-    if(!pFile) return false;
+    if(pFile == nullptr) return false;
 
     bool creado = fwrite(&entidad, sizeof(T), 1, pFile) == 1;
+
     fclose(pFile);
     return creado;
 }
@@ -43,42 +44,26 @@ bool Manager<T>::guardar(const T& entidad) {
 // Eliminar
 template <typename T>
 bool Manager<T>::eliminar(int id) {
-    FILE *pFileOriginal = fopen(_nombreArchivo.c_str(), "rb");
-    if(!pFileOriginal) return false;
-
-    FILE *pFileCopia = fopen("ArchivoCopia.dat", "wb");
-    if(!pFileCopia) {
-        fclose(pFileOriginal);
+    int pos = buscar(id);
+    if (pos == -1){
         return false;
     }
 
-    T entidad;
-    bool eliminado = false;
-    while(fread(&entidad, sizeof(T), 1, pFileOriginal) == 1){
-        if(entidad.getId() != id){
-            fwrite(&entidad, sizeof(T), 1, pFileCopia);
-        } else {
-            eliminado = true;
-        }
-    }
-
-    fclose(pFileOriginal);
-    fclose(pFileCopia);
-
-    remove(_nombreArchivo.c_str());
-    rename("ArchivoCopia.dat", _nombreArchivo.c_str());
-
-    return eliminado;
+    T entidad = leer(pos);
+    entidad.setEstado(false);
+    return modificar(entidad, pos);
 }
 
 // Modificar
 template <typename T>
 bool Manager<T>::modificar(const T& entidad, int posicion){
     FILE *pFile = fopen(_nombreArchivo.c_str(), "rb+");
-    if(!pFile) return false;
+    if(pFile == nullptr) return false;
 
     fseek(pFile, sizeof(T) * posicion, SEEK_SET);
+
     bool modificado = fwrite(&entidad, sizeof(T), 1, pFile) == 1;
+
     fclose(pFile);
     return modificado;
 }
@@ -87,11 +72,15 @@ bool Manager<T>::modificar(const T& entidad, int posicion){
 template <typename T>
 T Manager<T>::leer(int posicion){
     FILE *pFile = fopen(_nombreArchivo.c_str(), "rb");
-    T entidad; //VERIFICAR SI FALTA AGREGAR LLAVES
-    if(!pFile) return entidad;
+    T entidad{};
+    if(pFile == nullptr) return entidad;
 
     fseek(pFile, sizeof(T) * posicion, SEEK_SET);
-    fread(&entidad, sizeof(T), 1, pFile);
+
+    if(fread(&entidad, sizeof(T), 1, pFile) != 1){
+        entidad = T{};
+    }
+
     fclose(pFile);
     return entidad;
 }
@@ -100,10 +89,12 @@ T Manager<T>::leer(int posicion){
 template <typename T>
 int Manager<T>::cantidadDeRegistros(){
     FILE *pFile = fopen(_nombreArchivo.c_str(), "rb");
-    if(!pFile) return 0;
+    if(pFile == nullptr) return 0;
 
     fseek(pFile, 0, SEEK_END);
+
     int cantidad = ftell(pFile) / sizeof(T);
+
     fclose(pFile);
     return cantidad;
 }
@@ -113,27 +104,29 @@ template <typename T>
 std::vector<T> Manager<T>::leerTodos(){
     std::vector<T> lista;
     FILE *pFile = fopen(_nombreArchivo.c_str(), "rb");
-    if(!pFile) return lista;
+    if(pFile == nullptr) return lista;
 
     T registro;
     while(fread(&registro, sizeof(T), 1, pFile) == 1){
-        lista.push_back(registro);
+        if (registro.getEstado()) {
+            lista.push_back(registro);
+        }
     }
 
     fclose(pFile);
     return lista;
 }
 
-// Buscar NO IMPLEMENTADA
+// Buscar
 template <typename T>
 int Manager<T>::buscar(int id){
     FILE *pFile = fopen(_nombreArchivo.c_str(), "rb");
-    if(!pFile) return -1;
+    if(pFile == nullptr) return -1;
 
     T entidad;
     int i = 0;
     while(fread(&entidad, sizeof(T), 1, pFile) == 1){
-        if(entidad.getId() == id){
+        if(entidad.getId() == id && entidad.getEstado()){
             fclose(pFile);
             return i;
         }
@@ -151,5 +144,3 @@ int Manager<T>::obtenerNuevoId() {
     T ultimo = leer(cantidad - 1);
     return ultimo.getId() + 1;
 }
-
-

@@ -1,6 +1,14 @@
-#ifndef MANAGERBIOQUIMICO_H_INCLUDED
-#define MANAGERBIOQUIMICO_H_INCLUDED
+#pragma once
+#include "Manager.h"
+#include "../EntidadesH/Bioquimico.h"
+#include <vector>
+#include <string>
 
+class ManagerBioquimico : public Manager<Bioquimico> {
+public:
+    ManagerBioquimico(const std::string& nombreArchivo);
 
-
-#endif // MANAGERBIOQUIMICO_H_INCLUDED
+    std::vector<Bioquimico> ordenarPorApellido();
+    std::vector<Bioquimico> ordenarPorLegajo();
+    Bioquimico buscarPorMatricula(int matricula,bool& encontro);
+};
