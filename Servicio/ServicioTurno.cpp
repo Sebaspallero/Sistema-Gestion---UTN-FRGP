@@ -135,7 +135,7 @@ void ServicioTurno::crearTurno() {
             cout << "ID no encontrado. Intente nuevamente o ingrese -1 para crearlo.\n";
         }
     }
-
+    system("cls");
     //SELECCIONAR BIOQUIMICO
     servicioBioquimico.listarBioquimicos(bioquimicos);
     cout << "Ingrese ID del Bioquimico (0 para finalizar).\n";
@@ -169,7 +169,7 @@ void ServicioTurno::crearTurno() {
             cout << "ID no encontrado. Intente nuevamente.\n";
         }
     }
-
+    system("cls");
     //SELECCIONAR ANALISIS
     servicioAnalisis.listarAnalisis(analisis);
     cout << "Ingrese ID del Analisis (0 para finalizar).\n";
@@ -203,7 +203,7 @@ void ServicioTurno::crearTurno() {
             cout << "ID no encontrado. Intente nuevamente.\n";
         }
     }
-
+    system("cls");
     //SELECCIONAR SALA
     servicioSala.listarSalas(salas);
     cout << "Ingrese ID de la Sala (0 para finalizar).\n";
@@ -237,51 +237,24 @@ void ServicioTurno::crearTurno() {
             cout << "ID no encontrado. Intente nuevamente.\n";
         }
     }
-
+    system("cls");
     //SELECCIONAR FECHA Y HORA
     FechaHora fecha;
     while (true) {
-        cout << "\n-- Ingrese Fecha y Hora del Turno --\n";
+        fecha = pedirFechaHora("Ingrese la fecha y hora del turno", 2024, 2030);
 
-        // FECHA
-        while (true) {
-            cout << "Dia (1-31): "; if(cin >> dia && dia >= 1 && dia <= 31) break;
-            cout << "Dia invalido.\n"; limpiarBuffer();
+        if (fecha.getAnio() == 0) {
+            system("cls");
+            return;
         }
-        while (true) {
-            cout << "Mes (1-12): "; if(cin >> mes && mes >= 1 && mes <= 12) break;
-            cout << "Mes invalido.\n"; limpiarBuffer();
-        }
-        while (true) {
-            cout << "Anio (2024-2030): "; if(cin >> anio && anio >= 2024 && anio <= 2030) break;
-            cout << "Anio invalido.\n"; limpiarBuffer();
-        }
-
-        if (!validarFecha(dia, mes, anio)) {
-            cout << "La fecha ingresada no es logica (ej: 30 de febrero). Intente de nuevo.\n";
-            continue;
-        }
-
-        // HORA
-        while (true) {
-            cout << "Hora (0-23): "; if(cin >> hora && hora >= 0 && hora <= 23) break;
-            cout << "Hora invalida.\n"; limpiarBuffer();
-        }
-        while (true) {
-            cout << "Minutos (0-59): "; if(cin >> minutos && minutos >= 0 && minutos <= 59) break;
-            cout << "Minutos invalidos.\n"; limpiarBuffer();
-        }
-
-        fecha = FechaHora(dia, mes, anio, hora, minutos);
-        limpiarBuffer();
 
         // VALIDAR SI ESTA OCUPADO
         if (!fechaOcupada(fecha, idSala, idBioquimico)) {
-            break; // FECHA OK
+            break; // OK
         }
 
-        cout << "La SALA o el BIOQUIMICO ya tienen un turno en esa fecha y hora exacta.\n";
-        cout << "Por favor ingrese otro horario.\n";
+        cout << "La SALA o el BIOQUIMICO ya tienen un turno en esa fecha/hora.\n";
+        cout << "Ingrese otro horario.\n";
         listarTurnos(turnos);
     }
 
@@ -308,6 +281,7 @@ std::vector <Turno>ServicioTurno::obtenerTurnosConAsistencia(){
 
 //IMPRIMIR LISTA DE TURNOS
 void ServicioTurno::listarTurnos(const std::vector<Turno>& turnos) {
+    system("cls");
     if (turnos.empty()) {
         cout << "No hay turnos registrados.\n";
         return;
@@ -338,6 +312,7 @@ void ServicioTurno::listarTurnos(const std::vector<Turno>& turnos) {
 
 //ELIMINAR TURNO
 void ServicioTurno::eliminarTurno() {
+    system("cls");
     vector<Turno> lista = obtenerTurnos();
 
     if (lista.empty()) {
@@ -382,6 +357,7 @@ void ServicioTurno::eliminarTurno() {
 
 //MODIFICAR TURNO
 void ServicioTurno::modificarTurno() {
+    system("cls");
     vector<Turno> lista = obtenerTurnos();
 
     if (lista.empty()) {
@@ -414,7 +390,7 @@ void ServicioTurno::modificarTurno() {
             cout << "No existe un turno con ese ID. Intente nuevamente.\n";
         }
     }
-
+    system("cls");
     Turno turno = managerTurno.leer(pos);
     FechaHora fechaActual = turno.getFechaTurno();
 
@@ -422,69 +398,24 @@ void ServicioTurno::modificarTurno() {
     cout << "Fecha Actual: " << fechaActual.toString() << endl;
 
     //INGRESAR NUEVA FECHA
-    int dia, mes, anio, hora, minutos;
     FechaHora nuevaFecha;
 
     while (true) {
-        //FECHA
-        while (true) {
-            cout << "Nuevo dia: ";
-            cin >> dia;
-            if (cin.fail()) {
-                limpiarBuffer();
-                continue;
-            }
+        nuevaFecha = pedirFechaHora("Ingrese la fecha y hora del turno", 2024, 2030);
 
-            cout << "Nuevo mes: ";
-            cin >> mes;
-            if (cin.fail()) {
-                limpiarBuffer();
-                continue;
-            }
-
-            cout << "Nuevo anio: "; cin >> anio;
-            if (cin.fail()) {
-                limpiarBuffer();
-                continue;
-            }
-
-            if (validarFecha(dia, mes, anio)){
-                break;
-            }else{
-                cout << "Fecha invalida. Intente nuevamente.\n";
-            }
+        if (nuevaFecha.getAnio() == 0) {
+            system("cls");
+            return;
         }
 
-        //HORA
-        while (true) {
-            cout << "Nueva hora (0-23): ";
-            cin >> hora;
-            if (cin.fail()) {
-                limpiarBuffer();
-                continue;
-            }
-
-            cout << "Nuevos minutos (0-59): ";
-            cin >> minutos;
-            if (cin.fail()) {
-                limpiarBuffer();
-                continue;
-            }
-
-            if (hora >= 0 && hora <= 23 && minutos >= 0 && minutos <= 59){
-                break;
-            } else{
-                cout << "Hora invalida. Intente nuevamente.\n";
-            }
-        }
-
-        nuevaFecha = FechaHora(dia, mes, anio, hora, minutos);
-
+        // VALIDAR SI ESTA OCUPADO
         if (!fechaOcupada(nuevaFecha, turno.getIDSala(), turno.getIDBioquimico())) {
-            break;
-        } else {
-            cout << "Esa fecha y hora ya esta ocupada. Elija otra.\n";
+            break; // OK
         }
+
+        cout << "La SALA o el BIOQUIMICO ya tienen un turno en esa fecha/hora.\n";
+        cout << "Ingrese otro horario.\n";
+        listarTurnos(lista);
     }
 
     //GUARDAR
@@ -499,29 +430,22 @@ void ServicioTurno::modificarTurno() {
 
 //BUSCAR TURNO POR FECHA
 void ServicioTurno::buscarPorFecha() {
-    int dia, mes, anio;
+    system("cls");
 
     cout << "\n-- BUSCAR POR FECHA --\n";
 
-    while(true) {
-        cout << "Ingrese dia: "; cin >> dia;
-        if (cin.fail()) {
-                limpiarBuffer(); continue;
-        }
+    Fecha fecha = pedirFecha("Ingrese la fecha del turno a buscar:", 2022, 2030);
 
-        cout << "Ingrese mes: "; cin >> mes;
-        if (cin.fail()) {
-                limpiarBuffer(); continue;
-        }
-
-        cout << "Ingrese anio: "; cin >> anio;
-        if (cin.fail()) {
-                limpiarBuffer(); continue;
-        }
-        break;
+    if (fecha.getAnio() == 0) {
+        system("cls");
+        return;
     }
 
-    vector<Turno> resultado = managerTurno.buscarPorFecha(dia, mes, anio);
+    vector<Turno> resultado = managerTurno.buscarPorFecha(
+        fecha.getDia(),
+        fecha.getMes(),
+        fecha.getAnio()
+    );
 
     if (resultado.empty()) {
         cout << "No hay turnos en esa fecha.\n";
@@ -543,6 +467,7 @@ void ServicioTurno::buscarPorFecha() {
 
 //BUSCAR TURNO POR PACIENTE
 void ServicioTurno::buscarPorPaciente() {
+    system("cls");
     vector<Paciente> pacientes = servicioPaciente.obtenerPacientes();
 
     if (pacientes.empty()){
@@ -554,13 +479,14 @@ void ServicioTurno::buscarPorPaciente() {
 
     int id;
     while(true) {
-        cout << "Ingrese ID del paciente a buscar: ";
+        cout << "Ingrese ID del paciente a buscar (0 para salir): ";
         cin >> id;
         if (cin.fail()) {
             cout << "Debe ser un numero.\n";
             limpiarBuffer();
             continue;
         }
+        if(id == 0) return;
         break;
     }
 
@@ -583,6 +509,7 @@ void ServicioTurno::buscarPorPaciente() {
 
 //BUSCAR TURNO POR BIOQUIMICO
 void ServicioTurno::buscarPorBioquimico() {
+    system("cls");
     vector<Bioquimico> lista = servicioBioquimico.obtenerBioquimicos();
     if (lista.empty()) {
         cout << "No hay bioquimicos registrados.\n";
@@ -593,13 +520,14 @@ void ServicioTurno::buscarPorBioquimico() {
 
     int id;
     while(true) {
-        cout << "Ingrese ID del bioquimico a buscar: ";
+        cout << "Ingrese ID del bioquimico a buscar (0 para salir): ";
         cin >> id;
         if (cin.fail()) {
             cout << "Debe ser un numero.\n";
             limpiarBuffer();
             continue;
         }
+        if(id == 0) return;
         break;
     }
 
@@ -622,6 +550,7 @@ void ServicioTurno::buscarPorBioquimico() {
 
 //CONFIRMAR TURNO
 void ServicioTurno::confirmarTurno() {
+    system("cls");
     std::vector<Turno> turnos = obtenerTurnos();
 
     if (turnos.empty()) {
@@ -633,13 +562,14 @@ void ServicioTurno::confirmarTurno() {
 
     int id;
     while(true) {
-        cout << "\nIngrese ID del turno a confirmar: ";
+        cout << "\nIngrese ID del turno a confirmar (0 para salir): ";
         cin >> id;
         if (cin.fail()) {
             cout << "Debe ser un numero.\n";
             limpiarBuffer();
             continue;
         }
+        if (id == 0) return;
         break;
     }
 
@@ -661,6 +591,7 @@ void ServicioTurno::confirmarTurno() {
 
 //ORDENAR TURNO POR FECHA
 void ServicioTurno::ordenarPorFecha() {
+    system("cls");
     cout << "\n-- TURNOS ORDENADOS POR FECHA (DESCENDENTE) --\n";
 
     vector<Turno> lista = managerTurno.ordenarPorFecha();

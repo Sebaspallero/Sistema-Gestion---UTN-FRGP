@@ -9,6 +9,4 @@ public:
     ManagerResultado(const std::string& nombreArchivo);
 
     std::vector <Resultado> buscarPorPaciente(int idPaciente);
-    bool crearResultado(int idTurno, std::string descripcion, int dia, int mes, int anio);
-    bool modificarResultado(int idTurno, std::string descripcion, int dia, int mes, int anio, int id);
 };

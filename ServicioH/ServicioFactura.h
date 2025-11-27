@@ -37,5 +37,5 @@ class ServicioFactura{
         void buscarPorMetodoDePago();
         void buscarPorFecha();
         void buscarPorPaciente();
-        std::vector <Factura> ordenarPorFechaDePago();
+        void ordenarPorFechaDePago();
 };

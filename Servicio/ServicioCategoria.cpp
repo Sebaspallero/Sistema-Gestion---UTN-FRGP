@@ -3,6 +3,7 @@
 #include "../ServicioH/ServicioCategoria.h"
 #include "../ManagerH/Manager.h"
 #include "../ManagerH/ManagerAnalisis.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 #include <cstring>
 #include <iostream>
 #include <vector>
@@ -12,113 +13,123 @@ ServicioCategoria::ServicioCategoria(): _managerCategoria("categorias.dat") {}
 
 //CREAR CATEGORÍA
 void ServicioCategoria::crearCategoria() {
+    system("cls");
     int id = _managerCategoria.obtenerNuevoId();
     std::string nombre;
-    bool nombreValido;
-
     std::vector<Categoria> lista = _managerCategoria.leerTodos();
 
-    do{
-        std::cout<<"Ingrese el nombre de la categoria: "<<std::endl;
-        std::getline(std::cin,nombre);
+    while (true) {
+        std::cout << "Ingrese el nombre de la categoria (0 para cancelar): ";
+        std::getline(std::cin, nombre);
 
-        if(nombre.empty() || nombre.find_first_not_of(' ') == std::string::npos){
-            std::cout<<"El nombre no puede ser vacio. Intentelo nuevamente."<<std::endl;
+        if (nombre == "0") return;
+
+        if (nombre.empty() || nombre.find_first_not_of(' ') == std::string::npos) {
+            std::cout << "El nombre no puede ser vacio.\n";
             continue;
         }
 
         bool duplicado = false;
-
         for (int i = 0; i < (int) lista.size(); i++){
             if (lista[i].getNombre() == nombre) {
-            duplicado = true;
-            break;
+                duplicado = true;
+                break;
             }
         }
-
-        if (duplicado){
-            std::cout << "Ya existe una categoria con ese nombre. Intente con otro. " << std::endl;
+        if (duplicado) {
+            std::cout << "Ya existe una categoria con ese nombre.\n";
             continue;
         }
 
-        nombreValido = true;
+        break;
+    }
 
-    }while(!nombreValido);
+    Categoria categoria(id, nombre);
 
-    Categoria categoria (id, nombre);
-
-    if(_managerCategoria.guardar(categoria)){
+    if (_managerCategoria.guardar(categoria)) {
         std::cout << "Categoria registrada con exito!\n";
-    }else{
-        std::cout << "Error al intentar guardar una categoria.\n";
+    } else {
+        std::cout << "Error al intentar guardar la categoria.\n";
     }
 }
 
 //MODIFICAR CATEGORIA
 void ServicioCategoria::modificarCategoria() {
+    system("cls");
     std::vector<Categoria> lista = _managerCategoria.leerTodos();
 
-    if(lista.empty()){
-        std::cout << "\nNo hay categorias para modificar.\n";
+    if (lista.empty()) {
+        std::cout << "No hay categorias para modificar.\n";
         return;
     }
-
-    int id;
-    int posicion;
-    std::string nombre;
-    bool nombreValido = false;
 
     listarCategorias(lista);
 
-    std::cout << "Ingrese el ID de la categoria a modificar: ";
-    while (!(std::cin >> id)) {
-        std::cout << "Error: Debe ingresar un número entero." << std::endl;
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::cout << "Ingrese el ID: ";
+    int id;
+    int posicion = -1;
+
+    // Selección de ID
+    while (true) {
+        std::cout << "\nIngrese el ID de la categoria a modificar (0 para cancelar): ";
+        if (std::cin >> id) {
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            if (id == 0) return;
+
+            posicion = _managerCategoria.buscar(id);
+            if (posicion != -1) break;
+
+            std::cout << "No se encontro una categoria con ese ID.\n";
+
+        } else {
+            std::cout << "Error: Debe ingresar un numero.\n";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
     }
-    std::cin.ignore();
+    system("cls");
+    Categoria categoria = _managerCategoria.leer(posicion);
 
-    posicion = _managerCategoria.buscar(id);
+    std::string nombre;
 
-    if (posicion == -1) {
-        std::cout << "No se encontro una categoria activa con ese ID.\n";
-        return;
-    }
+    while (true) {
+        std::cout << "Nuevo nombre [" << categoria.getNombre() << "] (0 para cancelar): ";
+        std::getline(std::cin, nombre);
 
-    do {
-        std::cout << "Ingrese el nuevo nombre de la categoria: ";
-        getline(std::cin, nombre);
+        if (nombre == "0") return;
 
-        if (nombre.empty() || nombre.find_first_not_of(' ') == std::string::npos) {
-            std::cout << "El nombre no puede estar vacio. Intente nuevamente.\n";
+        if (nombre.empty()) {
+            nombre = categoria.getNombre();
+            break;
+        }
+
+        if (nombre.find_first_not_of(' ') == std::string::npos) {
+            std::cout << "El nombre no puede ser vacio.\n";
             continue;
         }
 
-        bool duplicado =false;
-        for(int i=0; i < (int)lista.size(); i++){
+        bool duplicado = false;
+        for (int i = 0; i < (int) lista.size(); i++) {
             if (lista[i].getId() != id && lista[i].getNombre() == nombre) {
                 duplicado = true;
                 break;
+            }
         }
+
+        if (duplicado) {
+            std::cout << "Ya existe otra categoria con ese nombre.\n";
+            continue;
+        }
+
+        break;
     }
 
-    if (duplicado){
-        std::cout << "Ya existe una categoria con ese nombre. Intente con otro. " << std::endl;
-        continue;
-    }
-
-    nombreValido = true;
-
-    } while (!nombreValido);
-
-    Categoria categoria = _managerCategoria.leer(posicion);
     categoria.setNombre(nombre);
 
     if (_managerCategoria.modificar(categoria, posicion)) {
         std::cout << "Categoria modificada con exito!\n";
     } else {
-        std::cout << "Error al intentar modificar la categoria.\n";
+        std::cout << "Error al modificar la categoria.\n";
     }
 }
 
@@ -129,6 +140,7 @@ void ServicioCategoria::modificarCategoria() {
 
 //LISTAR CATEGORIAS
 void ServicioCategoria::listarCategorias(const std::vector<Categoria>& categorias) {
+    system("cls");
     if (categorias.empty()) {
         std::cout << "No hay categorias registrados.\n";
     } else {
@@ -144,6 +156,7 @@ void ServicioCategoria::listarCategorias(const std::vector<Categoria>& categoria
 
 //ELIMINAR CATEGORIA
 void ServicioCategoria::eliminarCategoria() {
+    system("cls");
     std::vector<Categoria> lista = _managerCategoria.leerTodos();
 
     if(lista.empty()){
@@ -154,9 +167,7 @@ void ServicioCategoria::eliminarCategoria() {
     listarCategorias(lista);
 
     int id;
-
-    std::cout << std::endl << " Ingrese el ID a eliminar (0 para cancelar): ";
-    std::cin >> id;
+    id = pedirEntero(" Ingrese el ID a eliminar (0 para cancelar): ");
 
     if(id == 0){
         std::cout << "Operacion cancelada. " << std::endl;
@@ -192,12 +203,14 @@ void ServicioCategoria::eliminarCategoria() {
 
 //BUSCAR POR NOMBRE
 void ServicioCategoria::buscarPorNombre(){
+    system("cls");
     bool encontro = false;
     std::string nombre;
 
-    std::cout<<"Ingrese el nombre de la categoria que desea buscar: ";
-    //std::cin.ignore();
+    std::cout<<"Ingrese el nombre de la categoria que desea buscar (0 para cancelar): ";
     std::getline(std::cin,nombre);
+
+    if (nombre == "0") return;
 
     Categoria categoria = _managerCategoria.buscarPorNombre(nombre, encontro);
 
@@ -211,6 +224,7 @@ void ServicioCategoria::buscarPorNombre(){
 
 //BUSCAR POR ID
 std::string ServicioCategoria::buscarPorId(int id){
+    system("cls");
     bool encontro = false;
     std::string nombreCategoria = _managerCategoria.buscarPorId(id, encontro);
     if (!encontro) {

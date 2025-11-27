@@ -33,6 +33,7 @@ bool ServicioBioquimico::existeMatricula(int matricula) {
 
 //CREAR BIOQUIMICO
 void ServicioBioquimico::crearBioquimico() {
+    system("cls");
     cout << "\n-- REGISTRAR BIOQUIMICO --\n";
 
     int id = managerBioquimico.obtenerNuevoId();
@@ -40,32 +41,44 @@ void ServicioBioquimico::crearBioquimico() {
     int dni, matricula;
 
     //NOMBRE
-    do {
-        cout << "Ingrese nombre: ";
+    while (true) {
+        cout << "Ingrese nombre (0 para salir): ";
         getline(cin, nombre);
-        if (nombre.empty() || nombre.find_first_not_of(' ')==string::npos){
-           cout << "El nombre no puede estar vacio." << endl;
-        }
-    } while (nombre.empty() || nombre.find_first_not_of(' ')==string::npos);
+
+        if (nombre == "0") return;
+
+        if (!nombre.empty() && nombre.find_first_not_of(' ') != string::npos) break;
+
+        cout << "El nombre no puede estar vacio.\n";
+    }
 
     //APELLIDO
-    do {
-        cout << "Ingrese apellido: ";
+    while (true) {
+        cout << "Ingrese apellido (0 para salir): ";
         getline(cin, apellido);
-        if (apellido.empty() || apellido.find_first_not_of(' ')==string::npos){
-            cout << "El apellido no puede estar vacio." << endl;
-        }
-    } while (apellido.empty() || apellido.find_first_not_of(' ')==string::npos);
+
+        if (apellido == "0") return;
+
+        if (!apellido.empty() && apellido.find_first_not_of(' ') != string::npos) break;
+
+        cout << "El apellido no puede estar vacio.\n";
+    }
 
     //FECHA NACIMIENTO
+    cout << "(Ingrese 0 en cualquier campo para cancelar)\n";
     Fecha fechaNacimiento = pedirFecha("Ingrese la fecha de nacimiento:", 1900, 2025);
+    if (fechaNacimiento.getAnio() == 0) return;
 
     limpiarBuffer();
 
     //DNI
     while (true) {
-        cout << "Ingrese DNI: ";
+        cout << "Ingrese DNI (0 para salir): ";
         if (cin >> dni) {
+            if (dni == 0) {
+                limpiarBuffer();
+                return;
+            }
             if (dni > 0) {
                 if (!existeDNI(dni)) {
                     limpiarBuffer();
@@ -79,16 +92,27 @@ void ServicioBioquimico::crearBioquimico() {
     }
 
     //EMAIL
-    do {
-        cout << "Ingrese email: ";
+    while (true) {
+        cout << "Ingrese email (0 para salir): ";
         getline(cin, email);
-        if (email.empty()) cout << "El email no puede estar vacio.\n";
-    } while (email.empty());
+
+        if (email == "0") return;
+
+        if (!email.empty()) break;
+
+        cout << "El email no puede estar vacio.\n";
+    }
 
     //MATRICULA
     while (true) {
-        cout << "Ingrese matricula: ";
+        cout << "Ingrese matricula (0 para salir): ";
         if (cin >> matricula) {
+
+            if (matricula == 0) {
+                limpiarBuffer();
+                return;
+            }
+
             if (matricula > 0) {
                 if (!existeMatricula(matricula)){
                     limpiarBuffer();
@@ -112,6 +136,7 @@ void ServicioBioquimico::crearBioquimico() {
 
 //MODIFICAR BIOQUIMICO
 void ServicioBioquimico::modificarBioquimico() {
+    system("cls");
     std::vector<Bioquimico> lista = managerBioquimico.leerTodos();
 
     if (lista.empty()) {
@@ -142,15 +167,16 @@ void ServicioBioquimico::modificarBioquimico() {
     }
 
     Bioquimico bioquimico = managerBioquimico.leer(posicion);
-
+    system("cls");
     string nombre, apellido, email;
     int dni, matricula;
 
-    cout << "\n-- MODIFICANDO DATOS (Presione ENTER en textos para mantener el actual) --\n";
+    cout << "\n-- MODIFICANDO DATOS (Presione ENTER en textos para mantener el actual, 0 para cancelar) --\n";
 
     //NOMBRE
     cout << "Nombre actual [" << bioquimico.getNombre() << "]: ";
     getline(cin, nombre);
+    if (nombre == "0") return;
     if (nombre.empty()){
             nombre = bioquimico.getNombre();
     } else{
@@ -158,11 +184,12 @@ void ServicioBioquimico::modificarBioquimico() {
             cout << "El nombre no pueden ser solo espacios. Se mantiene el actual." << endl;
             nombre = bioquimico.getNombre();
            }
-        }
+    }
 
     //APELLIDO
     cout << "Apellido actual [" << bioquimico.getApellido() << "]: ";
     getline(cin, apellido);
+    if (apellido == "0") return;
     if (apellido.empty()){
             apellido = bioquimico.getApellido();
     } else{
@@ -176,12 +203,20 @@ void ServicioBioquimico::modificarBioquimico() {
     cout << "\n-- Fecha de nacimiento actual: "
      << bioquimico.getFechaNacimiento().toString() << "\n";
 
+    cout << "(Ingrese 0 en cualquier campo para cancelar)\n";
+
     Fecha fechaNacimiento = pedirFecha("Ingrese nueva fecha:", 1900, 2025);
+
+    if (fechaNacimiento.getAnio() == 0) return;
 
     // DNI
     while (true) {
         cout << "Nuevo DNI [" << bioquimico.getDNI() << "]: ";
         if (cin >> dni) {
+            if (dni == 0) {
+                limpiarBuffer();
+                return;
+            }
             if (dni > 0) {
                 if (dni == bioquimico.getDNI()) {
                     limpiarBuffer();
@@ -203,12 +238,17 @@ void ServicioBioquimico::modificarBioquimico() {
     // EMAIL
     cout << "Nuevo email [" << bioquimico.getEmail() << "]: ";
     getline(cin, email);
+    if (email == "0") return;
     if (email.empty()) email = bioquimico.getEmail();
 
     // MATRICULA
     while (true) {
         cout << "Nueva matricula [" << bioquimico.getMatricula() << "]: ";
         if (cin >> matricula) {
+            if (matricula == 0) {
+                limpiarBuffer();
+                return;
+            }
             if (matricula > 0) {
                 if (matricula == bioquimico.getMatricula() || !existeMatricula(matricula)) {
                     limpiarBuffer();
@@ -245,6 +285,7 @@ std::vector<Bioquimico> ServicioBioquimico::obtenerBioquimicos(){
 
 //LISTAR BIOQUIMICOS
 void ServicioBioquimico::listarBioquimicos(const std::vector<Bioquimico>& bioquimicos) {
+    system("cls");
     if (bioquimicos.empty()) {
         cout << "No hay bioquimicos registrados.\n";
         return;
@@ -264,6 +305,7 @@ void ServicioBioquimico::listarBioquimicos(const std::vector<Bioquimico>& bioqui
 
 //ELIMINAR BIOQUIMICO
 void ServicioBioquimico::eliminarBioquimico() {
+    system("cls");
     std::vector<Bioquimico> lista = managerBioquimico.leerTodos();
 
     if (lista.empty()) {
@@ -274,9 +316,7 @@ void ServicioBioquimico::eliminarBioquimico() {
     listarBioquimicos(lista);
 
     int id;
-    cout << "\nIngrese el ID a eliminar (0 para cancelar): ";
-    cin >> id;
-
+    id = pedirEntero("\nIngrese el ID a eliminar (0 para cancelar): ");
     if (id == 0){
         cout << "Operacion cancelada." << endl;
         return;
@@ -306,6 +346,7 @@ void ServicioBioquimico::eliminarBioquimico() {
 
 //ORDENAR POR APELLIDO
 void ServicioBioquimico::ordenarBioquimicosPorApellido() {
+    system("cls");
     std::vector<Bioquimico> listaOrdenada = managerBioquimico.ordenarPorApellido();
 
     if (listaOrdenada.empty()) {
@@ -326,6 +367,7 @@ void ServicioBioquimico::ordenarBioquimicosPorApellido() {
 
 //ORDENAR POR MATRICULA
 void ServicioBioquimico::ordenarBioquimicosPorLegajo() {
+    system("cls");
     std::vector<Bioquimico> listaOrdenada = managerBioquimico.ordenarPorLegajo();
 
     if (listaOrdenada.empty()) {
@@ -345,10 +387,12 @@ void ServicioBioquimico::ordenarBioquimicosPorLegajo() {
 }
 
 void ServicioBioquimico::buscarPorMatricula(){
+    system("cls");
 int matricula;
 bool encontro;
 Bioquimico bioquimico;
-matricula = pedirEntero("Ingrese la matricula de Bioquimico que desea buscar: ");
+matricula = pedirEntero("Ingrese la matricula de Bioquimico que desea buscar (0 para cancelar): ");
+if(matricula == 0){return;}
 bioquimico = managerBioquimico.buscarPorMatricula(matricula,encontro);
 if(encontro){
     cout << "\n-- BIOQUIMICO MATRICULA: "<<matricula<<" --\n";
@@ -363,4 +407,3 @@ if(encontro){
     cout<<"No existe un Bioquimico con ese numero de matricula."<<endl;
 }
 }
-

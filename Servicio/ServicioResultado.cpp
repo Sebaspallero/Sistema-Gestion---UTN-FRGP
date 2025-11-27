@@ -40,8 +40,9 @@ void ServicioResultado::crearResultado() {
     servicioTurno.listarTurnos(turnosAsistencia);
     //VALIDACION ID TURNO
     while (true) {
-        cout << "Ingrese ID del turno asociado: ";
+        cout << "Ingrese ID del turno asociado (0 para salir): ";
         if (cin >> idTurno) {
+            if(idTurno == 0) return;
             if (idTurno > 0) {
                 if (existeResultadoParaTurno(idTurno)) {
                     cout << "Ese turno YA TIENE un resultado cargado.\n";
@@ -69,16 +70,18 @@ void ServicioResultado::crearResultado() {
             limpiarBuffer();
         }
     }
-
+    system("cls");
     //DESCRIPCION
     do {
-        cout << "Ingrese descripcion del resultado: ";
+        cout << "Ingrese descripcion del resultado (0 para salir): ";
         getline(cin, descripcion);
+        if(descripcion == "0"){return;};
         if (descripcion.empty()) cout << "La descripcion no puede estar vacia.\n";
     } while (descripcion.empty());
 
     //FECHA
     Fecha fechaResultado = pedirFecha("Ingrese nueva fecha:", 2022, 2025);
+    if (fechaResultado.getAnio() == 0) return;
 
     Resultado resultado(id, idTurno, descripcion, fechaResultado);
 
@@ -96,6 +99,7 @@ vector<Resultado> ServicioResultado::obtenerResultado() {
 
 //LISTAR RESULTADOS
 void ServicioResultado::listarResultados(const vector<Resultado>& lista) {
+    system("cls");
     if (lista.empty()) {
         cout << "No hay resultados registrados.\n";
         return;
@@ -115,6 +119,7 @@ void ServicioResultado::listarResultados(const vector<Resultado>& lista) {
 
 //MODIFICAR RESULTADO
 void ServicioResultado::modificarResultado() {
+    system("cls");
     vector<Resultado> lista = obtenerResultado();
 
     if (lista.empty()) {
@@ -143,26 +148,30 @@ void ServicioResultado::modificarResultado() {
             limpiarBuffer();
         }
     }
-
+    system("cls");
     Resultado resultado = managerResultado.leer(pos);
 
     string descripcion;
 
-    cout << "\n-- MODIFICANDO DATOS (Presione ENTER en textos para mantener el actual) --\n";
+    cout << "\n-- MODIFICANDO DATOS (Presione ENTER en textos para mantener el actual, 0 para salir) --\n";
 
     // DESCRIPCION
     cout << "Descripcion actual: " << resultado.getDescripcion() << "\n";
     cout << "Nueva descripcion: ";
     getline(cin, descripcion);
+    if(descripcion == "0"){
+        return;
+    };
     if (descripcion.empty()) descripcion = resultado.getDescripcion();
 
     // FECHA
-    cout << "\n-- Reingrese la fecha del resultado --\n";
+    cout << "\n-- Reingrese la fecha del resultado (0 para salir) --\n";
 
     cout << "\n-- Fecha de resultado actual: "
      << resultado.getFecha().toString() << "\n";
 
     Fecha fechaResultado = pedirFecha("Ingrese nueva fecha:", 1900, 2025);
+    if(fechaResultado.getAnio() == 0) return;
 
     resultado.setDescripcion(descripcion);
     resultado.setFecha(fechaResultado);
@@ -176,6 +185,7 @@ void ServicioResultado::modificarResultado() {
 
 //ELIMINAR RESULTADO
 void ServicioResultado::eliminarResultado() {
+    system("cls");
     vector<Resultado> lista = obtenerResultado();
 
     if (lista.empty()) {
@@ -198,7 +208,11 @@ void ServicioResultado::eliminarResultado() {
     }
 
     if (id == 0) return;
-
+    int posicion = managerResultado.buscar(id);
+    if (posicion == -1){
+        cout << "No se encontro un resultado con ese ID. " << endl;
+        return;
+    }
     // Confirmación
     cout << "Esta seguro que desea eliminar el resultado con ID " << id << "? (S/N): ";
     char confirma;
@@ -218,16 +232,18 @@ void ServicioResultado::eliminarResultado() {
 
 //BUSCAR x PACIENTE
 void ServicioResultado::buscarPorPaciente() {
+    system("cls");
     int id;
     while(true) {
-        cout << "Ingrese ID del paciente: ";
-        if (cin >> id) {
+        cout << "Ingrese ID del paciente (0 para cancelar): ";
+        cin >> id;
+        if (cin.fail()) {
+            cout << "Error: Ingrese un numero.\n";
             limpiarBuffer();
-            break;
-        } else {
-            cout << "Error: Numero invalido.\n";
-            limpiarBuffer();
+            continue;
         }
+        if(id == 0) return;
+        break;
     }
 
     vector<Resultado> lista = managerResultado.buscarPorPaciente(id);

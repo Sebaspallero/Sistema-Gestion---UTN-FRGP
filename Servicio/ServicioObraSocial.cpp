@@ -13,60 +13,75 @@ void ServicioObraSocial::limpiarBuffer() const {
 
 //CREAR OBRA SOCIAL
 void ServicioObraSocial::crearObraSocial() {
+    system("cls");
     cout << "\n-- REGISTRAR OBRA SOCIAL --\n";
 
     int id = managerObraSocial.obtenerNuevoId();
     string nombre;
     float descuento;
 
-    vector<ObraSocial> lista =managerObraSocial.leerTodos();
+    vector<ObraSocial> lista = managerObraSocial.leerTodos();
 
     bool nombreValido = false;
-    do{
-    nombre = pedirString("Ingrese el nombre: ");
 
-        if(nombre.empty() || nombre.find_first_not_of(' ') == string::npos){
-            cout<< "El nombre no puede estar vacio ni ser solo espacios. " << endl;
+    do {
+        nombre = pedirString("Ingrese el nombre (0 para cancelar): ");
+
+        if (nombre == "0") {
+            cout << "Operacion cancelada.\n";
+            return;
+        }
+
+        if (nombre.empty() || nombre.find_first_not_of(' ') == string::npos) {
+            cout << "El nombre no puede estar vacio ni ser solo espacios.\n";
             continue;
         }
 
         bool duplicado = false;
-        for (int i = 0; i < (int) lista.size(); i++){
+        for (int i = 0; i < (int)lista.size(); i++) {
             if (lista[i].getNombre() == nombre) {
-            duplicado = true;
-            break;
+                duplicado = true;
+                break;
+            }
         }
-    }
 
-    if(duplicado){
-        cout << "Ya existe una obra social con ese nombre. Intente con otro. " << endl;
-        continue;
-    }
+        if (duplicado) {
+            cout << "Ya existe una obra social con ese nombre. Intente con otro.\n";
+            continue;
+        }
 
-    nombreValido = true;
-    }while(!nombreValido);
+        nombreValido = true;
+    } while (!nombreValido);
 
     bool descuentoValido = false;
-    while(!descuentoValido){
-        cout << "Ingrese el porcentaje de descuento (0-100): ";
+    while (!descuentoValido) {
+        cout << "Ingrese el porcentaje de descuento (0-100, -1 para cancelar): ";
         if (!(cin >> descuento)) {
-            cout << "Error: debe ingresar un numero valido." << endl;
+            cout << "Error: debe ingresar un numero valido.\n";
             limpiarBuffer();
             continue;
         }
-        if(descuento < 0 || descuento > 100){
-            cout << "El descuento debe ser mayor a 0 y menor o igual a 100. " << endl;
+
+        if (descuento == -1) {
+            cout << "Operacion cancelada.\n";
+            limpiarBuffer();
+            return;
+        }
+
+        if (descuento < 0 || descuento > 100) {
+            cout << "El descuento debe estar entre 0 y 100.\n";
             continue;
         }
+
         descuentoValido = true;
-        }
+    }
 
     ObraSocial obraSocial(id, nombre, descuento);
 
     if (managerObraSocial.guardar(obraSocial)) {
-        cout << "Obra social registrada con exito!" << endl;
+        cout << "Obra social registrada con exito!\n";
     } else {
-        cout << "Error al intentar guardar la obra social." << endl;
+        cout << "Error al intentar guardar la obra social.\n";
     }
 }
 
@@ -77,6 +92,7 @@ std::vector<ObraSocial> ServicioObraSocial :: obtenerObrasSociales(){
 
 //LISTAR OBRAS SOCIALES
 void ServicioObraSocial::listarObrasSociales(const std::vector<ObraSocial>& obrasSociales) {
+    system("cls");
     if (obrasSociales.empty()) {
         cout << "No hay obras sociales registradas." << endl;
     } else {
@@ -93,6 +109,7 @@ void ServicioObraSocial::listarObrasSociales(const std::vector<ObraSocial>& obra
 
 //ELIMINAR OBRA SOCIAL
 void ServicioObraSocial::eliminarObraSocial() {
+    system("cls");
     std::vector<ObraSocial> lista = obtenerObrasSociales();
 
     if(lista.empty()){
@@ -133,9 +150,10 @@ void ServicioObraSocial::eliminarObraSocial() {
 
 //MODIFICAR OBRA SOCIAL
 void ServicioObraSocial::modificarObraSocial() {
-    std::vector <ObraSocial> lista = obtenerObrasSociales();
+    system("cls");
+    vector<ObraSocial> lista = obtenerObrasSociales();
 
-    if(lista.empty()){
+    if (lista.empty()) {
         cout << "\nNo hay obras sociales para modificar.\n";
         return;
     }
@@ -144,59 +162,72 @@ void ServicioObraSocial::modificarObraSocial() {
 
     int id = pedirEntero("\nIngrese el ID a modificar (0 para cancelar): ");
     if (id == 0) {
-    std::cout << "Operacion cancelada.\n";
-    return;
+        cout << "Operacion cancelada.\n";
+        return;
     }
 
     int posicion = managerObraSocial.buscar(id);
     if (posicion == -1) {
-    cout << "No se encontro una obra social con ese ID.\n";
-    return;
+        cout << "No se encontro una obra social con ese ID.\n";
+        return;
     }
 
     ObraSocial obraSocial = managerObraSocial.leer(posicion);
-
+    system("cls");
     string nombre;
     bool nombreValido = false;
-    do{
-       cout << "Nuevo nombre: ";
-       limpiarBuffer();
-       getline(cin, nombre);
+    limpiarBuffer();
+    do {
+        cout << "Nuevo nombre [" << obraSocial.getNombre() << "] (0 para cancelar): ";
+        getline(cin, nombre);
 
-        if (nombre.empty() || nombre.find_first_not_of(' ') == string::npos){
-            cout << "El nombre no puede estar vacio ni ser solo espacios. " << endl;
+        if (nombre == "0") {
+            cout << "Operacion cancelada.\n";
+            return;
+        }
+
+        if (nombre.empty() || nombre.find_first_not_of(' ') == string::npos) {
+            cout << "El nombre no puede estar vacio ni ser solo espacios.\n";
             continue;
         }
 
-        bool duplicado =false;
-        for(int i=0; i < (int)lista.size(); i++){
+        bool duplicado = false;
+        for (int i = 0; i < (int)lista.size(); i++) {
             if (lista[i].getId() != id && lista[i].getNombre() == nombre) {
                 duplicado = true;
                 break;
+            }
         }
-    }
 
-    if (duplicado){
-        cout << "Ya existe una obra social con ese nombre. Intente con otro. " << endl;
-        continue;
-    }
+        if (duplicado) {
+            cout << "Ya existe una obra social con ese nombre.\n";
+            continue;
+        }
 
-    nombreValido = true;
-    }while(!nombreValido);
+        nombreValido = true;
+    } while (!nombreValido);
 
     float descuento;
     bool descuentoValido = false;
-    while(!descuentoValido){
-        cout << "Nuevo descuento (%): ";
-        if (!(cin >> descuento)){
-            cout << "Error: Debe ingresar un numero valido. " << endl;
+    while (!descuentoValido) {
+        cout << "Nuevo descuento (%) (-1 para cancelar): ";
+        if (!(cin >> descuento)) {
+            cout << "Error: Debe ingresar un numero valido.\n";
             limpiarBuffer();
             continue;
         }
-        if (descuento < 0 || descuento > 100){
-            cout << "El descuento debe ser mayor a 0 y menor o igual a 100. " << endl;
+
+        if (descuento == -1) {
+            cout << "Operacion cancelada.\n";
+            limpiarBuffer();
+            return;
+        }
+
+        if (descuento < 0 || descuento > 100) {
+            cout << "El descuento debe estar entre 1 y 100.\n";
             continue;
         }
+
         descuentoValido = true;
     }
 
@@ -212,10 +243,16 @@ void ServicioObraSocial::modificarObraSocial() {
 
 //BUSCAR OBRA SOCIAL x NOMBRE
 void ServicioObraSocial::buscarObraSocialPorNombre() {
-    cout << "\nIngrese el nombre a buscar: ";
+    system("cls");
+    cout << "\nIngrese el nombre a buscar (0 para cancelar): ";
 
     string nombre;
     getline(cin, nombre);
+
+    if (nombre == "0") {
+        cout << "Operacion cancelada.\n";
+        return;
+    }
 
     if (nombre.empty() || nombre.find_first_not_of(" \t\n\r") == string::npos) {
         cout << "Debe ingresar un nombre valido.\n";

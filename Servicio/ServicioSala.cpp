@@ -20,17 +20,23 @@ void ServicioSala::crearSala() {
     string nombre;
 
     //NOMBRE
-    do {
-        cout << "Ingrese el nombre de la sala: ";
+    while (true) {
+        cout << "Ingrese el nombre de la sala (0 para cancelar): ";
         getline(cin, nombre);
-        if (nombre.empty()) cout << "El nombre no puede estar vacio.\n";
-    } while (nombre.empty());
+
+        if (nombre == "0") return;
+
+        if (!nombre.empty()) break;
+
+        cout << "El nombre no puede estar vacio.\n";
+    }
 
     //PISO
     while (true) {
-        cout << "Ingrese el numero de piso: ";
+        cout << "Ingrese el numero de piso (0 para cancelar): ";
         if (cin >> piso) {
             limpiarBuffer();
+            if (piso == 0) return;
             break;
         } else {
             cout << "Error: El piso debe ser un numero.\n";
@@ -38,7 +44,6 @@ void ServicioSala::crearSala() {
         }
     }
 
-    //Revisar que hacer con atributo dispoinible, complicado de implementar
     Sala sala(id, nombre, piso, true);
 
     if(managerSala.guardar(sala)){
@@ -53,6 +58,7 @@ std::vector<Sala> ServicioSala :: obtenerSalas(){
 }
 
 void ServicioSala :: listarSalas(const std::vector<Sala>& salas){
+     system("cls");
         if (salas.empty()) {
                 cout << "No hay salas registradas.\n";
         } else {
@@ -68,6 +74,7 @@ void ServicioSala :: listarSalas(const std::vector<Sala>& salas){
 }
 
 void ServicioSala::eliminarSala() {
+    system("cls");
     std::vector<Sala> lista = obtenerSalas();
 
     if (lista.empty()) {
@@ -82,6 +89,7 @@ void ServicioSala::eliminarSala() {
         cout << "\nIngrese el ID de la sala a eliminar (0 para cancelar): ";
         if (cin >> id) {
             limpiarBuffer();
+            if (id == 0) return;
             break;
         } else {
             cout << "Error: Debe ingresar un numero.\n";
@@ -89,12 +97,20 @@ void ServicioSala::eliminarSala() {
         }
     }
 
-    if (id == 0) return;
 
-    // Confirmación
+
+    int posicion = managerSala.buscar(id);
+
+    if(posicion == -1){
+        cout << "\n-- NO SE ENCONTRO ESE ID --\n";
+        return;
+    }
+
+    // Si llegamos aca, el ID existe --> pedir confirmación
     cout << "Esta seguro que desea eliminar la sala con ID " << id << "? (S/N): ";
     char confirma;
     cin >> confirma;
+
     if (confirma != 'S' && confirma != 's') {
         cout << "Operacion cancelada. No se elimino la sala.\n";
         return;
@@ -103,17 +119,21 @@ void ServicioSala::eliminarSala() {
     if (managerSala.eliminar(id)) {
         cout << "\n-- SALA ELIMINADA EXITOSAMENTE --\n";
     } else {
-        cout << "\n-- NO SE ENCONTRO ESE ID --\n";
+        cout << "No pudo eliminarse la sala." << endl;
     }
+
 }
 
 
 void ServicioSala::buscarSalaPorNombre(){
+    system("cls");
     cout << "\n-- BUSCAR SALA POR NOMBRE --\n";
 
     string nombre;
     cout << "Ingrese nombre a buscar: ";
     getline(cin, nombre);
+
+    if (nombre == "0") return;
 
     Sala sala = managerSala.buscarPorNombre(nombre);
 
@@ -129,6 +149,7 @@ void ServicioSala::buscarSalaPorNombre(){
 
 //MODIFICAR SALA
 void ServicioSala::modificarSala(){
+    system("cls");
     std::vector<Sala> lista = obtenerSalas();
 
     if(lista.empty()){
@@ -148,7 +169,7 @@ void ServicioSala::modificarSala(){
             if (id == 0) return;
             posicion = managerSala.buscar(id);
             if (posicion != -1) {
-                limpiarBuffer();
+                limpiarBuffer();   // limpio el \n que dejó el >>
                 break;
             }
             cout << "\nNo se encontro una sala con ese ID.\n";
@@ -161,30 +182,49 @@ void ServicioSala::modificarSala(){
     Sala sala = managerSala.leer(posicion);
     string nombre;
     int piso;
-
+    system("cls");
     cout << "\n-- MODIFICANDO DATOS (Presione ENTER para mantener actual) --\n";
 
     // NOMBRE
-    cout << "Nombre actual [" << sala.getNombre() << "]: ";
+    cout << "Nombre actual [" << sala.getNombre() << "] (ENTER para mantener, 0 para cancelar): ";
     getline(cin, nombre);
-    if (nombre.empty()) nombre = sala.getNombre();
+    if (nombre == "0") return;                 // cancelar
+    if (nombre.empty()) nombre = sala.getNombre();  // mantener actual
 
     // PISO
     while (true) {
-        cout << "Nuevo piso [" << sala.getPiso() << "]: ";
-        if (cin >> piso) {
-            limpiarBuffer();
+        cout << "Nuevo piso [" << sala.getPiso()
+             << "] (ENTER para mantener, 0 para cancelar): ";
+
+        string linea;
+        getline(cin, linea);
+
+        if (linea.empty()) {
+            // ENTER mantener el actual
+            piso = sala.getPiso();
             break;
-        } else {
-            cout << "Error: Debe ingresar un numero.\n";
-            limpiarBuffer();
         }
+
+        // convertir string a int
+        try {
+            piso = stoi(linea);
+        } catch (...) {
+            cout << "Error: Debe ingresar un numero.\n";
+            continue;
+        }
+
+        if (piso == 0) {
+            // cancelar
+            return;
+        }
+
+        // si llegó hasta acá, es un número válido
+        break;
     }
 
-    //Revisar que hacemos con disponible, sugerencia eliminarlo
     sala.setNombre(nombre);
     sala.setPiso(piso);
-    sala.setDisponible(true);
+    sala.setDisponible(true);  // esto ya lo tenías
 
     if(managerSala.modificar(sala, posicion)){
         cout << "Sala modificada con exito!\n";

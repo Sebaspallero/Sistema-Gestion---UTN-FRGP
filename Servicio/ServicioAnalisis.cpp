@@ -10,7 +10,7 @@ ServicioAnalisis::ServicioAnalisis(): _managerAnalisis("analisis.dat"), _servici
 
 //CREAR ANALISIS
 void ServicioAnalisis::crearAnalisis() {
-
+    system("cls");
     int idCategoria;
     float valor;
     int id = _managerAnalisis.obtenerNuevoId();
@@ -40,20 +40,25 @@ void ServicioAnalisis::crearAnalisis() {
         }
     }
     limpiarBuffer();
-
+    system("cls");
     do{
-        std::cout<<"Ingrese el nombre del analisis: "<<std::endl;
+        std::cout<<"Ingrese el nombre del analisis: (0 para cancelar)"<<std::endl;
         std::getline(std::cin,nombre);
         if(nombre.empty() || nombre.find_first_not_of(' ') == std::string::npos){
             std::cout<<"El nombre no puede ser vacio. Intentelo nuevamente."<<std::endl;
         }
+        if(nombre == "0"){
+            return;
+        }
     }while(nombre.empty() || nombre.find_first_not_of(' ') == std::string::npos);
 
     do{
-        valor = pedirFloat("Ingrese el valor del analisis: $");
-
+        valor = pedirFloat("Ingrese el valor del analisis (-1 para cancelar): $");
+        if(valor == -1){
+            return;
+        }
         if(valor<=0){
-            std::cout<<"El valor ingresado no puede ser menor o igual a 0."<<std::endl;
+            std::cout<<"El valor ingresado no puede ser menor negativo."<<std::endl;
             valor = -1;
         }
     }while(valor<=0);
@@ -70,6 +75,7 @@ void ServicioAnalisis::crearAnalisis() {
 
 //MODIFICAR ANALISIS
 void ServicioAnalisis::modificarAnalisis() {
+    system("cls");
     int posicion, id, idCategoria;
     float valor;
     std::string nombre;
@@ -81,7 +87,11 @@ void ServicioAnalisis::modificarAnalisis() {
     }
 
     listarAnalisis(lista);
-    id = pedirEntero("Ingrese el ID correspondiente al analisis que desea modificar: ");
+    id = pedirEntero("Ingrese el ID correspondiente al analisis que desea modificar (0 para cancelar): ");
+    std::cout<<std::endl;
+    if(id == 0){
+        return;
+    }
     posicion = _managerAnalisis.buscar(id);
     if (posicion == -1) {
         std::cout << "No se encontro un analisis activo con ese ID."<<std::endl;
@@ -95,11 +105,14 @@ void ServicioAnalisis::modificarAnalisis() {
         std::cout << "La lista de categorias esta vacia. No se puede modificar el analisis."<<std::endl;
         return;
     }
+    system("cls");
     _servicioCategoria.listarCategorias(categorias);
-
     bool categoriaValida = false;
     while (!categoriaValida) {
-        idCategoria = pedirEntero("Elija el ID de la categoria que corresponde al analisis: ");
+        idCategoria = pedirEntero("Elija el ID de la categoria que corresponde al analisis (0 para cancelar): ");
+        if(idCategoria == 0){
+            return;
+        }
         for (int i = 0; i < (int)categorias.size(); i++) {
             if (categorias[i].getId() == idCategoria) {
                 categoriaValida = true;
@@ -113,14 +126,15 @@ void ServicioAnalisis::modificarAnalisis() {
     }
 
     analisis.setIdCategoria(idCategoria);
-
+    system("cls");
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    nombre = pedirString("- Ingrese el nuevo nombre del analisis: ");
+    nombre = pedirString("- Ingrese el nuevo nombre del analisis (0 para cancelar): ");
+    if(nombre == "0"){return;}
     analisis.setNombre(nombre);
-
     bool valorValido = false;
     while (!valorValido) {
-        valor = pedirFloat("- Ingrese el nuevo valor del analisis: ");
+        valor = pedirFloat("- Ingrese el nuevo valor del analisis (-1 para cancelar): ");
+        if(valor == -1){return;}
         if (valor <= 0) {
             std::cout << "El valor debe ser mayor a 0." << std::endl;
             continue;
@@ -149,6 +163,7 @@ void ServicioAnalisis::listarAnalisis(const std::vector<Analisis>& lista) {
 
 //ELIMINAR ANALISIS
 void ServicioAnalisis::eliminarAnalisis(){
+    system("cls");
     std::vector<Analisis> lista = _managerAnalisis.leerTodos();
 
     if (lista.empty()) {
@@ -159,7 +174,8 @@ void ServicioAnalisis::eliminarAnalisis(){
 
     int id;
     // Validar que se ingrese un número
-    id = pedirEntero("Ingrese el ID del analisis a eliminar: ");
+    id = pedirEntero("Ingrese el ID del analisis a eliminar (0 para cancelar): ");
+    if(id == 0){return;}
     // Verificar que el ID exista (y esté activo, porque buscar mira getEstado())
     int posicion = _managerAnalisis.buscar(id);
     if (posicion == -1) {
@@ -190,6 +206,7 @@ void ServicioAnalisis::eliminarAnalisis(){
 
 //BUSCAR x CATEGORÍA
 void ServicioAnalisis::buscarPorCategoria(){
+    system("cls");
     int idCategoria;
     bool encontro = false;
     std::vector<Categoria> categorias =  _servicioCategoria.obtenerCategorias();
@@ -214,6 +231,7 @@ void ServicioAnalisis::buscarPorCategoria(){
 
 //BUSCAR x NOMBRE
 void ServicioAnalisis::listarPorNombre(){
+    system("cls");
     std::string nombre;
     std::vector<Analisis> lista = _managerAnalisis.leerTodos();
     std::cout<<std::endl;
@@ -238,6 +256,7 @@ void ServicioAnalisis::listarPorNombre(){
 
 //ORDENAR x CATEGORIA
 void ServicioAnalisis::ordenarPorCategoria() {
+    system("cls");
     std::vector<Analisis> lista = _managerAnalisis.leerTodos();
 
     if (lista.size() == 0) {

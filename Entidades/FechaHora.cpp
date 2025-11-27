@@ -1,5 +1,7 @@
 #include "../EntidadesH/FechaHora.h"
 #include <string>
+#include <sstream>
+#include <iomanip>
 
 // Constructores
 FechaHora::FechaHora() : Fecha() {
@@ -22,8 +24,17 @@ void FechaHora::setMinutos(int minutos) { _minutos = minutos; }
 
 
 std::string FechaHora::toString() const {
-    return Fecha::toString() + " " +
-           std::to_string(_hora) + ":" + std::to_string(_minutos);
+    std::ostringstream oss;
+
+    oss << Fecha::toString() << " ";
+
+    // Hora con 2 dígitos
+    oss << std::setw(2) << std::setfill('0') << _hora
+        << ":"
+        // Minutos con 2 dígitos
+        << std::setw(2) << std::setfill('0') << _minutos;
+
+    return oss.str();
 }
 
 bool FechaHora::esIgual(const FechaHora& otraFecha) const {
