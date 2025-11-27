@@ -36,6 +36,7 @@ std::string ServicioPaciente::nombreObraPorId(int id, const vector<ObraSocial>& 
 
 //CREAR PACIENTE
 void ServicioPaciente::crearPaciente() {
+    system("cls");
     cout << "\n-- REGISTRAR PACIENTE --\n";
 
     //PRIMERO VALIDAMOS QUE HAYA OBRAS SOCIALES
@@ -150,6 +151,7 @@ void ServicioPaciente::crearPaciente() {
         }
     }
 
+
     Paciente paciente(id, nombre, apellido, fechaNacimiento, dni, email, telefono, codigoObraSocial);
 
     if (managerPaciente.guardar(paciente)) {
@@ -166,6 +168,7 @@ std::vector<Paciente> ServicioPaciente :: obtenerPacientes(){
 
 //LISTAR PACIENTES
 void ServicioPaciente::listarPacientes(const std::vector<Paciente>& pacientes) {
+    system("cls");
     if (pacientes.empty()) {
         cout << "No hay pacientes registrados.\n";
     } else {
@@ -185,6 +188,7 @@ void ServicioPaciente::listarPacientes(const std::vector<Paciente>& pacientes) {
 
 //ELIMINAR PACIENTE
 void ServicioPaciente::eliminarPaciente() {
+    system("cls");
     std::vector<Paciente> lista = obtenerPacientes();
     if (lista.empty()) {
         cout << "\nNo hay pacientes para eliminar.\n";
@@ -205,6 +209,13 @@ void ServicioPaciente::eliminarPaciente() {
 
     if (id == 0) return;
 
+    int posicion = managerPaciente.buscar(id);
+
+    if(posicion == -1){
+        cout << "\n-- NO SE ENCONTRO ESE ID PACIENTE --\n";
+        return;
+    }
+
     // Confirmación
     cout << "Esta seguro que desea eliminar el paciente con ID " << id << "? (S/N): ";
     char confirma;
@@ -223,6 +234,7 @@ void ServicioPaciente::eliminarPaciente() {
 
 //MODIFICAR PACIENTE
 void ServicioPaciente::modificarPaciente() {
+    system("cls");
     std::vector<Paciente> lista = obtenerPacientes();
 
     if (lista.empty()) {
@@ -258,7 +270,7 @@ void ServicioPaciente::modificarPaciente() {
 
     string nombre, apellido, email, telefono;
     int dia, mes, anio, dni, codigoObraSocial;
-
+    system("cls");
     cout << "\n-- MODIFICANDO DATOS (Presione ENTER en textos para mantener el actual) --\n";
 
     //NOMBRE
@@ -373,6 +385,7 @@ void ServicioPaciente::modificarPaciente() {
 
 //BUSCAR PACIENTE POR DNI
 void ServicioPaciente::buscarPacientePorDNI() {
+    system("cls");
     int dni;
 
     while (true) {
@@ -408,6 +421,7 @@ void ServicioPaciente::buscarPacientePorDNI() {
 
 //BUSCAR PACIENTE POR APELLIDO
 void ServicioPaciente::buscarPacientePorApellido() {
+    system("cls");
     string apellido;
 
     while(true){
@@ -443,6 +457,7 @@ void ServicioPaciente::buscarPacientePorApellido() {
 
 //ORDENAR PACIENTES POR APELLIDO
 void ServicioPaciente::ordenarPacientesPorApellido() {
+    system("cls");
     std::vector<Paciente> listaOrdenada = managerPaciente.ordenarPorApellido();
 
     if(listaOrdenada.empty()){

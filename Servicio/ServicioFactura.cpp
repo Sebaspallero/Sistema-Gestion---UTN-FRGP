@@ -158,7 +158,7 @@ void ServicioFactura::crearFactura() {
         if (turnoValido) break;
         cout << "ID invalido o turno no disponible para facturar.\n";
     }
-
+    system("cls");
     //CALCULAR MONTO REAL
     float montoFinal = calcularMontoConDescuento(turnoSeleccionado.getIDPaciente(), turnoSeleccionado.getIDAnalisis(), pacientes, analisis, obrasSociales);
     cout << "\n >> Monto Final a Pagar: $" << montoFinal << endl;
@@ -243,6 +243,7 @@ void ServicioFactura::listarFacturas(const std::vector<Factura>& facturas) {
 
 // MODIFICAR FACTURA
 void ServicioFactura::modificarFactura() {
+    system("cls");
     vector<Factura> lista = obtenerFacturas();
     if (lista.empty()) {
         cout << "No hay facturas para modificar.\n";
@@ -274,14 +275,13 @@ void ServicioFactura::modificarFactura() {
             cout << "No existe factura con ese ID. Intente nuevamente.\n";
         }
     }
-
+    system("cls");
     Factura factura = managerFactura.leer(pos);
 
     // MODIFICAR METODO DE PAGO
     int nuevoIdMetodo;
     vector<MetodoDePago> metodos = servicioMetodoDePago.obtenerMetodosDePago();
     servicioMetodoDePago.listarMetodosDePago(metodos);
-
     while(true) {
         cout << "Nuevo ID Metodo de Pago (0 para cancelar): ";
         cin >> nuevoIdMetodo;
@@ -311,6 +311,7 @@ void ServicioFactura::modificarFactura() {
 
 //ELIMINAR FACTURA
 void ServicioFactura::eliminarFactura() {
+    system("cls");
     vector<Factura> lista = obtenerFacturas();
 
     if (lista.empty()) {
@@ -358,6 +359,7 @@ void ServicioFactura::eliminarFactura() {
 
 //BUSCAR x METODO DE PAGO
 void ServicioFactura::buscarPorMetodoDePago() {
+    system("cls");
     vector<MetodoDePago> metodos = servicioMetodoDePago.obtenerMetodosDePago();
     servicioMetodoDePago.listarMetodosDePago(metodos);
 
@@ -385,6 +387,7 @@ void ServicioFactura::buscarPorMetodoDePago() {
 
 //BUSCAR x FECHA
 void ServicioFactura::buscarPorFecha() {
+    system("cls");
     cout << "\n-- BUSQUEDA POR FECHA --\n";
 
     Fecha fechaFactura = pedirFecha("Ingrese nueva fecha:", 2022, 2025);
@@ -401,6 +404,7 @@ void ServicioFactura::buscarPorFecha() {
 
 //BUSCAR x PACIENTE
 void ServicioFactura::buscarPorPaciente() {
+    system("cls");
     vector<Paciente> pacs = servicioPaciente.obtenerPacientes();
     servicioPaciente.listarPacientes(pacs);
 
@@ -427,7 +431,9 @@ void ServicioFactura::buscarPorPaciente() {
 }
 
 //ORDENAR x FECHA DE PAGO
-vector<Factura> ServicioFactura::ordenarPorFechaDePago() {
-    return managerFactura.ordenarPorFechaDePago();
+void ServicioFactura::ordenarPorFechaDePago() {
+    system("cls");
+    vector<Factura> lista = managerFactura.ordenarPorFechaDePago();
+    listarFacturas(lista);
 }
 

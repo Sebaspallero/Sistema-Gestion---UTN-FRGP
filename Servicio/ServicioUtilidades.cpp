@@ -221,9 +221,9 @@ FechaHora pedirFechaHora(const std::string& mensaje, int anioMin, int anioMax) {
 
         // ---- HORA ----
         while (true) {
-            std::cout << "Hora (0-23): ";
+            std::cout << "Hora (0-23) -1 para cancelar: ";
             if (std::cin >> hora) {
-                if (hora == 0) {
+                if (hora == -1) {
                     std::cout << "Operacion cancelada.\n";
                     return FechaHora(0,0,0,0,0);
                 }
@@ -235,9 +235,9 @@ FechaHora pedirFechaHora(const std::string& mensaje, int anioMin, int anioMax) {
 
         // ---- MINUTOS ----
         while (true) {
-            std::cout << "Minutos (0-59): ";
+            std::cout << "Minutos (0-59) -1 para cancelar: ";
             if (std::cin >> minutos) {
-                if (minutos == 0) {
+                if (minutos == -1) {
                     std::cout << "Operacion cancelada.\n";
                     return FechaHora(0,0,0,0,0);
                 }

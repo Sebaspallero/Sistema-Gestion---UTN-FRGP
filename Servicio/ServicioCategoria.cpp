@@ -3,6 +3,7 @@
 #include "../ServicioH/ServicioCategoria.h"
 #include "../ManagerH/Manager.h"
 #include "../ManagerH/ManagerAnalisis.h"
+#include "../ServicioH/ServiciosUtilidades.h"
 #include <cstring>
 #include <iostream>
 #include <vector>
@@ -12,6 +13,7 @@ ServicioCategoria::ServicioCategoria(): _managerCategoria("categorias.dat") {}
 
 //CREAR CATEGORÍA
 void ServicioCategoria::crearCategoria() {
+    system("cls");
     int id = _managerCategoria.obtenerNuevoId();
     std::string nombre;
     std::vector<Categoria> lista = _managerCategoria.leerTodos();
@@ -53,6 +55,7 @@ void ServicioCategoria::crearCategoria() {
 
 //MODIFICAR CATEGORIA
 void ServicioCategoria::modificarCategoria() {
+    system("cls");
     std::vector<Categoria> lista = _managerCategoria.leerTodos();
 
     if (lista.empty()) {
@@ -84,7 +87,7 @@ void ServicioCategoria::modificarCategoria() {
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
-
+    system("cls");
     Categoria categoria = _managerCategoria.leer(posicion);
 
     std::string nombre;
@@ -137,6 +140,7 @@ void ServicioCategoria::modificarCategoria() {
 
 //LISTAR CATEGORIAS
 void ServicioCategoria::listarCategorias(const std::vector<Categoria>& categorias) {
+    system("cls");
     if (categorias.empty()) {
         std::cout << "No hay categorias registrados.\n";
     } else {
@@ -152,6 +156,7 @@ void ServicioCategoria::listarCategorias(const std::vector<Categoria>& categoria
 
 //ELIMINAR CATEGORIA
 void ServicioCategoria::eliminarCategoria() {
+    system("cls");
     std::vector<Categoria> lista = _managerCategoria.leerTodos();
 
     if(lista.empty()){
@@ -162,9 +167,7 @@ void ServicioCategoria::eliminarCategoria() {
     listarCategorias(lista);
 
     int id;
-
-    std::cout << std::endl << " Ingrese el ID a eliminar (0 para cancelar): ";
-    std::cin >> id;
+    id = pedirEntero(" Ingrese el ID a eliminar (0 para cancelar): ");
 
     if(id == 0){
         std::cout << "Operacion cancelada. " << std::endl;
@@ -200,6 +203,7 @@ void ServicioCategoria::eliminarCategoria() {
 
 //BUSCAR POR NOMBRE
 void ServicioCategoria::buscarPorNombre(){
+    system("cls");
     bool encontro = false;
     std::string nombre;
 
@@ -220,6 +224,7 @@ void ServicioCategoria::buscarPorNombre(){
 
 //BUSCAR POR ID
 std::string ServicioCategoria::buscarPorId(int id){
+    system("cls");
     bool encontro = false;
     std::string nombreCategoria = _managerCategoria.buscarPorId(id, encontro);
     if (!encontro) {

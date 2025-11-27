@@ -13,6 +13,7 @@ void ServicioObraSocial::limpiarBuffer() const {
 
 //CREAR OBRA SOCIAL
 void ServicioObraSocial::crearObraSocial() {
+    system("cls");
     cout << "\n-- REGISTRAR OBRA SOCIAL --\n";
 
     int id = managerObraSocial.obtenerNuevoId();
@@ -68,7 +69,7 @@ void ServicioObraSocial::crearObraSocial() {
         }
 
         if (descuento < 0 || descuento > 100) {
-            cout << "El descuento debe estar entre 1 y 100.\n";
+            cout << "El descuento debe estar entre 0 y 100.\n";
             continue;
         }
 
@@ -91,6 +92,7 @@ std::vector<ObraSocial> ServicioObraSocial :: obtenerObrasSociales(){
 
 //LISTAR OBRAS SOCIALES
 void ServicioObraSocial::listarObrasSociales(const std::vector<ObraSocial>& obrasSociales) {
+    system("cls");
     if (obrasSociales.empty()) {
         cout << "No hay obras sociales registradas." << endl;
     } else {
@@ -107,6 +109,7 @@ void ServicioObraSocial::listarObrasSociales(const std::vector<ObraSocial>& obra
 
 //ELIMINAR OBRA SOCIAL
 void ServicioObraSocial::eliminarObraSocial() {
+    system("cls");
     std::vector<ObraSocial> lista = obtenerObrasSociales();
 
     if(lista.empty()){
@@ -147,6 +150,7 @@ void ServicioObraSocial::eliminarObraSocial() {
 
 //MODIFICAR OBRA SOCIAL
 void ServicioObraSocial::modificarObraSocial() {
+    system("cls");
     vector<ObraSocial> lista = obtenerObrasSociales();
 
     if (lista.empty()) {
@@ -169,7 +173,7 @@ void ServicioObraSocial::modificarObraSocial() {
     }
 
     ObraSocial obraSocial = managerObraSocial.leer(posicion);
-
+    system("cls");
     string nombre;
     bool nombreValido = false;
     limpiarBuffer();
@@ -239,6 +243,7 @@ void ServicioObraSocial::modificarObraSocial() {
 
 //BUSCAR OBRA SOCIAL x NOMBRE
 void ServicioObraSocial::buscarObraSocialPorNombre() {
+    system("cls");
     cout << "\nIngrese el nombre a buscar (0 para cancelar): ";
 
     string nombre;

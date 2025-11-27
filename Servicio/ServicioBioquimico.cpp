@@ -167,7 +167,7 @@ void ServicioBioquimico::modificarBioquimico() {
     }
 
     Bioquimico bioquimico = managerBioquimico.leer(posicion);
-
+    system("cls");
     string nombre, apellido, email;
     int dni, matricula;
 
@@ -285,6 +285,7 @@ std::vector<Bioquimico> ServicioBioquimico::obtenerBioquimicos(){
 
 //LISTAR BIOQUIMICOS
 void ServicioBioquimico::listarBioquimicos(const std::vector<Bioquimico>& bioquimicos) {
+    system("cls");
     if (bioquimicos.empty()) {
         cout << "No hay bioquimicos registrados.\n";
         return;
@@ -304,6 +305,7 @@ void ServicioBioquimico::listarBioquimicos(const std::vector<Bioquimico>& bioqui
 
 //ELIMINAR BIOQUIMICO
 void ServicioBioquimico::eliminarBioquimico() {
+    system("cls");
     std::vector<Bioquimico> lista = managerBioquimico.leerTodos();
 
     if (lista.empty()) {
@@ -314,9 +316,7 @@ void ServicioBioquimico::eliminarBioquimico() {
     listarBioquimicos(lista);
 
     int id;
-    cout << "\nIngrese el ID a eliminar (0 para cancelar): ";
-    cin >> id;
-
+    id = pedirEntero("\nIngrese el ID a eliminar (0 para cancelar): ");
     if (id == 0){
         cout << "Operacion cancelada." << endl;
         return;
@@ -346,6 +346,7 @@ void ServicioBioquimico::eliminarBioquimico() {
 
 //ORDENAR POR APELLIDO
 void ServicioBioquimico::ordenarBioquimicosPorApellido() {
+    system("cls");
     std::vector<Bioquimico> listaOrdenada = managerBioquimico.ordenarPorApellido();
 
     if (listaOrdenada.empty()) {
@@ -366,6 +367,7 @@ void ServicioBioquimico::ordenarBioquimicosPorApellido() {
 
 //ORDENAR POR MATRICULA
 void ServicioBioquimico::ordenarBioquimicosPorLegajo() {
+    system("cls");
     std::vector<Bioquimico> listaOrdenada = managerBioquimico.ordenarPorLegajo();
 
     if (listaOrdenada.empty()) {
@@ -385,10 +387,12 @@ void ServicioBioquimico::ordenarBioquimicosPorLegajo() {
 }
 
 void ServicioBioquimico::buscarPorMatricula(){
+    system("cls");
 int matricula;
 bool encontro;
 Bioquimico bioquimico;
-matricula = pedirEntero("Ingrese la matricula de Bioquimico que desea buscar: ");
+matricula = pedirEntero("Ingrese la matricula de Bioquimico que desea buscar (0 para cancelar): ");
+if(matricula == 0){return;}
 bioquimico = managerBioquimico.buscarPorMatricula(matricula,encontro);
 if(encontro){
     cout << "\n-- BIOQUIMICO MATRICULA: "<<matricula<<" --\n";

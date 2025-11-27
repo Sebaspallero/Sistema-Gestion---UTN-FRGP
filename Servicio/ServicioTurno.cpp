@@ -135,7 +135,7 @@ void ServicioTurno::crearTurno() {
             cout << "ID no encontrado. Intente nuevamente o ingrese -1 para crearlo.\n";
         }
     }
-
+    system("cls");
     //SELECCIONAR BIOQUIMICO
     servicioBioquimico.listarBioquimicos(bioquimicos);
     cout << "Ingrese ID del Bioquimico (0 para finalizar).\n";
@@ -169,7 +169,7 @@ void ServicioTurno::crearTurno() {
             cout << "ID no encontrado. Intente nuevamente.\n";
         }
     }
-
+    system("cls");
     //SELECCIONAR ANALISIS
     servicioAnalisis.listarAnalisis(analisis);
     cout << "Ingrese ID del Analisis (0 para finalizar).\n";
@@ -203,7 +203,7 @@ void ServicioTurno::crearTurno() {
             cout << "ID no encontrado. Intente nuevamente.\n";
         }
     }
-
+    system("cls");
     //SELECCIONAR SALA
     servicioSala.listarSalas(salas);
     cout << "Ingrese ID de la Sala (0 para finalizar).\n";
@@ -237,7 +237,7 @@ void ServicioTurno::crearTurno() {
             cout << "ID no encontrado. Intente nuevamente.\n";
         }
     }
-
+    system("cls");
     //SELECCIONAR FECHA Y HORA
     FechaHora fecha;
     while (true) {
@@ -281,6 +281,7 @@ std::vector <Turno>ServicioTurno::obtenerTurnosConAsistencia(){
 
 //IMPRIMIR LISTA DE TURNOS
 void ServicioTurno::listarTurnos(const std::vector<Turno>& turnos) {
+    system("cls");
     if (turnos.empty()) {
         cout << "No hay turnos registrados.\n";
         return;
@@ -311,6 +312,7 @@ void ServicioTurno::listarTurnos(const std::vector<Turno>& turnos) {
 
 //ELIMINAR TURNO
 void ServicioTurno::eliminarTurno() {
+    system("cls");
     vector<Turno> lista = obtenerTurnos();
 
     if (lista.empty()) {
@@ -355,6 +357,7 @@ void ServicioTurno::eliminarTurno() {
 
 //MODIFICAR TURNO
 void ServicioTurno::modificarTurno() {
+    system("cls");
     vector<Turno> lista = obtenerTurnos();
 
     if (lista.empty()) {
@@ -387,7 +390,7 @@ void ServicioTurno::modificarTurno() {
             cout << "No existe un turno con ese ID. Intente nuevamente.\n";
         }
     }
-
+    system("cls");
     Turno turno = managerTurno.leer(pos);
     FechaHora fechaActual = turno.getFechaTurno();
 
@@ -427,7 +430,7 @@ void ServicioTurno::modificarTurno() {
 
 //BUSCAR TURNO POR FECHA
 void ServicioTurno::buscarPorFecha() {
-    int dia, mes, anio;
+    system("cls");
 
     cout << "\n-- BUSCAR POR FECHA --\n";
 
@@ -464,6 +467,7 @@ void ServicioTurno::buscarPorFecha() {
 
 //BUSCAR TURNO POR PACIENTE
 void ServicioTurno::buscarPorPaciente() {
+    system("cls");
     vector<Paciente> pacientes = servicioPaciente.obtenerPacientes();
 
     if (pacientes.empty()){
@@ -505,6 +509,7 @@ void ServicioTurno::buscarPorPaciente() {
 
 //BUSCAR TURNO POR BIOQUIMICO
 void ServicioTurno::buscarPorBioquimico() {
+    system("cls");
     vector<Bioquimico> lista = servicioBioquimico.obtenerBioquimicos();
     if (lista.empty()) {
         cout << "No hay bioquimicos registrados.\n";
@@ -545,6 +550,7 @@ void ServicioTurno::buscarPorBioquimico() {
 
 //CONFIRMAR TURNO
 void ServicioTurno::confirmarTurno() {
+    system("cls");
     std::vector<Turno> turnos = obtenerTurnos();
 
     if (turnos.empty()) {
@@ -585,6 +591,7 @@ void ServicioTurno::confirmarTurno() {
 
 //ORDENAR TURNO POR FECHA
 void ServicioTurno::ordenarPorFecha() {
+    system("cls");
     cout << "\n-- TURNOS ORDENADOS POR FECHA (DESCENDENTE) --\n";
 
     vector<Turno> lista = managerTurno.ordenarPorFecha();

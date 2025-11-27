@@ -13,6 +13,7 @@ void ServicioMetodoDePago::limpiarBuffer() const {
 
 //CREAR METODO DE PAGO
 void ServicioMetodoDePago::crearMetodoDePago() {
+    system("cls");
     cout << "\n-- REGISTRAR METODO DE PAGO --\n";
 
     vector<MetodoDePago> lista = managerMetodoDePago.leerTodos();
@@ -57,6 +58,7 @@ void ServicioMetodoDePago::crearMetodoDePago() {
 
 //MODIFICAR METODO DE PAGO
 void ServicioMetodoDePago::modificarMetodoDePago() {
+    system("cls");
     vector<MetodoDePago> lista = managerMetodoDePago.leerTodos();
 
     if (lista.empty()) {
@@ -89,7 +91,7 @@ void ServicioMetodoDePago::modificarMetodoDePago() {
 
         cout << "No existe un metodo de pago con ese ID.\n";
     }
-
+    system("cls");
     MetodoDePago metodo = managerMetodoDePago.leer(posicion);
 
     string nombre;
@@ -137,6 +139,7 @@ void ServicioMetodoDePago::modificarMetodoDePago() {
 
 //ELIMINAR METODO DE PAGO
 void ServicioMetodoDePago::eliminarMetodoDePago() {
+    system("cls");
     vector<MetodoDePago> lista = managerMetodoDePago.leerTodos();
 
     if(lista.empty()){
@@ -185,6 +188,7 @@ std::vector<MetodoDePago> ServicioMetodoDePago:: obtenerMetodosDePago(){
 
 //LISTAR METODOS DE PAGO
 void ServicioMetodoDePago::listarMetodosDePago(const std::vector<MetodoDePago>& metodosDePago) {
+    system("cls");
     if (metodosDePago.empty()) {
         cout << "No hay metodos de pago registrados.\n";
     } else {
